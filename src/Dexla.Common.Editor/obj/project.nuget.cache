@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "GZB3Js9xAIKZigJIoSO/RFLWA9UV4RIIBac9jNFxGTSrO0c0IpG8fAr1xefX12mGWJu4ekAlKq9uEK62cGK8ag==",
+  "success": true,
+  "projectFilePath": "C:\\Projects\\Dexla Projects\\editor-common\\src\\Dexla.Common.Editor\\Dexla.Common.Editor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\TomMcDonough\\.nuget\\packages\\dexla.common\\1.1.0\\dexla.common.1.1.0.nupkg.sha512",
+    "C:\\Users\\TomMcDonough\\.nuget\\packages\\dexla.common.repository.types\\1.1.0\\dexla.common.repository.types.1.1.0.nupkg.sha512",
+    "C:\\Users\\TomMcDonough\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\TomMcDonough\\.nuget\\packages\\microsoft.extensions.configuration\\7.0.0\\microsoft.extensions.configuration.7.0.0.nupkg.sha512",
+    "C:\\Users\\TomMcDonough\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\TomMcDonough\\.nuget\\packages\\microsoft.extensions.configuration.binder\\7.0.4\\microsoft.extensions.configuration.binder.7.0.4.nupkg.sha512",
+    "C:\\Users\\TomMcDonough\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.1\\microsoft.extensions.logging.abstractions.7.0.1.nupkg.sha512",
+    "C:\\Users\\TomMcDonough\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\TomMcDonough\\.nuget\\packages\\nager.publicsuffix\\2.4.0\\nager.publicsuffix.2.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

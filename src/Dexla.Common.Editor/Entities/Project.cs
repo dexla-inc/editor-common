@@ -1,0 +1,28 @@
+﻿using Dexla.Common.Repository.Types.Enums;
+using Dexla.Common.Repository.Types.Interfaces;
+using Dexla.Common.Types.Enums;
+using Dexla.Common.Utilities;
+
+namespace Dexla.Common.Editor.Entities;
+
+public class Project : IEntity
+{
+    protected Project()
+    {
+    }
+
+    public string Id { get; set; } = UtilityExtensions.GetId();
+    public EntityStatus EntityStatus { get; set; }
+    public virtual string UserId { get; set; }
+    public virtual string FriendlyName { get; set; }
+    public virtual string Name { get; set; }
+    public virtual RegionTypes Region { get; set; }
+    public virtual ProjectTypes Type { get; set; }
+    public virtual string Industry { get; set; } = string.Empty;
+    public virtual string Description { get; set; } = string.Empty;
+    public virtual string? SimilarCompany { get; set; }
+    public virtual List<ProjectCollaborator> Collaborators { get; set; } = new();
+    public string Domain { get; set; } = string.Empty;
+    public string SubDomain { get; set; } = string.Empty;
+    public long Created { get; set; }
+}

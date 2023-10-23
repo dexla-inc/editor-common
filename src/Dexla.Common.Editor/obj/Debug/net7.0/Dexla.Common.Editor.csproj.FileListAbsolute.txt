@@ -1,0 +1,12 @@
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\bin\Debug\net7.0\Dexla.Common.Editor.deps.json
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\bin\Debug\net7.0\Dexla.Common.Editor.dll
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\bin\Debug\net7.0\Dexla.Common.Editor.pdb
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\obj\Debug\net7.0\Dexla.Common.Editor.csproj.AssemblyReference.cache
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\obj\Debug\net7.0\Dexla.Common.Editor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\obj\Debug\net7.0\Dexla.Common.Editor.AssemblyInfoInputs.cache
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\obj\Debug\net7.0\Dexla.Common.Editor.AssemblyInfo.cs
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\obj\Debug\net7.0\Dexla.Common.Editor.csproj.CoreCompileInputs.cache
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\obj\Debug\net7.0\Dexla.Common.Editor.dll
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\obj\Debug\net7.0\refint\Dexla.Common.Editor.dll
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\obj\Debug\net7.0\Dexla.Common.Editor.pdb
+C:\Projects\Dexla Projects\editor-common\src\Dexla.Common.Editor\obj\Debug\net7.0\ref\Dexla.Common.Editor.dll

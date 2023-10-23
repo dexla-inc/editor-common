@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>Dexla.Common.Editor.Entities</PackageId>
+        <Company>Dexla</Company>
+        <Authors>Dexla</Authors>
+        <PackageProjectUrl>https://github.com/dexla-inc/editor-api</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/dexla-inc/editor-api</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dexla.Common" Version="1.1.0" />
+        <PackageReference Include="Dexla.Common.Repository.Types" Version="1.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
+    </ItemGroup>
+
+</Project>
