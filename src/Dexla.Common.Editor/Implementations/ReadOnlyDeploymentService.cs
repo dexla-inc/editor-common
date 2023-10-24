@@ -10,16 +10,16 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class DeploymentService : IDeploymentService
+public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
 {
     private readonly IEditorContext _context;
     private readonly IModelMapper<DeploymentModel> _modelMapper;
-    private readonly ILoggerService<DeploymentService> _logger;
+    private readonly ILoggerService<ReadOnlyDeploymentService> _logger;
 
-    public DeploymentService(
+    public ReadOnlyDeploymentService(
         IEditorContext context,
         IModelMapper<DeploymentModel> modelMapper,
-        ILoggerService<DeploymentService> logger)
+        ILoggerService<ReadOnlyDeploymentService> logger)
     {
         _context = context;
         _modelMapper = modelMapper;

@@ -32,7 +32,7 @@ public class DeploymentResponse : ISuccess
         Pages = pages;
     }
 
-    internal DeploymentResponse()
+    public DeploymentResponse()
     {
         
     } 

@@ -2,7 +2,7 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Interfaces;
 
-public interface IPageService : IDexlaService
+public interface IReadOnlyPageService : IDexlaService
 {
     Task<IResponse> List(
         string projectId,

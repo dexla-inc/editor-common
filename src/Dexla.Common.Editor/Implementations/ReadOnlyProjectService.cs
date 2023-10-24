@@ -12,15 +12,15 @@ using Nager.PublicSuffix;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class ProjectService : DexlaService<Project, ProjectModel>, IProjectService
+public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IReadOnlyProjectService
 {
     private readonly IContext _context;
-    private readonly ILogger<ProjectService> _loggerService;
+    private readonly ILogger<ReadOnlyProjectService> _loggerService;
 
-    public ProjectService(
+    public ReadOnlyProjectService(
         IRepository<Project, ProjectModel> repository,
         IContext context,
-        ILogger<ProjectService> loggerService) : base(repository)
+        ILogger<ReadOnlyProjectService> loggerService) : base(repository)
     {
         _context = context;
         _loggerService = loggerService;

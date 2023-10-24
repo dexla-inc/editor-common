@@ -2,6 +2,7 @@
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
+using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
@@ -35,6 +36,11 @@ public class ProjectModel : IModelWithUserId
     public void SetFriendlyName(string value)
     {
         FriendlyName = value;
+    }
+
+    public void SetCreated()
+    {
+        Created = DateTimeExtensions.GetTimestamp();
     }
     
     public void AddOwnerAsCollaborator(string userId)

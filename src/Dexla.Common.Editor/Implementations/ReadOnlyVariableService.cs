@@ -10,11 +10,11 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class VariableService : DexlaService<Variable, VariableModel>, IVariableService
+public class ReadOnlyVariableService : DexlaService<Variable, VariableModel>, IReadOnlyVariableService
 {
     private readonly IContext _context;
 
-    public VariableService(
+    public ReadOnlyVariableService(
         IRepository<Variable, VariableModel> repository,
         IContext context) : base(repository)
     {
@@ -56,7 +56,7 @@ public class VariableService : DexlaService<Variable, VariableModel>, IVariableS
         };
     }
 
-    private static Func<Variable, VariableResponse> _getResponse()
+    public Func<Variable, VariableResponse> _getResponse()
     {
         return m => new VariableResponse(
             m.Id,
@@ -68,7 +68,7 @@ public class VariableService : DexlaService<Variable, VariableModel>, IVariableS
             m.PageId);
     }
 
-    private static VariableResponse _getResponse(VariableModel model)
+    public VariableResponse _getResponse(VariableModel model)
     {
         return new VariableResponse(
             model.Id!,
@@ -78,12 +78,5 @@ public class VariableService : DexlaService<Variable, VariableModel>, IVariableS
             model.Value,
             model.IsGlobal,
             model.PageId);
-    }
-
-    private IResponse _getResponse(RepositoryActionResultModel<VariableModel> actionResult)
-    {
-        return actionResult.ActionResult(
-            actionResult,
-            _getResponse);
     }
 }

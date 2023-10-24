@@ -10,11 +10,11 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class LogicFlowService : DexlaService<LogicFlow, LogicFlowModel>, ILogicFlowService
+public class ReadOnlyLogicFlowService : DexlaService<LogicFlow, LogicFlowModel>, IReadOnlyLogicFlowService
 {
     private readonly IContext _context;
 
-    public LogicFlowService(
+    public ReadOnlyLogicFlowService(
         IRepository<LogicFlow, LogicFlowModel> repository,
         IContext context) : base(repository)
     {
@@ -56,7 +56,7 @@ public class LogicFlowService : DexlaService<LogicFlow, LogicFlowModel>, ILogicF
         };
     }
 
-    private static Func<LogicFlow, LogicFlowResponse> _getResponse()
+    public Func<LogicFlow, LogicFlowResponse> _getResponse()
     {
         return entity => new LogicFlowResponse(
             entity.Id,
@@ -68,7 +68,7 @@ public class LogicFlowService : DexlaService<LogicFlow, LogicFlowModel>, ILogicF
             entity.UpdatedAt);
     }
 
-    private static LogicFlowResponse _getResponse(LogicFlowModel model)
+    public LogicFlowResponse _getResponse(LogicFlowModel model)
     {
         return new LogicFlowResponse(
             model.Id!,

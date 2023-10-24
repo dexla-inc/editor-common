@@ -2,7 +2,6 @@
 using Dexla.Common.Editor.Interfaces;
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Editor.Responses;
-using Dexla.Common.Editor.Entities;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types;
@@ -11,12 +10,12 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class ApiService : DexlaService<Api, ApiModel>, IApiService
+public class ReadOnlyApiService : DexlaService<Api, ApiModel>, IReadOnlyApiService
 {
     private readonly IRepository<ApiEndpoint, ApiEndpointModel> _endpointRepository;
     private readonly IContext _context;
 
-    public ApiService(
+    public ReadOnlyApiService(
         IRepository<Api, ApiModel> repository,
         IRepository<ApiEndpoint, ApiEndpointModel> endpointRepository,
         IContext context) : base(repository)
@@ -141,7 +140,7 @@ public class ApiService : DexlaService<Api, ApiModel>, IApiService
         };
     }
 
-    private IResponse _getEndpointResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult)
+    public IResponse _getEndpointResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult)
     {
         return actionResult.ActionResult<ApiEndpointResponse>(
             actionResult,
@@ -173,7 +172,7 @@ public class ApiService : DexlaService<Api, ApiModel>, IApiService
                 m.IsServerRequest));
     }
 
-    private static FilterConfiguration _addFilterConfiguration(
+    public FilterConfiguration _addFilterConfiguration(
         string projectId,
         string? dataSourceId,
         string? relativeUrl = null,
@@ -193,7 +192,7 @@ public class ApiService : DexlaService<Api, ApiModel>, IApiService
         return filterConfiguration;
     }
 
-    private async Task<IResponse> _fetchResponse(string apiId)
+    public async Task<IResponse> _fetchResponse(string apiId)
     {
         return await Get(apiId, apiModel => new ApiResponse(
             apiModel.Id!,

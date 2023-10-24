@@ -51,7 +51,7 @@ public class ProjectResponse : ISuccess
         Created = created;
     }
 
-    internal ProjectResponse()
+    public ProjectResponse()
     {
         
     }

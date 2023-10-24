@@ -8,11 +8,11 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class ThemeService : IThemeService
+public class ReadOnlyThemeService : IReadOnlyThemeService
 {
     private readonly IRepository<Theme, ThemeModel> _repository;
 
-    public ThemeService(IRepository<Theme, ThemeModel> repository)
+    public ReadOnlyThemeService(IRepository<Theme, ThemeModel> repository)
     {
         _repository = repository;
     }
@@ -28,7 +28,7 @@ public class ThemeService : IThemeService
             : ThemeResponse.GetDefault();
     }
 
-    private static IResponse _getResponse(RepositoryActionResultModel<ThemeModel> actionResult)
+    public IResponse _getResponse(RepositoryActionResultModel<ThemeModel> actionResult)
     {
         return actionResult.ActionResult<ThemeResponse>(
             actionResult,

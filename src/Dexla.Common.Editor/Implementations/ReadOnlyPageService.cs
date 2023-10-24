@@ -10,11 +10,11 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class PageService : DexlaService<Page, PageModel>, IPageService
+public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageService
 {
     private readonly IContext _context;
 
-    public PageService(IRepository<Page, PageModel> repository, IContext context) : base(repository)
+    public ReadOnlyPageService(IRepository<Page, PageModel> repository, IContext context) : base(repository)
     {
         _context = context;
     }
