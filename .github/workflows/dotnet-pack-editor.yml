@@ -1,4 +1,4 @@
-name: Common Editor - Pack and Publish
+name: Common Core - Pack and Publish
 
 on:
   workflow_dispatch:
