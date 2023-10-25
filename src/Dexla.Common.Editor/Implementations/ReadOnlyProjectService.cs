@@ -84,7 +84,7 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
         return userRole;
     }
     
-    private static IResponse _getResponse(RepositoryActionResultModel<ProjectModel> actionResult)
+    public IResponse _getResponse(RepositoryActionResultModel<ProjectModel> actionResult)
     {
         return actionResult.ActionResult<ProjectResponse>(
             actionResult,
@@ -101,11 +101,12 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
                 m.Domain,
                 m.SubDomain,
                 m.Collaborators,
-                m.Created
+                m.Created,
+                m.Screenshots
             ));
     }
 
-    private static IResponse _getResponse(Project entity)
+    public IResponse _getResponse(Project entity)
     {
         return new ProjectResponse(
             entity.Id,
@@ -125,7 +126,8 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
                 c.AccessLevel,
                 c.Status
             )).ToList(),
-            entity.Created
+            entity.Created,
+            entity.Screenshots
         );
     }
 }

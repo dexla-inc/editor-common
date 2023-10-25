@@ -11,6 +11,7 @@ public class ProjectModel : IModelWithUserId
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; } = string.Empty;
+    public string CompanyId { get; set; } = string.Empty;
     public string FriendlyName { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string Region { get; set; } = string.Empty;
@@ -22,7 +23,8 @@ public class ProjectModel : IModelWithUserId
     public string Domain { get; set; } = string.Empty;
     public string SubDomain { get; set; } = string.Empty;
     public long Created { get; set; }
-
+    public string[] Screenshots { get; set; } = Array.Empty<string>();
+    
     public void SetUserId(string value)
     {
         UserId = value;

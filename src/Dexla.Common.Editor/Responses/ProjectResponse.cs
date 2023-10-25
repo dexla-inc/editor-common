@@ -18,8 +18,9 @@ public class ProjectResponse : ISuccess
     public string Domain { get; }
     public string SubDomain { get; }
     public List<ProjectCollaboratorDto> Collaborators { get; }
-    public long Created { get; set; }
-
+    public long Created { get; }
+    public string[] Screenshots { get; }
+    
     public ProjectResponse(
         string id,
         string name,
@@ -33,7 +34,8 @@ public class ProjectResponse : ISuccess
         string domain,
         string subDomain,
         List<ProjectCollaboratorDto> collaborators,
-        long created)
+        long created,
+        string[] screenshots)
     {
         Id = id;
         Name = name;
@@ -49,6 +51,7 @@ public class ProjectResponse : ISuccess
         SubDomain = subDomain;
         Collaborators = collaborators;
         Created = created;
+        Screenshots = screenshots;
     }
 
     public ProjectResponse()

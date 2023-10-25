@@ -14,6 +14,7 @@ public class Project : IEntity
     public string Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
     public virtual string UserId { get; set; }
+    public virtual string CompanyId { get; set; }
     public virtual string FriendlyName { get; set; }
     public virtual string Name { get; set; }
     public virtual RegionTypes Region { get; set; }
@@ -25,4 +26,5 @@ public class Project : IEntity
     public string Domain { get; set; } = string.Empty;
     public string SubDomain { get; set; } = string.Empty;
     public long Created { get; set; }
+    public string[] Screenshots { get; set; }
 }

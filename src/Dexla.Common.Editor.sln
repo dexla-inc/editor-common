@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dexla.Common.Editor", "Dexla.Common.Editor\Dexla.Common.Editor.csproj", "{2D03ABC3-0604-4416-BFB8-3DBF1F1697BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dexla.Common.Editor", "Dexla.Common.Editor\Dexla.Common.Editor.csproj", "{5764BD54-5DAF-4E17-ACDE-3F07FF5E04C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dexla.Common", "Dexla.Common\Dexla.Common.csproj", "{9EF57117-910C-4791-85E1-A21B3839A7DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2D03ABC3-0604-4416-BFB8-3DBF1F1697BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D03ABC3-0604-4416-BFB8-3DBF1F1697BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D03ABC3-0604-4416-BFB8-3DBF1F1697BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D03ABC3-0604-4416-BFB8-3DBF1F1697BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5764BD54-5DAF-4E17-ACDE-3F07FF5E04C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5764BD54-5DAF-4E17-ACDE-3F07FF5E04C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5764BD54-5DAF-4E17-ACDE-3F07FF5E04C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5764BD54-5DAF-4E17-ACDE-3F07FF5E04C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EF57117-910C-4791-85E1-A21B3839A7DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EF57117-910C-4791-85E1-A21B3839A7DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EF57117-910C-4791-85E1-A21B3839A7DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF57117-910C-4791-85E1-A21B3839A7DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
