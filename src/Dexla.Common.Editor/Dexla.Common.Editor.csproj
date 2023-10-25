@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>Dexla.Common.Editor</PackageId>
+        <PackageId>Dexla.Common.Core</PackageId>
         <Company>Dexla</Company>
         <Authors>Dexla</Authors>
         <PackageProjectUrl>https://github.com/dexla-inc/editor-common</PackageProjectUrl>
