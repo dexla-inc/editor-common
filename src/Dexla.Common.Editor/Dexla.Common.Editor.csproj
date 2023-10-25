@@ -10,8 +10,8 @@
         <PackageId>Dexla.Common.Editor</PackageId>
         <Company>Dexla</Company>
         <Authors>Dexla</Authors>
-        <PackageProjectUrl>https://github.com/dexla-inc/editor-api</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/dexla-inc/editor-api</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/dexla-inc/editor-common</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/dexla-inc/editor-common</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     </PropertyGroup>
