@@ -27,4 +27,5 @@ public class Project : IEntity
     public string SubDomain { get; set; } = string.Empty;
     public long Created { get; set; }
     public string[] Screenshots { get; set; }
+    public bool IsOwner { get; set; }
 }

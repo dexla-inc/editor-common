@@ -6,6 +6,7 @@ namespace Dexla.Common.Editor.Responses;
 public class ProjectResponse : ISuccess
 {
     public string Id { get; }
+    public string CompanyId { get; }
     public string Name { get; }
     public string FriendlyName { get; }
     public Region Region { get; }
@@ -17,12 +18,12 @@ public class ProjectResponse : ISuccess
     public bool IsOwner { get; }
     public string Domain { get; }
     public string SubDomain { get; }
-    public List<ProjectCollaboratorDto> Collaborators { get; }
     public long Created { get; }
     public string[] Screenshots { get; }
     
     public ProjectResponse(
         string id,
+        string companyId,
         string name,
         string friendlyName,
         Region region,
@@ -30,14 +31,14 @@ public class ProjectResponse : ISuccess
         string industry,
         string description,
         string? similarCompany,
-        UserRoles accessLevel,
+        bool isOwner,
         string domain,
         string subDomain,
-        List<ProjectCollaboratorDto> collaborators,
         long created,
         string[] screenshots)
     {
         Id = id;
+        CompanyId = companyId;
         Name = name;
         FriendlyName = friendlyName;
         Region = region;
@@ -45,11 +46,9 @@ public class ProjectResponse : ISuccess
         Industry = industry;
         Description = description;
         SimilarCompany = similarCompany;
-        AccessLevel = accessLevel;
-        IsOwner = accessLevel == UserRoles.OWNER;
+        IsOwner = isOwner;
         Domain = domain;
         SubDomain = subDomain;
-        Collaborators = collaborators;
         Created = created;
         Screenshots = screenshots;
     }

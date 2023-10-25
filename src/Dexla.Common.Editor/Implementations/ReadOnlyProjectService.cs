@@ -60,36 +60,13 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
         }
     }
     
-    private static UserRoles _getUserRoleForProject(string userId, Project m)
-    {
-        UserRoles userRole;
-        if (m.UserId == userId)
-            userRole = UserRoles.OWNER;
-        else if (m.Collaborators.Any(c => c.UserId == userId))
-            userRole = m.Collaborators.First(c => c.UserId == userId).AccessLevel;
-        else
-            userRole = UserRoles.GUEST;
-        return userRole;
-    }
-
-    private static UserRoles _getUserRoleForProject(string? userId, ProjectModel m)
-    {
-        UserRoles userRole;
-        if (m.UserId == userId)
-            userRole = UserRoles.OWNER;
-        else if (m.Collaborators.Any(c => c.UserId == userId))
-            userRole = m.Collaborators.First(c => c.UserId == userId).AccessLevel;
-        else
-            userRole = UserRoles.GUEST;
-        return userRole;
-    }
-    
     public IResponse _getResponse(RepositoryActionResultModel<ProjectModel> actionResult)
     {
         return actionResult.ActionResult<ProjectResponse>(
             actionResult,
             m => new ProjectResponse(
                 m.Id!,
+                m.CompanyId,
                 m.Name,
                 m.FriendlyName,
                 Regions.ParseRegion(m.Region),
@@ -97,10 +74,9 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
                 m.Industry,
                 m.Description,
                 m.SimilarCompany,
-                _getUserRoleForProject(actionResult.CurrentVersion?.UserId, actionResult.CurrentVersion!),
+                m.IsOwner,
                 m.Domain,
                 m.SubDomain,
-                m.Collaborators,
                 m.Created,
                 m.Screenshots
             ));
@@ -110,6 +86,7 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
     {
         return new ProjectResponse(
             entity.Id,
+            entity.CompanyId,
             entity.Name,
             entity.FriendlyName,
             Regions.ParseRegion(entity.Region) ?? new Region(),
@@ -117,15 +94,9 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
             entity.Industry,
             entity.Description,
             entity.SimilarCompany,
-            _getUserRoleForProject(entity.UserId, entity),
+            entity.IsOwner,
             entity.Domain,
             entity.SubDomain,
-            entity.Collaborators.Select(c => new ProjectCollaboratorDto(
-                c.UserId,
-                c.Email,
-                c.AccessLevel,
-                c.Status
-            )).ToList(),
             entity.Created,
             entity.Screenshots
         );

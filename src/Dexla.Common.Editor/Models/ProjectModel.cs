@@ -24,6 +24,7 @@ public class ProjectModel : IModelWithUserId
     public string SubDomain { get; set; } = string.Empty;
     public long Created { get; set; }
     public string[] Screenshots { get; set; } = Array.Empty<string>();
+    public bool IsOwner { get; set; }
     
     public void SetUserId(string value)
     {
@@ -44,40 +45,14 @@ public class ProjectModel : IModelWithUserId
     {
         Created = DateTimeExtensions.GetTimestamp();
     }
-    
-    public void AddOwnerAsCollaborator(string userId)
-    {
-        Collaborators.Add(new ProjectCollaboratorDto
-        {
-            UserId = userId,
-            AccessLevel = UserRoles.OWNER,
-            Status = TeamStatus.ACCEPTED
-        });
-    }
 
-    public void InviteCollaborator(string email, UserRoles accessLevel)
+    public void SetCompanyId(string value)
     {
-        Collaborators.Add(new ProjectCollaboratorDto
-        {
-            Email = email,
-            AccessLevel = accessLevel
-        });
-    }
-
-    public void SetCollaboratorUserId(string email, string userId)
-    {
-        ProjectCollaboratorDto? collaborator =
-            Collaborators.FirstOrDefault(collaboratorDto => collaboratorDto.Email == email);
-        
-        if (collaborator != null)
-        {
-            collaborator.UserId = userId;
-            collaborator.Status = TeamStatus.ACCEPTED;
-        }
+        CompanyId = value;
     }
     
-    public void SetCollaborators(List<ProjectCollaboratorDto> value)
+    public void SetOwner(bool value)
     {
-        Collaborators = value;
+        IsOwner = value;
     }
 }
