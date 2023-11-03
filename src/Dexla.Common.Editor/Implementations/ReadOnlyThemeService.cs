@@ -4,6 +4,7 @@ using Dexla.Common.Editor.Models;
 using Dexla.Common.Editor.Responses;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Repository.Types.Models;
+using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
@@ -34,14 +35,19 @@ public class ReadOnlyThemeService : IReadOnlyThemeService
             actionResult,
             m => new ThemeResponse(
                 m.Id,
+                m.WebsiteUrl,
                 m.Fonts,
                 m.Colors,
                 m.ResponsiveBreakpoints,
                 m.FaviconUrl,
                 m.LogoUrl,
                 m.Logos,
-                m.DefaultBorderRadius,
+                m.DefaultFont,
+                m.HasCompactButtons,
+                m.DefaultRadius,
                 m.DefaultSpacing,
-                m.WebsiteUrl));
+                Enum.Parse<LoaderTypes>(m.Loader),
+                Enum.Parse<FocusRingTypes>(m.FocusRing)
+                ));
     }
 }

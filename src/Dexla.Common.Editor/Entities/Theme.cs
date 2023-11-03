@@ -1,5 +1,6 @@
 ﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
+using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Entities;
 
@@ -23,4 +24,9 @@ public class Theme : IEntity
     public string DefaultBorderRadius { get; set; }
     public string DefaultSpacing { get; set; } 
     public string? WebsiteUrl { get; set; }
+    public string DefaultRadius { get; set; } = string.Empty;
+    public string DefaultFont { get; set; } = string.Empty;
+    public bool HasCompactButtons { get; set; }
+    public LoaderTypes Loader { get; set; }
+    public FocusRingTypes FocusRing { get; set; }
 }

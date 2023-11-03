@@ -1,6 +1,7 @@
 ﻿using Dexla.Common.Editor.Responses;
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
+using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Models;
 
@@ -27,6 +28,12 @@ public class ThemeModel : IModelWithUserId
     public string DefaultBorderRadius { get; set; } = string.Empty;
     public string DefaultSpacing { get; set; } = string.Empty;
     public string? WebsiteUrl { get; set; }
+
+    public string DefaultRadius { get; set; } = string.Empty;
+    public string DefaultFont { get; set; } = string.Empty;
+    public bool HasCompactButtons { get; set; }
+    public string Loader { get; set; } = string.Empty;
+    public string FocusRing { get; set; } = string.Empty;
 
     public void SetUserId(string value)
     {
