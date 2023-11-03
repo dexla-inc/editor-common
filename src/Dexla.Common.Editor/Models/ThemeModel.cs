@@ -25,10 +25,8 @@ public class ThemeModel : IModelWithUserId
     public string LogoUrl { get; set; } = string.Empty;
     public List<LogoDto>? Logos { get; set; }
     public string FaviconUrl { get; set; } = string.Empty;
-    public string DefaultBorderRadius { get; set; } = string.Empty;
     public string DefaultSpacing { get; set; } = string.Empty;
     public string? WebsiteUrl { get; set; }
-
     public string DefaultRadius { get; set; } = string.Empty;
     public string DefaultFont { get; set; } = string.Empty;
     public bool HasCompactButtons { get; set; }

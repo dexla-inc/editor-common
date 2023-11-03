@@ -21,7 +21,6 @@ public class Theme : IEntity
     [Obsolete("Use Logos instead")]
     public string LogoUrl { get; set; } = string.Empty;
     public string FaviconUrl { get; set; } = string.Empty;
-    public string DefaultBorderRadius { get; set; }
     public string DefaultSpacing { get; set; } 
     public string? WebsiteUrl { get; set; }
     public string DefaultRadius { get; set; } = string.Empty;
