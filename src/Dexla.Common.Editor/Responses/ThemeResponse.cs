@@ -131,7 +131,7 @@ public class ThemeResponse : ISuccess
                 new() { Hex = "#D9D9D9", Name = "Secondary", IsDefault = true, FriendlyName = "Secondary" },
                 new() { Hex = "#FFFFFF", Name = "PrimaryText", IsDefault = true, FriendlyName = "Primary Text", },
                 new() { Hex = "#000000", Name = "SecondaryText", IsDefault = true, FriendlyName = "Secondary Text" },
-                new() { Hex = "#E57F4F ", Name = "Tertiary", IsDefault = true, FriendlyName = "Tertiary" },
+                new() { Hex = "#E57F4F", Name = "Tertiary", IsDefault = true, FriendlyName = "Tertiary" },
                 new() { Hex = "#FFFFFF", Name = "TertiaryText", IsDefault = true, FriendlyName = "Tertiary Text" },
                 new() { Hex = "#FF9600", Name = "Background", IsDefault = true, FriendlyName = "Background" },
                 new() { Hex = "#FE191C", Name = "Danger", IsDefault = true, FriendlyName = "Danger" },
