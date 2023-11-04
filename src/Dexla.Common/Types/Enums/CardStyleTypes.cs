@@ -1,0 +1,19 @@
+namespace Dexla.Common.Types.Enums;
+
+public enum CardStyleTypes
+{
+    ROUNDED,
+    SQUARED,
+    FLAT,
+    FLAT_ROUNDED,
+    FLAT_SQUARED,
+    OUTLINED,
+    OUTLINED_ROUNDED,
+    OUTLINED_SQUARED,
+    ELEVATED,
+    ELEVATED_ROUNDED,
+    ELEVATED_SQUARED,   
+    ELEVATED_OUTLINED,
+    ELEVATED_OUTLINED_ROUNDED,
+    ELEVATED_OUTLINED_SQUARED,
+}
