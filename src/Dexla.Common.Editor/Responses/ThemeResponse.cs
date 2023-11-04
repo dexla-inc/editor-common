@@ -163,7 +163,7 @@ public class ThemeResponse : ISuccess
     {
         return new[]
         {
-            "Primary", "Accent", "PrimaryText", "AccentText", "Danger", "Warning", "Success", "Neutral", "Black",
+            "Primary", "Secondary", "PrimaryText", "SecondaryText", "Tertiary", "TertiaryText", "Danger", "Warning", "Success", "Neutral", "Black",
             "White", "Border"
         };
     }
