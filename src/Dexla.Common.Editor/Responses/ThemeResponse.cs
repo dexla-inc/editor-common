@@ -6,7 +6,7 @@ namespace Dexla.Common.Editor.Responses;
 public class ThemeResponse : ISuccess
 {
     const string DefaultFontFamily = "Open Sans";
-    
+
     public string? Id { get; }
     public List<ColorDto> Colors { get; }
     public IEnumerable<FontDto> Fonts { get; }
@@ -159,11 +159,12 @@ public class ThemeResponse : ISuccess
             FocusRingTypes.DEFAULT);
     }
 
-    public static string[] GetDefaultColorNames()
+    private static IEnumerable<string> _getDefaultColorNames()
     {
         return new[]
         {
-            "Primary", "Secondary", "PrimaryText", "SecondaryText", "Tertiary", "TertiaryText", "Danger", "Warning", "Success", "Neutral", "Black",
+            "Primary", "Secondary", "PrimaryText", "SecondaryText", "Tertiary", "TertiaryText", "Danger", "Warning",
+            "Success", "Neutral", "Black",
             "White", "Border"
         };
     }
@@ -173,7 +174,7 @@ public class ThemeResponse : ISuccess
         out IEnumerable<string> missingColorNames)
     {
         // Check to make sure all default colors exist
-        string[] defaultColorNames = GetDefaultColorNames();
+        IEnumerable<string> defaultColorNames = _getDefaultColorNames();
         List<string> missingColors = defaultColorNames.Where(colorName => !colorNames.Contains(colorName)).ToList();
         if (missingColors.Any())
         {
