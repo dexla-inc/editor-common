@@ -32,6 +32,7 @@ public class ThemeModel : IModelWithUserId
     public bool HasCompactButtons { get; set; }
     public string Loader { get; set; } = string.Empty;
     public string FocusRing { get; set; } = string.Empty;
+    public string CardStyle { get; set; } = string.Empty;
 
     public void SetUserId(string value)
     {
@@ -151,6 +152,7 @@ public class ThemeModel : IModelWithUserId
             DefaultSpacing = "md",
             Loader = LoaderTypes.OVAL.ToString(),
             FocusRing = FocusRingTypes.DEFAULT.ToString(),
+            CardStyle = CardStyleTypes.FLAT.ToString(),
             FaviconUrl = "https://mortenjonassen.dk/wp-content/uploads/2020/02/Per-larsen-favicon.jpg",
             LogoUrl = "https://wwwspennarecom.cdn.triggerfish.cloud/uploads/2015/08/Your-Logo-Here-Black-22.jpg",
         };

@@ -21,6 +21,7 @@ public class ThemeResponse : ISuccess
     public bool HasCompactButtons { get; }
     public LoaderTypes Loader { get; }
     public FocusRingTypes FocusRing { get; }
+    public CardStyleTypes CardStyle { get; }
 
     public ThemeResponse(
         string? id,
@@ -36,7 +37,8 @@ public class ThemeResponse : ISuccess
         string defaultRadius,
         string defaultSpacing,
         LoaderTypes loader,
-        FocusRingTypes focusRing)
+        FocusRingTypes focusRing,
+        CardStyleTypes cardStyle)
     {
         Id = id;
         Fonts = fonts;
@@ -52,6 +54,7 @@ public class ThemeResponse : ISuccess
         WebsiteUrl = websiteUrl;
         Loader = loader;
         FocusRing = focusRing;
+        CardStyle = cardStyle;
     }
 
     public static ThemeResponse GetDefault()
@@ -156,7 +159,8 @@ public class ThemeResponse : ISuccess
             "sm",
             "md",
             LoaderTypes.OVAL,
-            FocusRingTypes.DEFAULT);
+            FocusRingTypes.DEFAULT,
+            CardStyleTypes.FLAT);
     }
 
     private static IEnumerable<string> _getDefaultColorNames()

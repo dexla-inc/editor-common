@@ -47,7 +47,9 @@ public class ReadOnlyThemeService : IReadOnlyThemeService
                 m.DefaultRadius,
                 m.DefaultSpacing,
                 Enum.Parse<LoaderTypes>(m.Loader),
-                Enum.Parse<FocusRingTypes>(m.FocusRing)
-                ));
+                Enum.Parse<FocusRingTypes>(m.FocusRing),
+                Enum.Parse<CardStyleTypes>(m.CardStyle)
+            )
+        );
     }
 }

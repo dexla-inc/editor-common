@@ -28,4 +28,5 @@ public class Theme : IEntity
     public bool HasCompactButtons { get; set; }
     public LoaderTypes Loader { get; set; }
     public FocusRingTypes FocusRing { get; set; }
+    public CardStyleTypes CardStyle { get; set; }
 }
