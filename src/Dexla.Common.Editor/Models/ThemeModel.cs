@@ -50,10 +50,12 @@ public class ThemeModel : IModelWithUserId
 
     const string DefaultFontFamily = "Open Sans";
 
-    public static ThemeModel GetDefault()
+    public static ThemeModel GetDefault(string userId, string projectId)
     {
         return new ThemeModel
         {
+            UserId = userId,
+            ProjectId = projectId,
             Fonts = new List<FontDto>
             {
                 new()
