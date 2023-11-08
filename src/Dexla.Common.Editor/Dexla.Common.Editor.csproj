@@ -17,8 +17,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dexla.Common.Types" Version="1.2.6" />
-        <PackageReference Include="Dexla.Common.Repository.Types" Version="1.2.0" />
+        <PackageReference Include="Dexla.Common.Types" Version="1.2.7" />
+        <PackageReference Include="Dexla.Common.Repository.Types" Version="1.2.1" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
     </ItemGroup>
 
