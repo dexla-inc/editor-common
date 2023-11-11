@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>Dexla.Common.Core</PackageId>
+        <PackageId>Dexla.Common.BlobStorage</PackageId>
         <Company>Dexla</Company>
         <Authors>Dexla</Authors>
         <PackageProjectUrl>https://github.com/dexla-inc/editor-common</PackageProjectUrl>
@@ -15,11 +15,15 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     </PropertyGroup>
-
+    
     <ItemGroup>
         <PackageReference Include="Dexla.Common.Types" Version="1.2.8" />
-        <PackageReference Include="Dexla.Common.Repository.Types" Version="1.2.1" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Azure.Storage.Blobs" Version="12.19.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
     </ItemGroup>
 
 </Project>

@@ -160,7 +160,7 @@ public class ThemeResponse : ISuccess
             "md",
             LoaderTypes.OVAL,
             FocusRingTypes.DEFAULT,
-            CardStyleTypes.FLAT);
+            CardStyleTypes.ROUNDED);
     }
 
     private static IEnumerable<string> _getDefaultColorNames()

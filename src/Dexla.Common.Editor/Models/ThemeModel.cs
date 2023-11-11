@@ -152,7 +152,7 @@ public class ThemeModel : IModelWithUserId
             DefaultSpacing = "md",
             Loader = LoaderTypes.OVAL.ToString(),
             FocusRing = FocusRingTypes.DEFAULT.ToString(),
-            CardStyle = CardStyleTypes.FLAT.ToString(),
+            CardStyle = CardStyleTypes.ROUNDED.ToString(),
             FaviconUrl = "https://mortenjonassen.dk/wp-content/uploads/2020/02/Per-larsen-favicon.jpg",
             LogoUrl = "https://wwwspennarecom.cdn.triggerfish.cloud/uploads/2015/08/Your-Logo-Here-Black-22.jpg",
         };
