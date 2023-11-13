@@ -31,7 +31,7 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
             
             string blobUrl = blobClient.Uri.ToString();
             
-            return new UploadResponse(blobUrl);
+            return new BlobResponse(blobUrl);
         }
         catch (Exception e)
         {
@@ -51,7 +51,7 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
         return (stream, properties.Value.ContentType);
     }
     
-    public async Task<IEnumerable<string>> SearchBlobsAsync(string searchString)
+    public async Task<ListBlobResponse> SearchBlobsAsync(string searchString)
     {
         List<string> blobUrls = new();
     
@@ -62,17 +62,17 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
             blobUrls.Add(blobClient.Uri.ToString());
         }
 
-        return blobUrls;
+        return new ListBlobResponse(blobUrls);
     }
     
-    public async Task<string?> GetBlobUrlByName(string blobName)
+    public async Task<BlobResponse?> GetBlobUrlByName(string blobName)
     {
         BlobClient blobClient = GetBlobClient(blobName);
 
-        if (await blobClient.ExistsAsync())
-            return blobClient.Uri.ToString();
-
-        return null;
+        if (!await blobClient.ExistsAsync()) return null;
+        string blobUrl = blobClient.Uri.ToString();
+            
+        return new BlobResponse(blobUrl);
     }
 
     public Task Delete(string name)
