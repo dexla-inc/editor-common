@@ -7,6 +7,7 @@ public enum AIRequestTypes
     LAYOUT,
     LAYOUT_CHANGE,
     COMPONENT,
+    COMPONENT_SCREENSHOT,
     DESIGN,
     DATA,
     API,
