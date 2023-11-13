@@ -4,7 +4,6 @@ using Azure.Storage.Blobs.Models;
 using Dexla.Common.BlobStorage.Contracts;
 using Dexla.Common.Types;
 using Dexla.Common.Types.Interfaces;
-using Dexla.Common.Types.Models;
 
 namespace Dexla.Common.BlobStorage;
 
@@ -50,6 +49,30 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
         Stream? stream = await blobClient.OpenReadAsync();
         Response<BlobProperties>? properties = await blobClient.GetPropertiesAsync();
         return (stream, properties.Value.ContentType);
+    }
+    
+    public async Task<IEnumerable<string>> SearchBlobsAsync(string searchString)
+    {
+        List<string> blobUrls = new();
+    
+        await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync())
+        {
+            if (!blobItem.Name.Contains(searchString)) continue;
+            BlobClient blobClient = GetBlobClient(blobItem.Name);
+            blobUrls.Add(blobClient.Uri.ToString());
+        }
+
+        return blobUrls;
+    }
+    
+    public async Task<string?> GetBlobUrlByName(string blobName)
+    {
+        BlobClient blobClient = GetBlobClient(blobName);
+
+        if (await blobClient.ExistsAsync())
+            return blobClient.Uri.ToString();
+
+        return null;
     }
 
     public Task Delete(string name)
