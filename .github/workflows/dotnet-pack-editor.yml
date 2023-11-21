@@ -11,7 +11,7 @@ jobs:
   pack-and-publish:
     runs-on: ubuntu-latest
     env:
-      DOTNET_CORE_VERSION: 7.0.x
+      DOTNET_CORE_VERSION: 8.0.x
       BUILD_PATH: ./src/Dexla.Common.Editor/Dexla.Common.Editor.csproj
     steps:
       - uses: actions/checkout@v3
