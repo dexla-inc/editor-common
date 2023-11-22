@@ -9,32 +9,26 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class ReadOnlyThemeService : IReadOnlyThemeService
+public class ReadOnlyThemeService(IRepository<Branding, BrandingModel> repository) : IReadOnlyThemeService
 {
-    private readonly IRepository<Theme, ThemeModel> _repository;
-
-    public ReadOnlyThemeService(IRepository<Theme, ThemeModel> repository)
-    {
-        _repository = repository;
-    }
-
     public async Task<IResponse> Get(
         string projectId,
         CancellationToken cancellationToken)
     {
-        RepositoryActionResultModel<ThemeModel> actionResult = await _repository.Get(projectId);
+        RepositoryActionResultModel<BrandingModel> actionResult = await repository.Get(projectId);
 
         return actionResult.CurrentVersion != null
             ? _getResponse(actionResult)
-            : ThemeResponse.GetDefault();
+            : BrandingResponse.GetDefault();
     }
 
-    public IResponse _getResponse(RepositoryActionResultModel<ThemeModel> actionResult)
+    public IResponse _getResponse(RepositoryActionResultModel<BrandingModel> actionResult)
     {
-        return actionResult.ActionResult<ThemeResponse>(
+        return actionResult.ActionResult<BrandingResponse>(
             actionResult,
-            m => new ThemeResponse(
+            m => new BrandingResponse(
                 m.Id,
+                m.Theme,
                 m.WebsiteUrl,
                 m.Fonts,
                 m.Colors,

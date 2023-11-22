@@ -8,5 +8,5 @@ public interface IReadOnlyThemeService :IDexlaService
 {
     Task<IResponse> Get(string projectId, CancellationToken cancellationToken);
 
-    IResponse _getResponse(RepositoryActionResultModel<ThemeModel> actionResult);
+    IResponse _getResponse(RepositoryActionResultModel<BrandingModel> actionResult);
 }

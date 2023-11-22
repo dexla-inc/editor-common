@@ -4,9 +4,9 @@ using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class Theme : IEntity
+public class Branding : IEntity
 {
-    protected Theme()
+    protected Branding()
     {
     }
 
@@ -14,6 +14,7 @@ public class Theme : IEntity
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; }
     public string ProjectId { get; set; } = string.Empty;
+    public string Theme { get; set; } = string.Empty;
     public List<Font> Fonts { get; set; }
     public List<Color> Colors { get; set; }
     public List<Logo>? Logos { get; set;  } 

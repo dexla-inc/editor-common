@@ -1,63 +1,53 @@
-﻿using Dexla.Common.Editor.Responses;
-using Dexla.Common.Repository.Types.Enums;
-using Dexla.Common.Repository.Types.Interfaces;
-using Dexla.Common.Types.Enums;
+﻿using Dexla.Common.Types.Enums;
+using Dexla.Common.Types.Interfaces;
 
-namespace Dexla.Common.Editor.Models;
+namespace Dexla.Common.Editor.Responses;
 
-public class ThemeModel : IModelWithUserId
+public class BrandingResponse(
+        string? id,
+        string theme,
+        string? websiteUrl,
+        IEnumerable<FontDto> fonts,
+        List<ColorDto> colors,
+        IEnumerable<ResponsiveBreakpointDto> responsiveBreakpoints,
+        string faviconUrl,
+        string logoUrl,
+        List<LogoDto>? logos,
+        string defaultFont,
+        bool hasCompactButtons,
+        string defaultRadius,
+        string defaultSpacing,
+        LoaderTypes loader,
+        FocusRingTypes focusRing,
+        CardStyleTypes cardStyle)
+    : ISuccess
 {
-    public string? Id
-    {
-        get => ProjectId;
-        set
-        {
-            if (value != null) ProjectId = value;
-        }
-    }
-
-    public EntityStatus EntityStatus { get; set; }
-    public string UserId { get; set; } = string.Empty;
-    public string ProjectId { get; set; } = string.Empty;
-    public List<FontDto> Fonts { get; set; } = new();
-    public List<ColorDto> Colors { get; set; } = new();
-    public List<ResponsiveBreakpointDto> ResponsiveBreakpoints { get; set; } = new();
-    public string LogoUrl { get; set; } = string.Empty;
-    public List<LogoDto>? Logos { get; set; }
-    public string FaviconUrl { get; set; } = string.Empty;
-    public string DefaultSpacing { get; set; } = string.Empty;
-    public string? WebsiteUrl { get; set; }
-    public string DefaultRadius { get; set; } = string.Empty;
-    public string DefaultFont { get; set; } = string.Empty;
-    public bool HasCompactButtons { get; set; }
-    public string Loader { get; set; } = string.Empty;
-    public string FocusRing { get; set; } = string.Empty;
-    public string CardStyle { get; set; } = string.Empty;
-
-    public void SetUserId(string value)
-    {
-        UserId = value;
-    }
-
-    public void SetProjectId(string projectId)
-    {
-        ProjectId = projectId;
-    }
-
-    public void CleanWebsiteUrl()
-    {
-        WebsiteUrl = WebsiteUrl?.TrimEnd('/');
-    }
-
     const string DefaultFontFamily = "Open Sans";
 
-    public static ThemeModel GetDefault(string userId, string projectId)
+    public string? Id { get; } = id;
+    public string Theme { get; } = theme;
+    public List<ColorDto> Colors { get; } = colors;
+    public IEnumerable<FontDto> Fonts { get; } = fonts;
+    public IEnumerable<ResponsiveBreakpointDto> ResponsiveBreakpoints { get; } = responsiveBreakpoints;
+    public string FaviconUrl { get; } = faviconUrl;
+    public string LogoUrl { get; } = logoUrl;
+    public List<LogoDto>? Logos { get; } = logos;
+    public string DefaultRadius { get; } = defaultRadius;
+    public string DefaultFont { get; } = defaultFont;
+    public string DefaultSpacing { get; } = defaultSpacing;
+    public string? WebsiteUrl { get; } = websiteUrl;
+    public bool HasCompactButtons { get; } = hasCompactButtons;
+    public LoaderTypes Loader { get; } = loader;
+    public FocusRingTypes FocusRing { get; } = focusRing;
+    public CardStyleTypes CardStyle { get; } = cardStyle;
+
+    public static BrandingResponse GetDefault()
     {
-        return new ThemeModel
-        {
-            UserId = userId,
-            ProjectId = projectId,
-            Fonts = new List<FontDto>
+        return new BrandingResponse(
+            null,
+            "light",
+            null,
+            new List<FontDto>
             {
                 new()
                 {
@@ -123,7 +113,7 @@ public class ThemeModel : IModelWithUserId
                     LetterSpacing = "0.5px"
                 }
             },
-            Colors = new List<ColorDto>
+            new List<ColorDto>
             {
                 new() { Hex = "#2F65CB", Name = "Primary", IsDefault = true, FriendlyName = "Primary", },
                 new() { Hex = "#D9D9D9", Name = "Secondary", IsDefault = true, FriendlyName = "Secondary" },
@@ -140,21 +130,50 @@ public class ThemeModel : IModelWithUserId
                 new() { Hex = "#FFFFFF", Name = "White", IsDefault = true, FriendlyName = "White" },
                 new() { Hex = "#EEEEEE", Name = "Border", IsDefault = true, FriendlyName = "Border" }
             },
-            ResponsiveBreakpoints = new List<ResponsiveBreakpointDto>
+            new List<ResponsiveBreakpointDto>
             {
                 new() { Breakpoint = "100%", Type = "Desktop" },
                 new() { Breakpoint = "768px", Type = "Tablet" },
                 new() { Breakpoint = "480px", Type = "Mobile" }
             },
-            DefaultFont = DefaultFontFamily,
-            HasCompactButtons = true,
-            DefaultRadius = "sm",
-            DefaultSpacing = "md",
-            Loader = LoaderTypes.OVAL.ToString(),
-            FocusRing = FocusRingTypes.DEFAULT.ToString(),
-            CardStyle = CardStyleTypes.ROUNDED.ToString(),
-            FaviconUrl = "https://mortenjonassen.dk/wp-content/uploads/2020/02/Per-larsen-favicon.jpg",
-            LogoUrl = "https://wwwspennarecom.cdn.triggerfish.cloud/uploads/2015/08/Your-Logo-Here-Black-22.jpg",
+            "",
+            "",
+            null,
+            DefaultFontFamily,
+            true,
+            "sm",
+            "md",
+            LoaderTypes.OVAL,
+            FocusRingTypes.DEFAULT,
+            CardStyleTypes.ROUNDED);
+    }
+
+    private static IEnumerable<string> _getDefaultColorNames()
+    {
+        return new[]
+        {
+            "Primary", "Secondary", "PrimaryText", "SecondaryText", "Tertiary", "TertiaryText", "Danger", "Warning",
+            "Success", "Neutral", "Black",
+            "White", "Border"
         };
     }
+
+    public static bool CheckAllDefaultColorsExists(
+        IEnumerable<string> colorNames,
+        out IEnumerable<string> missingColorNames)
+    {
+        // Check to make sure all default colors exist
+        IEnumerable<string> defaultColorNames = _getDefaultColorNames();
+        List<string> missingColors = defaultColorNames.Where(colorName => !colorNames.Contains(colorName)).ToList();
+        if (missingColors.Any())
+        {
+            missingColorNames = missingColors;
+            return false;
+        }
+
+        missingColorNames = new List<string>();
+        return true;
+    }
+
+    public string TrackingId { get; set; }
 }
