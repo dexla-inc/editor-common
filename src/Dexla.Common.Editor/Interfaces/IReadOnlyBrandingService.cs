@@ -4,7 +4,7 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Interfaces;
 
-public interface IReadOnlyThemeService :IDexlaService
+public interface IReadOnlyBrandingService : IDexlaService
 {
     Task<IResponse> Get(string projectId, CancellationToken cancellationToken);
 

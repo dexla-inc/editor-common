@@ -9,7 +9,7 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class ReadOnlyThemeService(IRepository<Branding, BrandingModel> repository) : IReadOnlyThemeService
+public class ReadOnlyBrandingService(IRepository<Branding, BrandingModel> repository) : IReadOnlyBrandingService
 {
     public async Task<IResponse> Get(
         string projectId,
