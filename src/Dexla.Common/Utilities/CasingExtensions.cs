@@ -14,6 +14,11 @@ public static class CasingExtensions
         return word.Pascalize();
     }
     
+    public static string ToCamelCase(this string word)
+    {
+        return word.Camelize();
+    }
+    
     public static string ToLowerThenPascalCase(this string word)
     {
         return word.ToLower().Pascalize();
