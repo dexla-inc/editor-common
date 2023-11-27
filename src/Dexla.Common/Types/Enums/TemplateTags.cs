@@ -1,4 +1,4 @@
-﻿namespace Dexla.EditorAPI.Core.Entities;
+﻿namespace Dexla.Common.Types.Enums;
 
 public enum TemplateTags
 {
