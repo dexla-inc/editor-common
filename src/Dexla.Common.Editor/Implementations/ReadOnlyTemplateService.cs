@@ -5,6 +5,7 @@ using Dexla.Common.Editor.Responses;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types;
+using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 using Dexla.EditorAPI.Core.Entities;
 
@@ -15,9 +16,15 @@ public class ReadOnlyTemplateService(
         IContext context)
     : DexlaService<Template, TemplateModel>(repository), IReadOnlyTemplateService
 {
-    public async Task<IResponse> Get(string id)
+    public async Task<IResponse> Get(string name)
     {
-        return await Get(id, _getResponse);
+        FilterConfiguration filterConfig = new();
+        filterConfig.Append(nameof(Template.Name), name, SearchTypes.EXACT);
+        Template? template  = await context.GetByFields<Template>(filterConfig);
+        
+        return template != null 
+            ? _getResponse()(template) 
+            : new ErrorResponse("Template not found with the name " + name + ".");
     }
 
     public async Task<IResponse> List(
