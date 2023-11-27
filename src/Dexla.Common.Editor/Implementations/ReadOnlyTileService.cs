@@ -42,6 +42,7 @@ public class ReadOnlyTileService(
             entity.Id,
             entity.Name,
             entity.State,
+            entity.Prompt,
             entity.TemplateId,
             entity.UpdatedAt,
             entity.CreatedAt);
@@ -53,6 +54,7 @@ public class ReadOnlyTileService(
             model.Id!,
             model.Name,
             model.State,
+            model.Prompt,
             model.TemplateId,
             model.UpdatedAt,
             model.CreatedAt);

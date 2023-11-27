@@ -13,6 +13,7 @@ public class Tile : IEntity
     public EntityStatus EntityStatus { get; set; }
     public string Name { get; set; }
     public string State { get; set; }
+    public string Prompt { get; set; }
     public string TemplateId { get; set; }
     public long UpdatedAt { get; set; }
     public long CreatedAt { get; set; }

@@ -10,6 +10,7 @@ public class TemplateModel : IModel
     public EntityStatus EntityStatus { get; set; }
     public string Name { get; set; } = string.Empty;
     public string State { get; set; } = string.Empty;
+    public string Prompt { get; set; } = string.Empty;
     public string Type { get; set; } = string.Empty;
     public string[] Tags { get; set; } = Array.Empty<string>();
     public long UpdatedAt { get; set; }

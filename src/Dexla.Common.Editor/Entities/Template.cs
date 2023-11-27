@@ -14,7 +14,7 @@ public class Template : IEntity
     public EntityStatus EntityStatus { get; set; }
     public string Name { get; set; }
     public string State { get; set; }
-    //public string Prompt { get; set; }
+    public string Prompt { get; set; }
     public TemplateTypes Type { get; set; }
     public TemplateTags[] Tags { get; set; }
     public long UpdatedAt { get; set; }

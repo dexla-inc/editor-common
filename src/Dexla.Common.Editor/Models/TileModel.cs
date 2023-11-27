@@ -10,6 +10,7 @@ public class TileModel : IModel
     public EntityStatus EntityStatus { get; set; }
     public string Name { get; set; } = string.Empty;
     public string State { get; set; } = string.Empty;
+    public string Prompt { get; set; } = string.Empty;
     public string TemplateId { get; set; } = string.Empty;
     public long UpdatedAt { get; set; }
     public long CreatedAt { get; set; }

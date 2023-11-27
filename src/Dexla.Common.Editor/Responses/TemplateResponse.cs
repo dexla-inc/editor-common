@@ -7,6 +7,7 @@ public class TemplateResponse(
         string id,
         string name,
         string state,
+        string prompt,
         TemplateTypes type,
         TemplateTags[] tags,
         long updatedAt,
@@ -16,6 +17,7 @@ public class TemplateResponse(
     public string Id { get; } = id;
     public string Name { get; } = name;
     public string State { get; } = state;
+    public string Prompt { get; } = prompt;
     public TemplateTypes Type { get; } = type;
     public TemplateTags[] Tags { get; } = tags;
     public long UpdatedAt { get; } = updatedAt;

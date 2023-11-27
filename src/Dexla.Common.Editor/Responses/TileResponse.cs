@@ -6,6 +6,7 @@ public class TileResponse(
         string id,
         string name,
         string state,
+        string prompt,
         string templateId,
         long updatedAt,
         long createdAt)
@@ -14,6 +15,7 @@ public class TileResponse(
     public string Id { get; } = id;
     public string Name { get; } = name;
     public string State { get; } = state;
+    public string Prompt { get; } = prompt;
     public string TemplateId { get; } = templateId;
     public long UpdatedAt { get; } = updatedAt;
     public long CreatedAt { get; } = createdAt;
