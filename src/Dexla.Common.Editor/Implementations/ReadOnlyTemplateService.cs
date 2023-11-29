@@ -16,15 +16,25 @@ public class ReadOnlyTemplateService(
         IContext context)
     : DexlaService<Template, TemplateModel>(repository), IReadOnlyTemplateService
 {
-    public async Task<IResponse> Get(string name)
+    public async Task<IResponse> Get(string name, bool includeTiles = false)
     {
-        FilterConfiguration filterConfig = new();
-        filterConfig.Append(nameof(Template.Name), name, SearchTypes.EXACT);
-        Template? template  = await context.GetByFields<Template>(filterConfig);
-        
-        return template != null 
-            ? _getResponse()(template) 
-            : new ErrorResponse("Template not found with the name " + name + ".");
+        FilterConfiguration templateFilterConfig = new();
+        templateFilterConfig.Append(nameof(Template.Name), name, SearchTypes.EXACT);
+
+        Template? template = await context.GetByFields<Template>(templateFilterConfig);
+
+        if (!includeTiles)
+        {
+            return template != null
+                ? _getResponse()(template)
+                : new ErrorResponse("Template not found with the name " + name + ".");
+        }
+
+        FilterConfiguration tileFilterConfig = new();
+        tileFilterConfig.Append(nameof(Tile.TemplateId), template!.Id, SearchTypes.EXACT);
+        (IReadOnlyList<Tile> tiles, int totalRecords) = await context.GetEntities<Tile>(tileFilterConfig);
+
+        return _getResponse(tiles)(template);
     }
 
     public async Task<IResponse> List(
@@ -43,7 +53,7 @@ public class ReadOnlyTemplateService(
         };
     }
 
-    public Func<Template, TemplateResponse> _getResponse()
+    public Func<Template, TemplateResponse> _getResponse(IReadOnlyList<Tile>? tiles = null)
     {
         return entity => new TemplateResponse(
             entity.Id,
@@ -53,7 +63,18 @@ public class ReadOnlyTemplateService(
             entity.Type,
             entity.Tags,
             entity.UpdatedAt,
-            entity.CreatedAt);
+            entity.CreatedAt)
+        {
+            Tiles = tiles?.Select(tile => new TileResponse(
+                    tile.Id,
+                    tile.Name,
+                    tile.State,
+                    tile.Prompt,
+                    tile.TemplateId,
+                    tile.UpdatedAt,
+                    tile.CreatedAt))
+                .ToList()
+        };
     }
 
     public TemplateResponse _getResponse(TemplateModel model)

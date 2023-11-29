@@ -8,7 +8,7 @@ namespace Dexla.Common.Editor.Interfaces;
 public interface IReadOnlyTemplateService : IDexlaService
 {
     Task<IResponse> List(int offset, int limit);
-    Task<IResponse> Get(string name);
+    Task<IResponse> Get(string name, bool includeTiles = false);
     TemplateResponse _getResponse(TemplateModel model);
-    Func<Template, TemplateResponse> _getResponse();
+    Func<Template, TemplateResponse> _getResponse(IReadOnlyList<Tile>? tiles = null);
 }

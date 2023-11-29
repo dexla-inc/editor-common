@@ -22,6 +22,7 @@ public class TemplateResponse(
     public TemplateTags[] Tags { get; } = tags;
     public long UpdatedAt { get; } = updatedAt;
     public long CreatedAt { get; } = createdAt;
+    public List<TileResponse>? Tiles { get; set; }
 
     public string TrackingId { get; set; } = string.Empty;
 }
