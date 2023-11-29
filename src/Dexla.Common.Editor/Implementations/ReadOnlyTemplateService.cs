@@ -23,7 +23,7 @@ public class ReadOnlyTemplateService(
 
         Template? template = await context.GetByFields<Template>(templateFilterConfig);
 
-        if (!includeTiles)
+        if (!includeTiles || template == null)
         {
             return template != null
                 ? _getResponse()(template)
@@ -31,7 +31,7 @@ public class ReadOnlyTemplateService(
         }
 
         FilterConfiguration tileFilterConfig = new();
-        tileFilterConfig.Append(nameof(Tile.TemplateId), template!.Id, SearchTypes.EXACT);
+        tileFilterConfig.Append(nameof(Tile.TemplateId), template.Id, SearchTypes.EXACT);
         (IReadOnlyList<Tile> tiles, int totalRecords) = await context.GetEntities<Tile>(tileFilterConfig);
 
         return _getResponse(tiles)(template);
