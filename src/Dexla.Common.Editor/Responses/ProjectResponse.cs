@@ -20,6 +20,7 @@ public class ProjectResponse : ISuccess
     public string SubDomain { get; }
     public long Created { get; }
     public string[] Screenshots { get; }
+    public string? HomePageId { get; set; }
     
     public ProjectResponse(
         string id,
