@@ -30,4 +30,23 @@ public class PageModel : IModelWithUserId
     {
         UserId = value;
     }
+    
+    public static PageModel Empty(string userId, string projectId)
+    {
+        return new PageModel
+        {
+            UserId = userId,
+            ProjectId = projectId,
+            Title = "Home",
+            Slug = "/",
+            Description = "Home page",
+            PageState = "",
+            IsHome = true,
+            AuthenticatedOnly = false,
+            AuthenticatedUserRole = string.Empty,
+            HasNavigation = false,
+            CopyFrom = null,
+            QueryStrings = null
+        };
+    }
 }
