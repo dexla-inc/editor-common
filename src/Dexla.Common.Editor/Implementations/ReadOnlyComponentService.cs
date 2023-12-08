@@ -15,7 +15,7 @@ public class ReadOnlyComponentService(
         IContext context)
     : DexlaService<Component, ComponentModel>(repository), IReadOnlyComponentService
 {
-    public async Task<IResponse> List(string userId, string projectId, string companyId, string scopes, string? search)
+    public async Task<IResponse> List(string projectId, string companyId, string scopes, string? search)
     {
         FilterConfiguration filterConfiguration = new();
 
@@ -34,6 +34,9 @@ public class ReadOnlyComponentService(
             scopesList.Add(scopes);
 
         filterConfiguration.AppendArray(nameof(Component.Scope), scopesList, SearchTypes.ONE_OF);
+        
+        if (search != null)
+            filterConfiguration.Append(nameof(Component.Description), search, SearchTypes.PARTIAL);
 
         (IReadOnlyList<Component> entities, int totalRecords) =
             await context.GetEntities<Component>(filterConfiguration);
