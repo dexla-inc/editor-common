@@ -4,11 +4,11 @@ public enum UITypes
 {
     Container,
     Grid,
+    GridColumn,
     Button, // Default, Hover, Focused, Disabled, Error
     Checkbox, // Selected, Unselected, Disabled
     Radio,  // Selected, Unselected, Disabled
     Rating, // Selected, Unselected, Disabled
-    Toggle, // Selected, Unselected, Disabled
     Tabs, // Selected, Unselected, Disabled
     Select, // Default, Hover, Focused, Disabled, Error
     Input, // Default, Hover, Focused, Disabled, Error
@@ -74,4 +74,22 @@ public enum UITypes
     PercentAreaChart,
     ProfileList,
     ImageCardList,
+    AccordionControl,
+    AccordionItem,
+    AccordionPanel,
+    ButtonIcon,
+    DateInput,
+    Drawer,
+    FileUpload,
+    GoogleMapPlugin,
+    NavLink,
+    Navbar,
+    PopOver,
+    RadioItem,
+    Title,
+    TableRow,
+    TableCell,
+    TableHead,
+    TableHeaderCell,
+    TableBody
 }
