@@ -1,6 +1,6 @@
 ﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
-using Dexla.EditorAPI.Core.Entities;
+using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Entities;
 

@@ -7,7 +7,6 @@ using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
-using Dexla.EditorAPI.Core.Entities;
 
 namespace Dexla.Common.Editor.Implementations;
 
