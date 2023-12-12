@@ -39,7 +39,7 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
         };
     }
 
-    public async Task<DeploymentResponse> GetMostRecent(string projectId, string environment)
+    public async Task<DeploymentResponse> GetMostRecent(string projectId, string environment, bool includePages)
     {
         IEnumerable<Deployment> entities = await _context.GetMostRecentEnvironmentDeployments(projectId);
         IEnumerable<DeploymentModel> list = _modelMapper.Create(entities);
@@ -47,7 +47,7 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
         DeploymentResponse? result = list
             .Where(m => m.Environment == Enum.Parse<EnvironmentTypes>(environment))
             .OrderByDescending(m => m.Version)
-            .Select(_responseToModel())
+            .Select(_responseToModel(includePages))
             .FirstOrDefault();
 
         return result ?? new DeploymentResponse();
@@ -61,7 +61,7 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
     {
         try
         {
-            IResponse result = await GetMostRecent(projectId, environment);
+            IResponse result = await GetMostRecent(projectId, environment, true);
 
             if (result is not DeploymentResponse response)
                 return new DeploymentPageResponse();
@@ -96,12 +96,11 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
             m.Environment,
             m.CommitMessage,
             m.TaskId,
-            m.Version,
-            m.Pages.ToList()
+            m.Version
         );
     }
 
-    private static Func<DeploymentModel, DeploymentResponse> _responseToModel()
+    private static Func<DeploymentModel, DeploymentResponse> _responseToModel(bool includePagesState)
     {
         return m => new DeploymentResponse(
             m.Id!,
@@ -109,8 +108,9 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
             m.Environment,
             m.CommitMessage,
             m.TaskId,
-            m.Version,
-            m.Pages.ToList()
-                .ToList());
+            m.Version)
+        {
+            Pages = includePagesState ? m.Pages.ToList() : []
+        };
     }
 }
