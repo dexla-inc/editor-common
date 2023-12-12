@@ -55,8 +55,7 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
     public async Task<DeploymentPageResponse> GetMostRecentByPage(
         string projectId,
         string environment,
-        string? pageId,
-        string? slug)
+        string page)
     {
         try
         {
@@ -65,10 +64,10 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
             if (result is not DeploymentResponse response)
                 return DeploymentPageResponse.Empty;
 
-            DeploymentPageResponse? page = response.Pages
-                .FirstOrDefault(d => (pageId != null && d.Id == pageId) || (slug != null && d.Slug == slug));
+            DeploymentPageResponse? deploymentPage = response.Pages
+                .FirstOrDefault(d => page == d.Id || page == d.Slug);
 
-            return page ?? DeploymentPageResponse.Empty;
+            return deploymentPage ?? DeploymentPageResponse.Empty;
         }
         catch (Exception e)
         {

@@ -10,6 +10,5 @@ public interface IReadOnlyDeploymentService : IDexlaService
     Task<DeploymentPageResponse> GetMostRecentByPage(
         string projectId,
         string environment,
-        string? pageId,
-        string? slug);
+        string page);
 }
