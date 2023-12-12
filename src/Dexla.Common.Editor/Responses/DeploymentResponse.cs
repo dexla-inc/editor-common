@@ -1,5 +1,4 @@
-﻿using Dexla.Common.Editor.Entities;
-using Dexla.Common.Types.Enums;
+﻿using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
@@ -12,7 +11,7 @@ public class DeploymentResponse : ISuccess
     public string CommitMessage { get; }
     public string TaskId { get; }
     public string Version { get; }
-    public List<DeploymentPage> Pages { get; set; } = [];
+    public List<DeploymentPageResponse> Pages { get; }
 
     public DeploymentResponse(
         string id, 
@@ -20,7 +19,8 @@ public class DeploymentResponse : ISuccess
         EnvironmentTypes environment, 
         string commitMessage,
         string taskId,
-        string version)
+        string version, 
+        List<DeploymentPageResponse> pages)
     {
         Id = id;
         ProjectId = projectId;
@@ -28,6 +28,7 @@ public class DeploymentResponse : ISuccess
         CommitMessage = commitMessage;
         TaskId = taskId;
         Version = version;
+        Pages = pages;
     }
 
     public DeploymentResponse()
