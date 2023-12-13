@@ -20,6 +20,6 @@ public class Deployment : IEntity, IEntityWithTimeStamp
     public virtual string CommitMessage { get; set; }
     public virtual string TaskId { get; set; }
     public virtual EnvironmentTypes Environment { get; set; }
-    public virtual string Version { get; set; }
+    public virtual int Version { get; set; }
     public List<DeploymentPage> Pages { get; set; } = new();
 }

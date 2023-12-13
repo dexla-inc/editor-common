@@ -10,7 +10,7 @@ public class DeploymentResponse : ISuccess
     public EnvironmentTypes Environment { get; }
     public string CommitMessage { get; }
     public string TaskId { get; }
-    public string Version { get; }
+    public int Version { get; }
     public List<DeploymentPageResponse> Pages { get; }
 
     public DeploymentResponse(
@@ -19,7 +19,7 @@ public class DeploymentResponse : ISuccess
         EnvironmentTypes environment, 
         string commitMessage,
         string taskId,
-        string version, 
+        int version, 
         List<DeploymentPageResponse> pages)
     {
         Id = id;

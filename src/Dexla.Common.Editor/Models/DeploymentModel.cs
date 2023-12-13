@@ -15,8 +15,8 @@ public class DeploymentModel : IModelWithUserId
     public string CommitMessage { get; set; } = string.Empty;
     public string TaskId { get; set; } = string.Empty;
     public EnvironmentTypes Environment { get; set; }
-    public string Version { get; set; } = string.Empty;
-    public List<DeploymentPage> Pages { get; set; } = new();
+    public int Version { get; set; }
+    public List<DeploymentPage> Pages { get; set; } = [];
 
     public void SetUserId(string value)
     {
