@@ -78,7 +78,8 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
                 m.Domain,
                 m.SubDomain,
                 m.Created,
-                m.Screenshots
+                m.Screenshots,
+                m.CustomCode
             ));
     }
 
@@ -98,7 +99,8 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
             entity.Domain,
             entity.SubDomain,
             entity.Created,
-            entity.Screenshots
+            entity.Screenshots,
+            entity.CustomCode
         );
     }
 }

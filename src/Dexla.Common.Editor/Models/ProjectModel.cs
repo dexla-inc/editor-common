@@ -25,6 +25,7 @@ public class ProjectModel : IModelWithUserId
     public long Created { get; set; }
     public string[] Screenshots { get; set; } = Array.Empty<string>();
     public bool IsOwner { get; set; }
+    public string? CustomCode { get; set; }
     
     public void SetUserId(string value)
     {

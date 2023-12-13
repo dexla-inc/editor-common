@@ -21,6 +21,7 @@ public class ProjectResponse : ISuccess
     public long Created { get; }
     public string[] Screenshots { get; }
     public string? HomePageId { get; set; }
+    public string? CustomCode { get; set; }
     
     public ProjectResponse(
         string id,
@@ -36,7 +37,8 @@ public class ProjectResponse : ISuccess
         string domain,
         string subDomain,
         long created,
-        string[] screenshots)
+        string[] screenshots,
+        string? customCode)
     {
         Id = id;
         CompanyId = companyId;
@@ -52,6 +54,7 @@ public class ProjectResponse : ISuccess
         SubDomain = subDomain;
         Created = created;
         Screenshots = screenshots;
+        CustomCode = customCode;
     }
 
     public ProjectResponse()

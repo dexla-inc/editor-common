@@ -28,4 +28,5 @@ public class Project : IEntity
     public long Created { get; set; }
     public string[] Screenshots { get; set; }
     public bool IsOwner { get; set; }
+    public string? CustomCode { get; set; }
 }
