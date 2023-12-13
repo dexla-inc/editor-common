@@ -10,28 +10,18 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
+public class ReadOnlyDeploymentService(
+    IEditorContext context,
+    IModelMapper<DeploymentModel> modelMapper,
+    ILoggerService<ReadOnlyDeploymentService> logger)
+    : IReadOnlyDeploymentService
 {
-    private readonly IEditorContext _context;
-    private readonly IModelMapper<DeploymentModel> _modelMapper;
-    private readonly ILoggerService<ReadOnlyDeploymentService> _logger;
-
-    public ReadOnlyDeploymentService(
-        IEditorContext context,
-        IModelMapper<DeploymentModel> modelMapper,
-        ILoggerService<ReadOnlyDeploymentService> logger)
-    {
-        _context = context;
-        _modelMapper = modelMapper;
-        _logger = logger;
-    }
-
     public async Task<IResponse> List(string projectId)
     {
         SortConfiguration sortConfig = new("version", SortDirections.Descending);
 
         (IReadOnlyList<Deployment> entities, int _) =
-            await _context.GetEntities<Deployment>(new FilterConfiguration(projectId), 0, 100, sortConfig);
+            await context.GetEntities<Deployment>(new FilterConfiguration(projectId), 0, 100, sortConfig);
 
         return new PagedResponse<DeploymentResponse>
         {
@@ -41,8 +31,8 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
 
     public async Task<DeploymentResponse> GetMostRecent(string projectId, string environment, bool includePages)
     {
-        IEnumerable<Deployment> entities = await _context.GetMostRecentEnvironmentDeployments(projectId);
-        IEnumerable<DeploymentModel> list = _modelMapper.Create(entities);
+        IEnumerable<Deployment> entities = await context.GetMostRecentEnvironmentDeployments(projectId);
+        IEnumerable<DeploymentModel> list = modelMapper.Create(entities);
 
         DeploymentResponse? result = list
             .Where(m => m.Environment == Enum.Parse<EnvironmentTypes>(environment))
@@ -71,12 +61,36 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
         }
         catch (Exception e)
         {
-            _logger.LogWarning(e.Message);
+            logger.LogWarning(e.Message);
             return DeploymentPageResponse.Empty;
         }
     }
 
-    private static Func<Deployment, DeploymentResponse> _responseToEntity()
+    public Func<Deployment, DeploymentResponse> _responseToEntity()
+    {
+        return m => new DeploymentResponse(
+            m.Id,
+            m.ProjectId,
+            m.Environment,
+            m.CommitMessage,
+            m.TaskId,
+            m.Version,
+            _pagesToDeploymentPages(m.Pages, false));
+    }
+    
+    public DeploymentResponse _getResponse(Deployment entity, bool includePages)
+    {
+        return new DeploymentResponse(
+            entity.Id,
+            entity.ProjectId,
+            entity.Environment,
+            entity.CommitMessage,
+            entity.TaskId,
+            entity.Version,
+            _pagesToDeploymentPages(entity.Pages, includePages));
+    }
+
+    public Func<DeploymentModel, DeploymentResponse> _responseToModel(bool includePages)
     {
         return m => new DeploymentResponse(
             m.Id!,
@@ -85,33 +99,21 @@ public class ReadOnlyDeploymentService : IReadOnlyDeploymentService
             m.CommitMessage,
             m.TaskId,
             m.Version,
-            m.Pages
-                .Select(p => new DeploymentPageResponse(p.Id, p.Title, p.Slug))
-                .ToList());
+            _pagesToDeploymentPages(m.Pages, includePages));
     }
 
-    private static Func<DeploymentModel, DeploymentResponse> _responseToModel(bool includePagesState)
-    {
-        return m => new DeploymentResponse(
-            m.Id!,
-            m.ProjectId,
-            m.Environment,
-            m.CommitMessage,
-            m.TaskId,
-            m.Version,
-            _pagesToDeploymentPages(m.Pages, includePagesState));
-    }
-
-    private static List<DeploymentPageResponse> _pagesToDeploymentPages(IEnumerable<DeploymentPage> pages, bool includePagesState)
+    public List<DeploymentPageResponse> _pagesToDeploymentPages(
+        IEnumerable<DeploymentPage> pages,
+        bool includePagesState)
     {
         return pages.Select(d => _pageToDeploymentPage(d, includePagesState)).ToList();
     }
     
-    private static DeploymentPageResponse _pageToDeploymentPage(DeploymentPage d, bool includePages)
+    public DeploymentPageResponse _pageToDeploymentPage(DeploymentPage page, bool includePages)
     {
-        return new DeploymentPageResponse(d.Id, d.Title, d.Slug)
+        return new DeploymentPageResponse(page.Id, page.Title, page.Slug)
         {
-            PageState = includePages ? d.PageState : null,
+            PageState = includePages ? page.PageState : null,
         };
     }
 }
