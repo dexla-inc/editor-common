@@ -8,4 +8,5 @@ public class Font
     public string FontSize { get; set; } = string.Empty;
     public string LineHeight { get; set; } = string.Empty;
     public string LetterSpacing { get; set; } = string.Empty;
+    public string Note { get; set; } = string.Empty;
 }

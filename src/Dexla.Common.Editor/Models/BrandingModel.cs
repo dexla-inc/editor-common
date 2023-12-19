@@ -64,64 +64,71 @@ public class BrandingModel : IModelWithUserId
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H1",
-                    FontWeight = "700",
-                    FontSize = "3.052rem",
-                    LineHeight = "1.2",
-                    LetterSpacing = "0.5px"
+                    FontWeight = "500",
+                    FontSize = "48px",
+                    LineHeight = "1.5",
+                    LetterSpacing = "0px",
+                    Note = "Main Title"
                 },
                 new()
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H2",
-                    FontWeight = "700",
-                    FontSize = "2.441rem",
-                    LineHeight = "1.2",
-                    LetterSpacing = "0.4px"
+                    FontWeight = "500",
+                    FontSize = "28px",
+                    LineHeight = "1.5",
+                    LetterSpacing = "0.4px",
+                    Note = "Section Title"
                 },
                 new()
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H3",
-                    FontWeight = "700",
-                    FontSize = "1.953rem",
-                    LineHeight = "1.2",
-                    LetterSpacing = "0.3px"
+                    FontWeight = "500",
+                    FontSize = "24px",
+                    LineHeight = "1.67",
+                    LetterSpacing = "0.3px",
+                    Note = "Subsection Title"
                 },
                 new()
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H4",
-                    FontWeight = "700",
-                    FontSize = "1.563rem",
-                    LineHeight = "1.2",
-                    LetterSpacing = "0.2px"
+                    FontWeight = "600",
+                    FontSize = "22px",
+                    LineHeight = "1.45",
+                    LetterSpacing = "0.2px",
+                    Note = "Topic Title"
                 },
                 new()
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H5",
-                    FontWeight = "700",
-                    FontSize = "1.25rem",
+                    FontWeight = "500",
+                    FontSize = "20px",
                     LineHeight = "1.2",
-                    LetterSpacing = "0.1px"
+                    LetterSpacing = "0.1px",
+                    Note = "Subtopic Title"
                 },
                 new()
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H6",
-                    FontWeight = "700",
-                    FontSize = "1rem",
-                    LineHeight = "1.2",
-                    LetterSpacing = "0.1px"
+                    FontWeight = "600",
+                    FontSize = "18px",
+                    LineHeight = "1.33",
+                    LetterSpacing = "0.1px",
+                    Note = "Minor Point"
                 },
                 new()
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "P",
                     FontWeight = "400",
-                    FontSize = "0.8rem",
-                    LineHeight = "1.5",
-                    LetterSpacing = "0.5px"
+                    FontSize = "14px",
+                    LineHeight = "1.43",
+                    LetterSpacing = "0.5px",
+                    Note = "Paragraph"
                 }
             },
             Colors = new List<ColorDto>

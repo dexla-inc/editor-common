@@ -12,20 +12,12 @@ using Nager.PublicSuffix;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IReadOnlyProjectService
+public class ReadOnlyProjectService(
+    IRepository<Project, ProjectModel> repository,
+    IContext context,
+    ILogger<ReadOnlyProjectService> loggerService)
+    : DexlaService<Project, ProjectModel>(repository), IReadOnlyProjectService
 {
-    private readonly IContext _context;
-    private readonly ILogger<ReadOnlyProjectService> _loggerService;
-
-    public ReadOnlyProjectService(
-        IRepository<Project, ProjectModel> repository,
-        IContext context,
-        ILogger<ReadOnlyProjectService> loggerService) : base(repository)
-    {
-        _context = context;
-        _loggerService = loggerService;
-    }
-    
     public async Task<IResponse> Get(string id)
     {
         RepositoryActionResultModel<ProjectModel> actionResult = await Repository.Get(id);
@@ -47,7 +39,7 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
             filterConfig.Append(nameof(Project.SubDomain), subDomain, SearchTypes.EXACT);
             filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
 
-            Project? project = await _context.GetByFields<Project>(filterConfig);
+            Project? project = await context.GetByFields<Project>(filterConfig);
 
             return project is null 
                 ? new ProjectResponse() 
@@ -55,7 +47,7 @@ public class ReadOnlyProjectService : DexlaService<Project, ProjectModel>, IRead
         }
         catch (ParseException e)
         {
-            _loggerService.LogWarning("Failed to parse domain {0}", domain);
+            loggerService.LogWarning("Failed to parse domain {0}", domain);
             return new ProjectResponse();
         }
     }

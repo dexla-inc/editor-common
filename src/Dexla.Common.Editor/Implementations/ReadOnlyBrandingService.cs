@@ -19,31 +19,33 @@ public class ReadOnlyBrandingService(IRepository<Branding, BrandingModel> reposi
 
         return actionResult.CurrentVersion != null
             ? _getResponse(actionResult)
-            : BrandingResponse.GetDefault();
+            : _getResponse(BrandingModel.GetDefault("", projectId));
+    }
+
+    public BrandingResponse _getResponse(BrandingModel model)
+    {
+        return new BrandingResponse(
+            model.Id,
+            model.Theme,
+            model.WebsiteUrl,
+            model.Fonts,
+            model.Colors,
+            model.ResponsiveBreakpoints,
+            model.FaviconUrl,
+            model.LogoUrl,
+            model.Logos,
+            model.DefaultFont,
+            model.HasCompactButtons,
+            model.DefaultRadius,
+            model.DefaultSpacing,
+            Enum.Parse<LoaderTypes>(model.Loader),
+            Enum.Parse<FocusRingTypes>(model.FocusRing),
+            Enum.Parse<CardStyleTypes>(model.CardStyle)
+        );
     }
 
     public IResponse _getResponse(RepositoryActionResultModel<BrandingModel> actionResult)
     {
-        return actionResult.ActionResult<BrandingResponse>(
-            actionResult,
-            m => new BrandingResponse(
-                m.Id,
-                m.Theme,
-                m.WebsiteUrl,
-                m.Fonts,
-                m.Colors,
-                m.ResponsiveBreakpoints,
-                m.FaviconUrl,
-                m.LogoUrl,
-                m.Logos,
-                m.DefaultFont,
-                m.HasCompactButtons,
-                m.DefaultRadius,
-                m.DefaultSpacing,
-                Enum.Parse<LoaderTypes>(m.Loader),
-                Enum.Parse<FocusRingTypes>(m.FocusRing),
-                Enum.Parse<CardStyleTypes>(m.CardStyle)
-            )
-        );
+        return actionResult.ActionResult(actionResult, _getResponse);
     }
 }
