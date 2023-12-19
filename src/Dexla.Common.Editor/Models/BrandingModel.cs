@@ -77,7 +77,7 @@ public class BrandingModel : IModelWithUserId
                     FontWeight = "500",
                     FontSize = "28px",
                     LineHeight = "1.5",
-                    LetterSpacing = "0.4px",
+                    LetterSpacing = "0px",
                     Note = "Section Title"
                 },
                 new()
@@ -87,7 +87,7 @@ public class BrandingModel : IModelWithUserId
                     FontWeight = "500",
                     FontSize = "24px",
                     LineHeight = "1.67",
-                    LetterSpacing = "0.3px",
+                    LetterSpacing = "0px",
                     Note = "Subsection Title"
                 },
                 new()
@@ -97,7 +97,7 @@ public class BrandingModel : IModelWithUserId
                     FontWeight = "600",
                     FontSize = "22px",
                     LineHeight = "1.45",
-                    LetterSpacing = "0.2px",
+                    LetterSpacing = "0px",
                     Note = "Topic Title"
                 },
                 new()
@@ -107,7 +107,7 @@ public class BrandingModel : IModelWithUserId
                     FontWeight = "500",
                     FontSize = "20px",
                     LineHeight = "1.2",
-                    LetterSpacing = "0.1px",
+                    LetterSpacing = "0px",
                     Note = "Subtopic Title"
                 },
                 new()
@@ -117,7 +117,7 @@ public class BrandingModel : IModelWithUserId
                     FontWeight = "600",
                     FontSize = "18px",
                     LineHeight = "1.33",
-                    LetterSpacing = "0.1px",
+                    LetterSpacing = "0px",
                     Note = "Minor Point"
                 },
                 new()
@@ -127,7 +127,7 @@ public class BrandingModel : IModelWithUserId
                     FontWeight = "400",
                     FontSize = "14px",
                     LineHeight = "1.43",
-                    LetterSpacing = "0.5px",
+                    LetterSpacing = "0px",
                     Note = "Paragraph"
                 }
             },
