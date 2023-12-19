@@ -20,9 +20,9 @@ public class BrandingModel : IModelWithUserId
     public string UserId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
     public string Theme { get; set; } = string.Empty; 
-    public List<FontDto> Fonts { get; set; } = new();
-    public List<ColorDto> Colors { get; set; } = new();
-    public List<ResponsiveBreakpointDto> ResponsiveBreakpoints { get; set; } = new();
+    public List<FontDto> Fonts { get; set; } = [];
+    public List<ColorDto> Colors { get; set; } = [];
+    public List<ResponsiveBreakpointDto> ResponsiveBreakpoints { get; set; } = [];
     public string LogoUrl { get; set; } = string.Empty;
     public List<LogoDto>? Logos { get; set; }
     public string FaviconUrl { get; set; } = string.Empty;
