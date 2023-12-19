@@ -58,9 +58,9 @@ public class BrandingModel : IModelWithUserId
         {
             UserId = userId,
             ProjectId = projectId,
-            Fonts = new List<FontDto>
-            {
-                new()
+            Fonts =
+            [
+                new FontDto
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H1",
@@ -70,7 +70,7 @@ public class BrandingModel : IModelWithUserId
                     LetterSpacing = "0px",
                     Note = "Main Title"
                 },
-                new()
+                new FontDto
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H2",
@@ -80,7 +80,7 @@ public class BrandingModel : IModelWithUserId
                     LetterSpacing = "0px",
                     Note = "Section Title"
                 },
-                new()
+                new FontDto
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H3",
@@ -90,7 +90,7 @@ public class BrandingModel : IModelWithUserId
                     LetterSpacing = "0px",
                     Note = "Subsection Title"
                 },
-                new()
+                new FontDto
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H4",
@@ -100,7 +100,7 @@ public class BrandingModel : IModelWithUserId
                     LetterSpacing = "0px",
                     Note = "Topic Title"
                 },
-                new()
+                new FontDto
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H5",
@@ -110,7 +110,8 @@ public class BrandingModel : IModelWithUserId
                     LetterSpacing = "0px",
                     Note = "Subtopic Title"
                 },
-                new()
+
+                new FontDto
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "H6",
@@ -120,7 +121,8 @@ public class BrandingModel : IModelWithUserId
                     LetterSpacing = "0px",
                     Note = "Minor Point"
                 },
-                new()
+
+                new FontDto
                 {
                     FontFamily = DefaultFontFamily,
                     Tag = "P",
@@ -130,30 +132,30 @@ public class BrandingModel : IModelWithUserId
                     LetterSpacing = "0px",
                     Note = "Paragraph"
                 }
-            },
-            Colors = new List<ColorDto>
-            {
-                new() { Hex = "#2F65CB", Name = "Primary", IsDefault = true, FriendlyName = "Primary", },
-                new() { Hex = "#FFFFFF", Name = "PrimaryText", IsDefault = true, FriendlyName = "Primary Text", },
-                new() { Hex = "#D9D9D9", Name = "Secondary", IsDefault = true, FriendlyName = "Secondary" },
-                new() { Hex = "#000000", Name = "SecondaryText", IsDefault = true, FriendlyName = "Secondary Text" },
-                new() { Hex = "#E57F4F", Name = "Tertiary", IsDefault = true, FriendlyName = "Tertiary" },
-                new() { Hex = "#FFFFFF", Name = "TertiaryText", IsDefault = true, FriendlyName = "Tertiary Text" },
-                new() { Hex = "#FF9600", Name = "Background", IsDefault = true, FriendlyName = "Background" },
-                new() { Hex = "#FE191C", Name = "Danger", IsDefault = true, FriendlyName = "Danger" },
-                new() { Hex = "#FFCC00", Name = "Warning", IsDefault = true, FriendlyName = "Warning" },
-                new() { Hex = "#10D48E", Name = "Success", IsDefault = true, FriendlyName = "Success" },
-                new() { Hex = "#F1F1F1", Name = "Neutral", IsDefault = true, FriendlyName = "Neutral" },
-                new() { Hex = "#000000", Name = "Black", IsDefault = true, FriendlyName = "Black" },
-                new() { Hex = "#FFFFFF", Name = "White", IsDefault = true, FriendlyName = "White" },
-                new() { Hex = "#EEEEEE", Name = "Border", IsDefault = true, FriendlyName = "Border" }
-            },
-            ResponsiveBreakpoints = new List<ResponsiveBreakpointDto>
-            {
-                new() { Breakpoint = "100%", Type = "Desktop" },
-                new() { Breakpoint = "768px", Type = "Tablet" },
-                new() { Breakpoint = "480px", Type = "Mobile" }
-            },
+            ],
+            Colors =
+            [
+                new ColorDto { Hex = "#2F65CB", Name = "Primary", IsDefault = true, FriendlyName = "Primary", },
+                new ColorDto { Hex = "#FFFFFF", Name = "PrimaryText", IsDefault = true, FriendlyName = "Primary Text", },
+                new ColorDto { Hex = "#D9D9D9", Name = "Secondary", IsDefault = true, FriendlyName = "Secondary" },
+                new ColorDto { Hex = "#000000", Name = "SecondaryText", IsDefault = true, FriendlyName = "Secondary Text" },
+                new ColorDto { Hex = "#E57F4F", Name = "Tertiary", IsDefault = true, FriendlyName = "Tertiary" },
+                new ColorDto { Hex = "#FFFFFF", Name = "TertiaryText", IsDefault = true, FriendlyName = "Tertiary Text" },
+                new ColorDto { Hex = "#FF9600", Name = "Background", IsDefault = true, FriendlyName = "Background" },
+                new ColorDto { Hex = "#FE191C", Name = "Danger", IsDefault = true, FriendlyName = "Danger" },
+                new ColorDto { Hex = "#FFCC00", Name = "Warning", IsDefault = true, FriendlyName = "Warning" },
+                new ColorDto { Hex = "#10D48E", Name = "Success", IsDefault = true, FriendlyName = "Success" },
+                new ColorDto { Hex = "#F1F1F1", Name = "Neutral", IsDefault = true, FriendlyName = "Neutral" },
+                new ColorDto { Hex = "#000000", Name = "Black", IsDefault = true, FriendlyName = "Black" },
+                new ColorDto { Hex = "#FFFFFF", Name = "White", IsDefault = true, FriendlyName = "White" },
+                new ColorDto { Hex = "#EEEEEE", Name = "Border", IsDefault = true, FriendlyName = "Border" }
+            ],
+            ResponsiveBreakpoints =
+            [
+                new ResponsiveBreakpointDto { Breakpoint = "100%", Type = "Desktop" },
+                new ResponsiveBreakpointDto { Breakpoint = "768px", Type = "Tablet" },
+                new ResponsiveBreakpointDto { Breakpoint = "480px", Type = "Mobile" }
+            ],
             DefaultFont = DefaultFontFamily,
             HasCompactButtons = true,
             DefaultRadius = "sm",
