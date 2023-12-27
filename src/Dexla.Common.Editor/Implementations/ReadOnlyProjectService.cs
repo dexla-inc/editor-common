@@ -51,7 +51,7 @@ public class ReadOnlyProjectService(
             Project? project = await context.GetByFields<Project>(filterConfig);
 
             if (project is null)
-                await loggerService.LogCritical("Project not found for domain", "Project not found for domain {0}", domain);
+                loggerService.LogWarning("Project not found for domain {0}", domain);
             
             return project is null 
                 ? new ProjectResponse() 
