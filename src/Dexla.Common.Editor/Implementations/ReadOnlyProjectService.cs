@@ -7,7 +7,6 @@ using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
-using Microsoft.Extensions.Logging;
 using Nager.PublicSuffix;
 
 namespace Dexla.Common.Editor.Implementations;
@@ -15,7 +14,7 @@ namespace Dexla.Common.Editor.Implementations;
 public class ReadOnlyProjectService(
     IRepository<Project, ProjectModel> repository,
     IContext context,
-    ILogger<ReadOnlyProjectService> loggerService)
+    ILoggerService<ReadOnlyProjectService> loggerService)
     : DexlaService<Project, ProjectModel>(repository), IReadOnlyProjectService
 {
     public async Task<IResponse> Get(string id)
@@ -30,17 +29,27 @@ public class ReadOnlyProjectService(
         try
         {
             FilterConfiguration filterConfig = new();
-
             DomainParser domainParser = new(new WebTldRuleProvider());
             DomainInfo? domainInfo = domainParser.Parse(domain);
+            
+            if (domain.EndsWith("dexla.io"))
+            {
+                string projectId = domainInfo.SubDomain ?? string.Empty;
+                filterConfig.Append(nameof(Project.Id), projectId, SearchTypes.EXACT);
+            }
+            else
+            {
+                string subDomain = domainInfo.SubDomain ?? string.Empty;
 
-            string subDomain = domainInfo.SubDomain ?? string.Empty;
-
-            filterConfig.Append(nameof(Project.SubDomain), subDomain, SearchTypes.EXACT);
-            filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
-
+                filterConfig.Append(nameof(Project.SubDomain), subDomain, SearchTypes.EXACT);
+                filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
+            }
+            
             Project? project = await context.GetByFields<Project>(filterConfig);
 
+            if (project is null)
+                await loggerService.LogCritical("Project not found for domain", "Project not found for domain {0}", domain);
+            
             return project is null 
                 ? new ProjectResponse() 
                 : _getResponse(project);
