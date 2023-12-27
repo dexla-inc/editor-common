@@ -32,16 +32,19 @@ public class ReadOnlyProjectService(
             DomainParser domainParser = new(new WebTldRuleProvider());
             DomainInfo? domainInfo = domainParser.Parse(domain);
             
-            if (domainInfo.RegistrableDomain == "dexla.io" || domainInfo.TLD == "localhost")
+            if (domainInfo.RegistrableDomain == "dexla.io")
             {
                 string projectId = domainInfo.SubDomain ?? string.Empty;
                 filterConfig.Append(nameof(Project.Id), projectId, SearchTypes.EXACT);
             }
+            else if (domainInfo.TLD == "localhost")
+            {
+                string projectId = domainInfo.Domain ?? string.Empty;
+                filterConfig.Append(nameof(Project.Id), projectId, SearchTypes.EXACT);
+            }
             else
             {
-                string subDomain = domainInfo.SubDomain ?? string.Empty;
-
-                filterConfig.Append(nameof(Project.SubDomain), subDomain, SearchTypes.EXACT);
+                filterConfig.Append(nameof(Project.SubDomain), domainInfo.SubDomain, SearchTypes.EXACT);
                 filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
             }
             
