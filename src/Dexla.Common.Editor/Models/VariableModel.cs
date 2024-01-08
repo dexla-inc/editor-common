@@ -10,7 +10,7 @@ public class VariableModel : IModelWithUserId
     {
     }
 
-    public string? Id { get; set; } 
+    public string? Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; }
     public string ProjectId { get; set; }
