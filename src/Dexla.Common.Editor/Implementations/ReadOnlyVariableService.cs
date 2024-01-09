@@ -29,7 +29,6 @@ public class ReadOnlyVariableService : DexlaService<Variable, VariableModel>, IR
     public async Task<IResponse> List(
         string projectId,
         string? search,
-        string pageId,
         int offset,
         int limit)
     {
@@ -37,14 +36,6 @@ public class ReadOnlyVariableService : DexlaService<Variable, VariableModel>, IR
 
         if (search != null)
             filterConfiguration.Append(nameof(Variable.Name), search, SearchTypes.PARTIAL);
-
-        filterConfiguration.AppendArray(
-            new Dictionary<string, object>
-            {
-                { nameof(Variable.PageId), pageId },
-                { nameof(Variable.IsGlobal), true }
-            },
-            SearchTypes.OR);
 
         (IReadOnlyList<Variable> entities, int totalRecords) =
             await _context.GetEntities<Variable>(filterConfiguration);
@@ -62,9 +53,7 @@ public class ReadOnlyVariableService : DexlaService<Variable, VariableModel>, IR
             m.Id,
             m.Name,
             m.Type,
-            m.DefaultValue,
-            m.IsGlobal,
-            m.PageId);
+            m.DefaultValue);
     }
 
     public VariableResponse _getResponse(VariableModel model)
@@ -73,8 +62,6 @@ public class ReadOnlyVariableService : DexlaService<Variable, VariableModel>, IR
             model.Id!,
             model.Name,
             Enum.Parse<FrontEndTypes>(model.Type),
-            model.DefaultValue,
-            model.IsGlobal,
-            model.PageId);
+            model.DefaultValue);
     }
 }

@@ -7,7 +7,7 @@ namespace Dexla.Common.Editor.Interfaces;
 
 public interface IReadOnlyVariableService : IDexlaService
 {
-    Task<IResponse> List(string projectId, string? search, string pageId, int offset, int limit);
+    Task<IResponse> List(string projectId, string? search, int offset, int limit);
     Task<IResponse> Get(string id);
     VariableResponse _getResponse(VariableModel model);
     Func<Variable, VariableResponse> _getResponse();

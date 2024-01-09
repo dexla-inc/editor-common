@@ -38,14 +38,6 @@ public class ReadOnlyLogicFlowService : DexlaService<LogicFlow, LogicFlowModel>,
         if (search != null)
             filterConfiguration.Append(nameof(LogicFlow.Name), search, SearchTypes.PARTIAL);
 
-        filterConfiguration.AppendArray(
-            new Dictionary<string, object>
-            {
-                { nameof(LogicFlow.PageId), pageId },
-                { nameof(LogicFlow.IsGlobal), true }
-            },
-            SearchTypes.OR);
-
         (IReadOnlyList<LogicFlow> entities, int totalRecords) =
             await _context.GetEntities<LogicFlow>(filterConfiguration);
 
@@ -62,8 +54,6 @@ public class ReadOnlyLogicFlowService : DexlaService<LogicFlow, LogicFlowModel>,
             entity.Id,
             entity.Name,
             entity.Data,
-            entity.PageId,
-            entity.IsGlobal,
             entity.CreatedAt,
             entity.UpdatedAt);
     }
@@ -74,8 +64,6 @@ public class ReadOnlyLogicFlowService : DexlaService<LogicFlow, LogicFlowModel>,
             model.Id!,
             model.Name,
             model.Data,
-            model.PageId,
-            model.IsGlobal,
             model.CreatedAt,
             model.UpdatedAt);
     }
