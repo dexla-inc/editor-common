@@ -29,7 +29,6 @@ public class ReadOnlyLogicFlowService : DexlaService<LogicFlow, LogicFlowModel>,
     public async Task<IResponse> List(
         string projectId,
         string? search,
-        string pageId,
         int offset,
         int limit)
     {
