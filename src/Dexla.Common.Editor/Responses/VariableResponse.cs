@@ -9,7 +9,6 @@ public class VariableResponse : ISuccess
     public string Name { get; }
     public FrontEndTypes Type { get; }
     public string DefaultValue { get; }
-    public string Value { get; }
     public bool IsGlobal { get; }
     public string PageId { get; }
 
@@ -18,7 +17,6 @@ public class VariableResponse : ISuccess
         string name,
         FrontEndTypes type,
         string defaultValue,
-        string value,
         bool isGlobal,
         string pageId)
     {
@@ -26,7 +24,6 @@ public class VariableResponse : ISuccess
         Name = name;
         Type = type;
         DefaultValue = defaultValue;
-        Value = value;
         IsGlobal = isGlobal;
         PageId = pageId;
     }
