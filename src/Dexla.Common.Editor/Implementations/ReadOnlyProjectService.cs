@@ -64,7 +64,7 @@ public class ReadOnlyProjectService(
         }
     }
 
-    public IResponse _getResponse(RepositoryActionResultModel<ProjectModel> actionResult)
+    public IResponse _getResponse(RepositoryActionResultModel<ProjectModel> actionResult, string? homePageId = null)
     {
         return actionResult.ActionResult<ProjectResponse>(
             actionResult,
@@ -84,15 +84,18 @@ public class ReadOnlyProjectService(
                 m.Created,
                 m.Screenshots,
                 m.CustomCode,
-                new PageSlugWithIdDto
+                m.RedirectPage != null ? new PageSlugWithIdDto
                 {
                     Id = m.RedirectPage.Id, 
                     Slug = m.RedirectPage.Slug
-                }
-            ));
+                } : null
+            )
+            {
+                HomePageId = homePageId
+            });
     }
 
-    public IResponse _getResponse(Project entity)
+    public ProjectResponse _getResponse(Project entity, bool? isOwner = false)
     {
         return new ProjectResponse(
             entity.Id,
@@ -104,17 +107,17 @@ public class ReadOnlyProjectService(
             entity.Industry,
             entity.Description,
             entity.SimilarCompany,
-            entity.IsOwner,
+            isOwner ?? entity.IsOwner,
             entity.Domain,
             entity.SubDomain,
             entity.Created,
             entity.Screenshots,
             entity.CustomCode,
-            new PageSlugWithIdDto
+            entity.RedirectPage != null ? new PageSlugWithIdDto
             {
                 Id = entity.RedirectPage.Id, 
                 Slug = entity.RedirectPage.Slug
-            }
+            } : null
         );
     }
 }
