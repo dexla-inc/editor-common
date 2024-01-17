@@ -84,11 +84,7 @@ public class ReadOnlyProjectService(
                 m.Created,
                 m.Screenshots,
                 m.CustomCode,
-                m.RedirectPage != null ? new PageSlugWithIdDto
-                {
-                    Id = m.RedirectPage.Id, 
-                    Slug = m.RedirectPage.Slug
-                } : null
+                m.RedirectSlug
             )
             {
                 HomePageId = homePageId
@@ -113,11 +109,7 @@ public class ReadOnlyProjectService(
             entity.Created,
             entity.Screenshots,
             entity.CustomCode,
-            entity.RedirectPage != null ? new PageSlugWithIdDto
-            {
-                Id = entity.RedirectPage.Id, 
-                Slug = entity.RedirectPage.Slug
-            } : null
+            entity.RedirectSlug
         );
     }
 }

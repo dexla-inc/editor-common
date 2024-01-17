@@ -23,7 +23,7 @@ public class ProjectResponse : ISuccess
     public string[] Screenshots { get; }
     public string? HomePageId { get; set; }
     public string? CustomCode { get; set; }
-    public PageSlugWithIdDto? RedirectPage { get; }
+    public string? RedirectSlug { get; }
     
     public ProjectResponse(
         string id,
@@ -41,7 +41,7 @@ public class ProjectResponse : ISuccess
         long created,
         string[] screenshots,
         string? customCode,
-        PageSlugWithIdDto? redirectPage)
+        string? redirectSlug)
     {
         Id = id;
         CompanyId = companyId;
@@ -58,7 +58,7 @@ public class ProjectResponse : ISuccess
         Created = created;
         Screenshots = screenshots;
         CustomCode = customCode;
-        RedirectPage = redirectPage;
+        RedirectSlug = redirectSlug;
     }
 
     public ProjectResponse()

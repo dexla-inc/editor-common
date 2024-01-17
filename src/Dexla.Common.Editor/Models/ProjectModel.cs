@@ -27,7 +27,7 @@ public class ProjectModel : IModelWithUserId
     public string[] Screenshots { get; set; } = Array.Empty<string>();
     public bool IsOwner { get; set; }
     public string? CustomCode { get; set; }
-    public PageSlugWithIdDto? RedirectPage { get; set; }
+    public string? RedirectSlug { get; set; }
     
     public void SetUserId(string value)
     {

@@ -29,5 +29,5 @@ public class Project : IEntity
     public string[] Screenshots { get; set; }
     public bool IsOwner { get; set; }
     public string? CustomCode { get; set; }
-    public PageSlugWithId? RedirectPage { get; set; }
+    public string? RedirectSlug { get; set; }
 }
