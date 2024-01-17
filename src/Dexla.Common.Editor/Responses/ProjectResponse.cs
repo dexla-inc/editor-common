@@ -1,4 +1,5 @@
-﻿using Dexla.Common.Types.Enums;
+﻿using Dexla.Common.Editor.Entities;
+using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
@@ -22,6 +23,7 @@ public class ProjectResponse : ISuccess
     public string[] Screenshots { get; }
     public string? HomePageId { get; set; }
     public string? CustomCode { get; set; }
+    public PageSlugWithIdDto RedirectPage { get; }
     
     public ProjectResponse(
         string id,
@@ -38,7 +40,8 @@ public class ProjectResponse : ISuccess
         string subDomain,
         long created,
         string[] screenshots,
-        string? customCode)
+        string? customCode,
+        PageSlugWithIdDto redirectPage)
     {
         Id = id;
         CompanyId = companyId;
@@ -55,6 +58,7 @@ public class ProjectResponse : ISuccess
         Created = created;
         Screenshots = screenshots;
         CustomCode = customCode;
+        RedirectPage = redirectPage;
     }
 
     public ProjectResponse()

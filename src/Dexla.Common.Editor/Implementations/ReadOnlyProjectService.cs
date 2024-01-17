@@ -24,14 +24,14 @@ public class ReadOnlyProjectService(
         return _getResponse(actionResult);
     }
 
-    public async Task<IResponse> GetProjectId(string domain)
+    public async Task<IResponse> GetByDomain(string domain)
     {
         try
         {
             FilterConfiguration filterConfig = new();
             DomainParser domainParser = new(new WebTldRuleProvider());
             DomainInfo? domainInfo = domainParser.Parse(domain);
-            
+
             if (domainInfo.RegistrableDomain == "dexla.io")
             {
                 string projectId = domainInfo.SubDomain ?? string.Empty;
@@ -47,14 +47,14 @@ public class ReadOnlyProjectService(
                 filterConfig.Append(nameof(Project.SubDomain), domainInfo.SubDomain, SearchTypes.EXACT);
                 filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
             }
-            
+
             Project? project = await context.GetByFields<Project>(filterConfig);
 
             if (project is null)
                 loggerService.LogWarning("Project not found for domain {0}", domain);
-            
-            return project is null 
-                ? new ProjectResponse() 
+
+            return project is null
+                ? new ProjectResponse()
                 : _getResponse(project);
         }
         catch (ParseException e)
@@ -63,7 +63,7 @@ public class ReadOnlyProjectService(
             return new ProjectResponse();
         }
     }
-    
+
     public IResponse _getResponse(RepositoryActionResultModel<ProjectModel> actionResult)
     {
         return actionResult.ActionResult<ProjectResponse>(
@@ -83,7 +83,12 @@ public class ReadOnlyProjectService(
                 m.SubDomain,
                 m.Created,
                 m.Screenshots,
-                m.CustomCode
+                m.CustomCode,
+                new PageSlugWithIdDto
+                {
+                    Id = m.RedirectPage.Id, 
+                    Slug = m.RedirectPage.Slug
+                }
             ));
     }
 
@@ -104,7 +109,12 @@ public class ReadOnlyProjectService(
             entity.SubDomain,
             entity.Created,
             entity.Screenshots,
-            entity.CustomCode
+            entity.CustomCode,
+            new PageSlugWithIdDto
+            {
+                Id = entity.RedirectPage.Id, 
+                Slug = entity.RedirectPage.Slug
+            }
         );
     }
 }

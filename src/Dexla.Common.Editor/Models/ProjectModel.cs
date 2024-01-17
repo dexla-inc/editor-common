@@ -1,4 +1,5 @@
-﻿using Dexla.Common.Editor.Responses;
+﻿using Dexla.Common.Editor.Entities;
+using Dexla.Common.Editor.Responses;
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
@@ -19,13 +20,14 @@ public class ProjectModel : IModelWithUserId
     public string Industry { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string? SimilarCompany { get; set; }
-    public List<ProjectCollaboratorDto> Collaborators { get; set; } = new();
+    public List<ProjectCollaboratorDto> Collaborators { get; set; } = [];
     public string Domain { get; set; } = string.Empty;
     public string SubDomain { get; set; } = string.Empty;
     public long Created { get; set; }
     public string[] Screenshots { get; set; } = Array.Empty<string>();
     public bool IsOwner { get; set; }
     public string? CustomCode { get; set; }
+    public PageSlugWithIdDto RedirectPage { get; set; } = new();
     
     public void SetUserId(string value)
     {
