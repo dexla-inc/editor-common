@@ -17,6 +17,7 @@ public class BrandingResponse(
         bool hasCompactButtons,
         string defaultRadius,
         string defaultSpacing,
+        string inputSize,
         LoaderTypes loader,
         FocusRingTypes focusRing,
         CardStyleTypes cardStyle)
@@ -35,6 +36,7 @@ public class BrandingResponse(
     public string DefaultRadius { get; } = defaultRadius;
     public string DefaultFont { get; } = defaultFont;
     public string DefaultSpacing { get; } = defaultSpacing;
+    public string InputSize { get; } = inputSize;
     public string? WebsiteUrl { get; } = websiteUrl;
     public bool HasCompactButtons { get; } = hasCompactButtons;
     public LoaderTypes Loader { get; } = loader;

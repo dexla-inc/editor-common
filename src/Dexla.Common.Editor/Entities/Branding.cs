@@ -26,6 +26,7 @@ public class Branding : IEntity
     public string? WebsiteUrl { get; set; }
     public string DefaultRadius { get; set; } = string.Empty;
     public string DefaultFont { get; set; } = string.Empty;
+    public string InputSize { get; set; } = string.Empty;
     public bool HasCompactButtons { get; set; }
     public LoaderTypes Loader { get; set; }
     public FocusRingTypes FocusRing { get; set; }

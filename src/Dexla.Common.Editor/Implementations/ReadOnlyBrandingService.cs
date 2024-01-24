@@ -38,6 +38,7 @@ public class ReadOnlyBrandingService(IRepository<Branding, BrandingModel> reposi
             model.HasCompactButtons,
             model.DefaultRadius,
             model.DefaultSpacing,
+            model.InputSize,
             Enum.Parse<LoaderTypes>(model.Loader),
             Enum.Parse<FocusRingTypes>(model.FocusRing),
             Enum.Parse<CardStyleTypes>(model.CardStyle)

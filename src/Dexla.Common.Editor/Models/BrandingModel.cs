@@ -30,6 +30,7 @@ public class BrandingModel : IModelWithUserId
     public string? WebsiteUrl { get; set; }
     public string DefaultRadius { get; set; } = string.Empty;
     public string DefaultFont { get; set; } = string.Empty;
+    public string InputSize { get; set; } = string.Empty;
     public bool HasCompactButtons { get; set; }
     public string Loader { get; set; } = string.Empty;
     public string FocusRing { get; set; } = string.Empty;
@@ -160,6 +161,7 @@ public class BrandingModel : IModelWithUserId
             HasCompactButtons = true,
             DefaultRadius = "sm",
             DefaultSpacing = "md",
+            InputSize = "sm",
             Loader = LoaderTypes.OVAL.ToString(),
             FocusRing = FocusRingTypes.DEFAULT.ToString(),
             CardStyle = CardStyleTypes.ROUNDED.ToString(),
