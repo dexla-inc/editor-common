@@ -28,6 +28,7 @@ public class ProjectModel : IModelWithUserId
     public bool IsOwner { get; set; }
     public string? CustomCode { get; set; }
     public string? RedirectSlug { get; set; }
+    public string? FaviconUrl { get; set; }
     
     public void SetUserId(string value)
     {

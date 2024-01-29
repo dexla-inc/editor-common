@@ -84,7 +84,8 @@ public class ReadOnlyProjectService(
                 m.Created,
                 m.Screenshots,
                 m.CustomCode,
-                m.RedirectSlug
+                m.RedirectSlug,
+                m.FaviconUrl
             )
             {
                 HomePageId = homePageId
@@ -109,7 +110,8 @@ public class ReadOnlyProjectService(
             entity.Created,
             entity.Screenshots,
             entity.CustomCode,
-            entity.RedirectSlug
+            entity.RedirectSlug,
+            entity.FaviconUrl
         );
     }
 }

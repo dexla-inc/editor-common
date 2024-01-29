@@ -24,6 +24,7 @@ public class ProjectResponse : ISuccess
     public string? HomePageId { get; set; }
     public string? CustomCode { get; set; }
     public string? RedirectSlug { get; }
+    public string? FaviconUrl { get; }
     
     public ProjectResponse(
         string id,
@@ -41,7 +42,8 @@ public class ProjectResponse : ISuccess
         long created,
         string[] screenshots,
         string? customCode,
-        string? redirectSlug)
+        string? redirectSlug,
+        string? faviconUrl)
     {
         Id = id;
         CompanyId = companyId;
@@ -59,6 +61,7 @@ public class ProjectResponse : ISuccess
         Screenshots = screenshots;
         CustomCode = customCode;
         RedirectSlug = redirectSlug;
+        FaviconUrl = faviconUrl;
     }
 
     public ProjectResponse()
