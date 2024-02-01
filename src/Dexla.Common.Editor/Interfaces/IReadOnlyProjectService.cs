@@ -4,7 +4,6 @@ namespace Dexla.Common.Editor.Interfaces;
 
 public interface IReadOnlyProjectService : IDexlaService
 {
-    Task<IResponse> Get(string id);
-    Task<IResponse> GetByDomain(string domain);
-    Task<IResponse> GetProjectWithBranding(string domain);
+    Task<IResponse> Get(string id, bool includeBranding);
+    Task<IResponse> GetByDomain(string domain, bool includeBranding);
 }

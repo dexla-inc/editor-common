@@ -17,14 +17,26 @@ public class ReadOnlyProjectService(
     ILoggerService<ReadOnlyProjectService> loggerService)
     : DexlaService<Project, ProjectModel>(repository), IReadOnlyProjectService
 {
-    public async Task<IResponse> Get(string id)
+    public async Task<IResponse> Get(string id, bool includeBranding)
     {
+        if (includeBranding)
+        {
+            FilterConfiguration filterConfig = new();
+            filterConfig.Append(nameof(Project.Id), id, SearchTypes.EXACT);
+
+            return
+                await context.JoinCollections<Project, Branding, ProjectWithBranding>(
+                    filterConfig,
+                    nameof(Project.Id),
+                    nameof(Branding.ProjectId));
+        }
+
         RepositoryActionResultModel<ProjectModel> actionResult = await Repository.Get(id);
 
         return _getResponse(actionResult);
     }
 
-    public async Task<IResponse> GetByDomain(string domain)
+    public async Task<IResponse> GetByDomain(string domain, bool includeBranding)
     {
         try
         {
@@ -46,6 +58,15 @@ public class ReadOnlyProjectService(
             {
                 filterConfig.Append(nameof(Project.SubDomain), domainInfo.SubDomain, SearchTypes.EXACT);
                 filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
+            }
+
+            if (includeBranding)
+            {
+                return
+                    await context.JoinCollections<Project, Branding, ProjectWithBranding>(
+                        filterConfig,
+                        nameof(Project.Id),
+                        nameof(Branding.ProjectId));
             }
 
             Project? project = await context.GetByFields<Project>(filterConfig);
@@ -56,46 +77,6 @@ public class ReadOnlyProjectService(
             return project is null
                 ? new ProjectResponse()
                 : _getResponse(project);
-        }
-        catch (ParseException e)
-        {
-            loggerService.LogWarning("Failed to parse domain {0}", domain);
-            return new ProjectResponse();
-        }
-    }
-
-    public async Task<IResponse> GetProjectWithBranding(string domain)
-    {
-        try
-        {
-            FilterConfiguration filterConfig = new();
-            DomainParser domainParser = new(new WebTldRuleProvider());
-            DomainInfo? domainInfo = domainParser.Parse(domain);
-
-            if (domainInfo.RegistrableDomain == "dexla.io")
-            {
-                string projectId = domainInfo.SubDomain ?? string.Empty;
-                filterConfig.Append(nameof(Project.Id), projectId, SearchTypes.EXACT);
-            }
-            else if (domainInfo.TLD == "localhost")
-            {
-                string projectId = domainInfo.Domain ?? string.Empty;
-                filterConfig.Append(nameof(Project.Id), projectId, SearchTypes.EXACT);
-            }
-            else
-            {
-                filterConfig.Append(nameof(Project.SubDomain), domainInfo.SubDomain, SearchTypes.EXACT);
-                filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
-            }
-
-            ProjectWithBranding project =
-                await context.JoinCollections<Project, Branding, ProjectWithBranding>(
-                    filterConfig,
-                    nameof(Project.Id),
-                    nameof(Branding.ProjectId),
-                    "Brandings");
-            
-            return project;
         }
         catch (ParseException e)
         {
