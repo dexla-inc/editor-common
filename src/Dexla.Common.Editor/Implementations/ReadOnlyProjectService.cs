@@ -91,8 +91,8 @@ public class ReadOnlyProjectService(
             ProjectWithBranding project =
                 await context.JoinCollections<Project, Branding, ProjectWithBranding>(
                     filterConfig,
-                    project => project.Id,
-                    branding => branding.ProjectId,
+                    nameof(Project.Id),
+                    nameof(Branding.ProjectId),
                     "Brandings");
             
             return project;
