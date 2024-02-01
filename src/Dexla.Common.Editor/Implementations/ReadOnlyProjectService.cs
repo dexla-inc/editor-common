@@ -64,6 +64,46 @@ public class ReadOnlyProjectService(
         }
     }
 
+    public async Task<IResponse> GetProjectWithBranding(string domain)
+    {
+        try
+        {
+            FilterConfiguration filterConfig = new();
+            DomainParser domainParser = new(new WebTldRuleProvider());
+            DomainInfo? domainInfo = domainParser.Parse(domain);
+
+            if (domainInfo.RegistrableDomain == "dexla.io")
+            {
+                string projectId = domainInfo.SubDomain ?? string.Empty;
+                filterConfig.Append(nameof(Project.Id), projectId, SearchTypes.EXACT);
+            }
+            else if (domainInfo.TLD == "localhost")
+            {
+                string projectId = domainInfo.Domain ?? string.Empty;
+                filterConfig.Append(nameof(Project.Id), projectId, SearchTypes.EXACT);
+            }
+            else
+            {
+                filterConfig.Append(nameof(Project.SubDomain), domainInfo.SubDomain, SearchTypes.EXACT);
+                filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
+            }
+
+            ProjectWithBranding project =
+                await context.JoinCollections<Project, Branding, ProjectWithBranding>(
+                    filterConfig,
+                    project => project.Id,
+                    branding => branding.ProjectId,
+                    "Brandings");
+            
+            return project;
+        }
+        catch (ParseException e)
+        {
+            loggerService.LogWarning("Failed to parse domain {0}", domain);
+            return new ProjectResponse();
+        }
+    }
+
     public IResponse _getResponse(RepositoryActionResultModel<ProjectModel> actionResult, string? homePageId = null)
     {
         return actionResult.ActionResult<ProjectResponse>(
@@ -114,4 +154,10 @@ public class ReadOnlyProjectService(
             entity.FaviconUrl
         );
     }
+}
+
+public class ProjectWithBranding : Project, ISuccess
+{
+    public Branding? Branding { get; set; }
+    public string TrackingId { get; set; }
 }

@@ -6,4 +6,5 @@ public interface IReadOnlyProjectService : IDexlaService
 {
     Task<IResponse> Get(string id);
     Task<IResponse> GetByDomain(string domain);
+    Task<IResponse> GetProjectWithBranding(string domain);
 }
