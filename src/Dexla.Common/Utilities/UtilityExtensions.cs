@@ -36,10 +36,14 @@ namespace Dexla.Common.Utilities
 
             return mediaTypes;
         }
-        
+
         public static string[] GetPreferredMediaTypes()
         {
-            return new[] { MediaTypes.ApplicationJson, MediaTypes.ApplicationFormUrlEncoded, "multipart/form-data", "application/graphql" };
+            return new[]
+            {
+                MediaTypes.ApplicationJson, MediaTypes.ApplicationFormUrlEncoded, "multipart/form-data",
+                "application/graphql"
+            };
         }
 
         public static bool InList<TType>(this TType value, params TType[] values)
@@ -94,6 +98,18 @@ namespace Dexla.Common.Utilities
         {
             int index = random.Next(list.Count);
             return list[index];
+        }
+
+        public static IEnumerable<string> GetInternalUrls()
+        {
+            return
+            [
+                "www.dexla.io",
+                "www.dexla.ai",
+                "dev-app.dexla.ai",
+                "beta.dexla.ai",
+                "app.dexla.ai",
+            ];
         }
     }
 }
