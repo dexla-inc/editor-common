@@ -35,7 +35,7 @@ public class ReadOnlyProjectService(
             DomainParser domainParser = new(new WebTldRuleProvider());
             DomainInfo? domainInfo = domainParser.Parse(domain);
             string? projectId = string.Empty;
-            
+
             if (domainInfo.RegistrableDomain == "dexla.io")
             {
                 projectId = domainInfo.SubDomain ?? string.Empty;
@@ -51,7 +51,7 @@ public class ReadOnlyProjectService(
                 filterConfig.Append(nameof(Project.SubDomain), domainInfo.SubDomain, SearchTypes.EXACT);
                 filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
             }
-         
+
             if (includeBranding)
                 return await _projectWithBranding(projectId);
 
@@ -135,6 +135,9 @@ public class ReadOnlyProjectService(
 
         if (projectWithBranding.Branding is null)
             projectWithBranding.SetBranding(id);
+
+        if (projectWithBranding is null)
+            return new ProjectResponse();
 
         return projectWithBranding;
     }
