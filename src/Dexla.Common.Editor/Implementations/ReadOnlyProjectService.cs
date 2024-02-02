@@ -124,32 +124,29 @@ public class ReadOnlyProjectService(
 
     private async Task<IResponse> _projectWithBranding(string id)
     {
-        FilterConfiguration filterConfig = new();
-        filterConfig.Append(nameof(Project.Id), id, SearchTypes.EXACT);
+        try
+        {
+            FilterConfiguration filterConfig = new();
+            filterConfig.Append(nameof(Project.Id), id, SearchTypes.EXACT);
 
-        ProjectWithBrandingResponse projectWithBranding =
-            await context.JoinCollections<Project, Branding, ProjectWithBrandingResponse>(
-                filterConfig,
-                nameof(Project.Id),
-                nameof(Branding.ProjectId));
+            ProjectWithBrandingResponse projectWithBranding =
+                await context.JoinCollections<Project, Branding, ProjectWithBrandingResponse>(
+                    filterConfig,
+                    nameof(Project.Id),
+                    nameof(Branding.ProjectId));
 
-        if (projectWithBranding.Branding is null)
-            projectWithBranding.SetBranding(id);
+            if (projectWithBranding.Branding is null)
+                projectWithBranding.SetBranding(id);
 
-        if (projectWithBranding is null)
+            if (string.IsNullOrEmpty(projectWithBranding.Id))
+                return new ProjectResponse();
+
+            return projectWithBranding;
+        }
+        catch (Exception e)
+        {
+            loggerService.LogWarning("Failed to get project with branding {0}", e.Message);
             return new ProjectResponse();
-
-        return projectWithBranding;
-    }
-}
-
-public class ProjectWithBrandingResponse : Project, ISuccess
-{
-    public BrandingModel? Branding { get; set; }
-    public string TrackingId { get; set; }
-
-    public void SetBranding(string? projectId)
-    {
-        Branding = BrandingModel.GetDefault(string.Empty, projectId ?? string.Empty);
+        }
     }
 }
