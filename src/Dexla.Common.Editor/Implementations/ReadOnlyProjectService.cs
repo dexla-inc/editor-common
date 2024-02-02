@@ -136,7 +136,7 @@ public class ReadOnlyProjectService(
         if (projectWithBranding.Branding is null)
             projectWithBranding.SetBranding(id);
 
-        return new ErrorResponse("Project not found with branding");
+        return projectWithBranding;
     }
 }
 
