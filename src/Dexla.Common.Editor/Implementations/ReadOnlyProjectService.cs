@@ -20,16 +20,7 @@ public class ReadOnlyProjectService(
     public async Task<IResponse> Get(string id, bool includeBranding)
     {
         if (includeBranding)
-        {
-            FilterConfiguration filterConfig = new();
-            filterConfig.Append(nameof(Project.Id), id, SearchTypes.EXACT);
-
-            return
-                await context.JoinCollections<Project, Branding, ProjectWithBranding>(
-                    filterConfig,
-                    nameof(Project.Id),
-                    nameof(Branding.ProjectId));
-        }
+            return await _projectWithBranding(id);
 
         RepositoryActionResultModel<ProjectModel> actionResult = await Repository.Get(id);
 
@@ -43,15 +34,16 @@ public class ReadOnlyProjectService(
             FilterConfiguration filterConfig = new();
             DomainParser domainParser = new(new WebTldRuleProvider());
             DomainInfo? domainInfo = domainParser.Parse(domain);
-
+            string? projectId = string.Empty;
+            
             if (domainInfo.RegistrableDomain == "dexla.io")
             {
-                string projectId = domainInfo.SubDomain ?? string.Empty;
+                projectId = domainInfo.SubDomain ?? string.Empty;
                 filterConfig.Append(nameof(Project.Id), projectId, SearchTypes.EXACT);
             }
             else if (domainInfo.TLD == "localhost")
             {
-                string projectId = domainInfo.Domain ?? string.Empty;
+                projectId = domainInfo.Domain ?? string.Empty;
                 filterConfig.Append(nameof(Project.Id), projectId, SearchTypes.EXACT);
             }
             else
@@ -59,15 +51,9 @@ public class ReadOnlyProjectService(
                 filterConfig.Append(nameof(Project.SubDomain), domainInfo.SubDomain, SearchTypes.EXACT);
                 filterConfig.Append(nameof(Project.Domain), domainInfo.RegistrableDomain, SearchTypes.EXACT);
             }
-
+         
             if (includeBranding)
-            {
-                return
-                    await context.JoinCollections<Project, Branding, ProjectWithBranding>(
-                        filterConfig,
-                        nameof(Project.Id),
-                        nameof(Branding.ProjectId));
-            }
+                return await _projectWithBranding(projectId);
 
             Project? project = await context.GetByFields<Project>(filterConfig);
 
@@ -135,10 +121,32 @@ public class ReadOnlyProjectService(
             entity.FaviconUrl
         );
     }
+
+    private async Task<IResponse> _projectWithBranding(string id)
+    {
+        FilterConfiguration filterConfig = new();
+        filterConfig.Append(nameof(Project.Id), id, SearchTypes.EXACT);
+
+        ProjectWithBrandingResponse projectWithBranding =
+            await context.JoinCollections<Project, Branding, ProjectWithBrandingResponse>(
+                filterConfig,
+                nameof(Project.Id),
+                nameof(Branding.ProjectId));
+
+        if (projectWithBranding.Branding is null)
+            projectWithBranding.SetBranding(id);
+
+        return new ErrorResponse("Project not found with branding");
+    }
 }
 
-public class ProjectWithBranding : Project, ISuccess
+public class ProjectWithBrandingResponse : Project, ISuccess
 {
-    public Branding? Branding { get; set; }
+    public BrandingModel? Branding { get; set; }
     public string TrackingId { get; set; }
+
+    public void SetBranding(string? projectId)
+    {
+        Branding = BrandingModel.GetDefault(string.Empty, projectId ?? string.Empty);
+    }
 }
