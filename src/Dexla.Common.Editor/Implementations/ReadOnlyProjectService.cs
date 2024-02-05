@@ -125,13 +125,37 @@ public class ReadOnlyProjectService(
             entity.FaviconUrl
         );
     }
+    
+    public ProjectWithBrandingResponse _getResponse(ProjectWithBranding entity)
+    {
+        return new ProjectWithBrandingResponse(
+            entity.Id,
+            entity.CompanyId,
+            entity.Name,
+            entity.FriendlyName,
+            Regions.ParseRegion(entity.Region) ?? new Region(),
+            entity.Type,
+            entity.Industry,
+            entity.Description,
+            entity.SimilarCompany,
+            entity.IsOwner,
+            entity.Domain,
+            entity.SubDomain,
+            entity.Created,
+            entity.Screenshots,
+            entity.CustomCode,
+            entity.RedirectSlug,
+            entity.FaviconUrl,
+            entity.Branding
+        );
+    }
 
     private async Task<IResponse> _projectWithBranding(FilterConfiguration filterConfig)
     {
         try
         {
-            ProjectWithBrandingResponse projectWithBranding =
-                await context.JoinCollections<Project, Branding, ProjectWithBrandingResponse>(
+            ProjectWithBranding projectWithBranding =
+                await context.JoinCollections<Project, Branding, ProjectWithBranding>(
                     filterConfig,
                     nameof(Project.Id),
                     nameof(Branding.ProjectId));
@@ -142,7 +166,7 @@ public class ReadOnlyProjectService(
             if (string.IsNullOrEmpty(projectWithBranding.Id))
                 return new ErrorResponse("Can't find project", Json.Serialize(filterConfig.Filters.ToArray()));
 
-            return projectWithBranding;
+            return _getResponse(projectWithBranding);
         }
         catch (Exception e)
         {

@@ -8,5 +8,5 @@ public interface IReadOnlyBrandingService : IDexlaService
 {
     Task<IResponse> Get(string projectId, CancellationToken cancellationToken);
 
-    IResponse GetResponse(RepositoryActionResultModel<BrandingModel> actionResult);
+    IResponse _getResponse(RepositoryActionResultModel<BrandingModel> actionResult);
 }

@@ -18,7 +18,7 @@ public class ReadOnlyBrandingService(IRepository<Branding, BrandingModel> reposi
         RepositoryActionResultModel<BrandingModel> actionResult = await repository.Get(projectId);
 
         return actionResult.CurrentVersion != null
-            ? GetResponse(actionResult)
+            ? _getResponse(actionResult)
             : GetResponse(BrandingModel.GetDefault("", projectId));
     }
 
@@ -45,7 +45,7 @@ public class ReadOnlyBrandingService(IRepository<Branding, BrandingModel> reposi
         );
     }
 
-    public IResponse GetResponse(RepositoryActionResultModel<BrandingModel> actionResult)
+    public IResponse _getResponse(RepositoryActionResultModel<BrandingModel> actionResult)
     {
         return actionResult.ActionResult(actionResult, GetResponse);
     }

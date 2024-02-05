@@ -1,5 +1,4 @@
-﻿using Dexla.Common.Editor.Entities;
-using Dexla.Common.Types.Enums;
+﻿using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
