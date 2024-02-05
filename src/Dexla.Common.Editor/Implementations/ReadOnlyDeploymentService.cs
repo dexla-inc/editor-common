@@ -111,7 +111,7 @@ public class ReadOnlyDeploymentService(
     
     public DeploymentPageResponse _pageToDeploymentPage(DeploymentPage page, bool includePages)
     {
-        return new DeploymentPageResponse(page.Id, page.Title, page.Slug)
+        return new DeploymentPageResponse(page.Id, page.Title, page.Slug, page.AuthenticatedOnly, page.AuthenticatedUserRole)
         {
             PageState = includePages ? page.PageState : null,
         };

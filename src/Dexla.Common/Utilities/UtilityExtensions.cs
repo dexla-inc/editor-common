@@ -114,7 +114,8 @@ namespace Dexla.Common.Utilities
                 "app.dexla.ai",
                 "staging-evalio.dexla.io",
                 "app.dexla.co.uk",
-                "*-dexla-inc.vercel.app"
+                "beta.dexla.co.uk",
+                "*-dexla-inc.vercel.app",
             ];
         }
     }
