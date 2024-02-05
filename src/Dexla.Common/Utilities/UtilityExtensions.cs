@@ -106,9 +106,15 @@ namespace Dexla.Common.Utilities
             [
                 "www.dexla.io",
                 "www.dexla.ai",
+                "dexla.io",
+                "dexla.ai",
+                "dexla.co.uk",
                 "dev-app.dexla.ai",
                 "beta.dexla.ai",
                 "app.dexla.ai",
+                "staging-evalio.dexla.io",
+                "app.dexla.co.uk",
+                "*-dexla-inc.vercel.app"
             ];
         }
     }
