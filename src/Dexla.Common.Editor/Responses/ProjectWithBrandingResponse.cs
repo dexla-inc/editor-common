@@ -4,10 +4,9 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
 
-public class ProjectWithBrandingResponse : ProjectResponse, ISuccess
+public class ProjectWithBrandingResponse : ProjectResponse
 {
     public BrandingResponse? Branding { get; set; }
-    public string TrackingId { get; set; }
 
     public void SetBranding()
     {

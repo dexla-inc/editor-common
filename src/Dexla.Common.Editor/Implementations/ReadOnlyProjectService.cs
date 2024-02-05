@@ -146,8 +146,8 @@ public class ReadOnlyProjectService(
         }
         catch (Exception e)
         {
-            loggerService.LogWarning("Failed to get project with branding {0}", e.Message);
-            return new ProjectResponse();
+            //await loggerService.LogError("Failed to get project with branding {0}", e.Message);
+            return new ErrorResponse("Failed to get project with branding " + e.Message);
         }
     }
 }
