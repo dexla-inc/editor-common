@@ -20,7 +20,11 @@ public class ReadOnlyProjectService(
     public async Task<IResponse> Get(string id, bool includeBranding)
     {
         if (includeBranding)
-            return await _projectWithBranding(id);
+        {
+            FilterConfiguration filterConfig = new();
+            filterConfig.Append(nameof(Project.Id), id, SearchTypes.EXACT);
+            return await _projectWithBranding(filterConfig);
+        }
 
         RepositoryActionResultModel<ProjectModel> actionResult = await Repository.Get(id);
 
@@ -53,7 +57,7 @@ public class ReadOnlyProjectService(
             }
 
             if (includeBranding)
-                return await _projectWithBranding(projectId);
+                return await _projectWithBranding(filterConfig);
 
             Project? project = await context.GetByFields<Project>(filterConfig);
 
@@ -122,13 +126,11 @@ public class ReadOnlyProjectService(
         );
     }
 
-    private async Task<IResponse> _projectWithBranding(string id)
+
+    private async Task<IResponse> _projectWithBranding(FilterConfiguration filterConfig)
     {
         try
         {
-            FilterConfiguration filterConfig = new();
-            filterConfig.Append(nameof(Project.Id), id, SearchTypes.EXACT);
-
             ProjectWithBrandingResponse projectWithBranding =
                 await context.JoinCollections<Project, Branding, ProjectWithBrandingResponse>(
                     filterConfig,
@@ -136,7 +138,7 @@ public class ReadOnlyProjectService(
                     nameof(Branding.ProjectId));
 
             if (projectWithBranding.Branding is null)
-                projectWithBranding.SetBranding(id);
+                projectWithBranding.SetBranding();
 
             if (string.IsNullOrEmpty(projectWithBranding.Id))
                 return new ProjectResponse();

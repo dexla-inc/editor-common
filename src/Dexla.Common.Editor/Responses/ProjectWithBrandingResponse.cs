@@ -9,8 +9,8 @@ public class ProjectWithBrandingResponse : Project, ISuccess
     public BrandingModel? Branding { get; set; }
     public string TrackingId { get; set; }
 
-    public void SetBranding(string? projectId)
+    public void SetBranding()
     {
-        Branding = BrandingModel.GetDefault(string.Empty, projectId ?? string.Empty);
+        Branding = BrandingModel.GetDefault(string.Empty, string.Empty);
     }
 }
