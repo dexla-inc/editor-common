@@ -126,7 +126,6 @@ public class ReadOnlyProjectService(
         );
     }
 
-
     private async Task<IResponse> _projectWithBranding(FilterConfiguration filterConfig)
     {
         try
@@ -136,12 +135,12 @@ public class ReadOnlyProjectService(
                     filterConfig,
                     nameof(Project.Id),
                     nameof(Branding.ProjectId));
-
+            
             if (projectWithBranding.Branding is null)
                 projectWithBranding.SetBranding();
 
             if (string.IsNullOrEmpty(projectWithBranding.Id))
-                return new ProjectResponse();
+                return new ErrorResponse("Can't find project", Json.Serialize(filterConfig.Filters.ToArray()));
 
             return projectWithBranding;
         }
