@@ -17,4 +17,5 @@ public class Variable : IEntity
     public string Name { get; set; }
     public FrontEndTypes Type { get; set; }
     public string DefaultValue { get; set; }
+    public bool IsGlobal { get; set; }
 }

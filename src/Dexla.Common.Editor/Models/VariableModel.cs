@@ -17,6 +17,7 @@ public class VariableModel : IModelWithUserId
     public string Name { get; set; }
     public string Type { get; set; }
     public string DefaultValue { get; set; }
+    public bool IsGlobal { get; set; }
 
     public void SetUserId(string value)
     {

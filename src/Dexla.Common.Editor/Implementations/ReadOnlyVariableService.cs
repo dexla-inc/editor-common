@@ -53,7 +53,8 @@ public class ReadOnlyVariableService : DexlaService<Variable, VariableModel>, IR
             m.Id,
             m.Name,
             m.Type,
-            m.DefaultValue);
+            m.DefaultValue,
+            m.IsGlobal);
     }
 
     public VariableResponse _getResponse(VariableModel model)
@@ -62,6 +63,7 @@ public class ReadOnlyVariableService : DexlaService<Variable, VariableModel>, IR
             model.Id!,
             model.Name,
             Enum.Parse<FrontEndTypes>(model.Type),
-            model.DefaultValue);
+            model.DefaultValue,
+            model.IsGlobal);
     }
 }
