@@ -45,7 +45,7 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
             offset,
             take,
             sortConfiguration);
-        
+
         PagedResponse<PageResponse> results = new()
         {
             Results = entities.Select(_getResponse()).ToList(),
@@ -116,7 +116,7 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
                 SequentialTo = a.SequentialTo
             }).ToList());
     }
-    
+
     public Func<Page, PageResponse> _getResponse()
     {
         return page => new PageResponse(
@@ -163,5 +163,25 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
                 ActionType = a.ActionType,
                 SequentialTo = a.SequentialTo
             }).ToList());
+    }
+
+    public static IResponse _getResponse(RepositoryActionResultModel<PageModel> actionResult)
+    {
+        return actionResult.ActionResult<PageResponse>(
+            actionResult,
+            m => new PageResponse(
+                m.Id, 
+                m.ProjectId, 
+                m.Title, 
+                m.Slug, 
+                m.Description,
+                m.PageState,
+                m.IsHome,
+                m.AuthenticatedOnly,
+                m.AuthenticatedUserRole,
+                m.ParentPageId,
+                m.HasNavigation,
+                m.QueryStrings,
+                m.Actions));
     }
 }
