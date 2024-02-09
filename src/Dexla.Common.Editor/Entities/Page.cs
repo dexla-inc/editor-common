@@ -25,5 +25,5 @@ public class Page : IEntity
     public virtual bool HasNavigation { get; set; }
     public Dictionary<string,string>? QueryStrings { get; set; }
     public virtual string Description { get; set; }
-    public List<Action>? Actions = [];
+    public virtual List<Action>? Actions { get; set; }
 }

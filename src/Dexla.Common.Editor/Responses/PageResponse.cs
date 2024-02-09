@@ -29,7 +29,7 @@ public class PageResponse : ISuccess
     public string? ParentPageId { get; }
     public bool HasNavigation { get; }
     public Dictionary<string,string>? QueryStrings { get; }
-    public List<ActionDto>? Actions = [];
+    public List<ActionDto>? Actions { get; set; }
 
     public PageResponse(
         string? id,
