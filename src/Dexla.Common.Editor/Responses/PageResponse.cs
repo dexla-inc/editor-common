@@ -1,4 +1,5 @@
-﻿using Dexla.Common.Types.Interfaces;
+﻿using Dexla.Common.Editor.Models;
+using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
 
@@ -28,6 +29,7 @@ public class PageResponse : ISuccess
     public string? ParentPageId { get; }
     public bool HasNavigation { get; }
     public Dictionary<string,string>? QueryStrings { get; }
+    public List<ActionDto>? Actions = [];
 
     public PageResponse(
         string? id,
@@ -41,7 +43,8 @@ public class PageResponse : ISuccess
         string authenticatedUserRole,
         string? parentPageId,
         bool hasNavigation,
-        Dictionary<string, string>? queryStrings)
+        Dictionary<string, string>? queryStrings,
+        List<ActionDto>? actions)
     {
         Id = id;
         ProjectId = projectId;
@@ -55,6 +58,7 @@ public class PageResponse : ISuccess
         ParentPageId = parentPageId;
         HasNavigation = hasNavigation;
         QueryStrings = queryStrings;
+        Actions = actions;
     }
 
     public string TrackingId { get; set; }

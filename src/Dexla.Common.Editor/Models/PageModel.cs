@@ -21,6 +21,7 @@ public class PageModel : IModelWithUserId
     public bool HasNavigation { get; set; }
     public WebAppType? CopyFrom { get; set; } = new();
     public Dictionary<string,string>? QueryStrings { get; set; }
+    public List<ActionDto>? Actions = [];
 
     public void SetProjectId(string projectId)
     {

@@ -45,40 +45,44 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
             offset,
             take,
             sortConfiguration);
-
-        List<PageResponse> results = entities.Select(m =>
-                new PageResponse(m.Id, m.ProjectId, m.Title, m.Slug, m.Description, m.PageState, m.IsHome, m.AuthenticatedOnly,
-                    m.AuthenticatedUserRole, m.ParentPageId, m.HasNavigation, m.QueryStrings))
-            .ToList();
+        
+        PagedResponse<PageResponse> results = new()
+        {
+            Results = entities.Select(_getResponse()).ToList(),
+            Paging = new PagingModel(totalRecords, entities.Count, offset, take)
+        };
 
         // Sort by results.title except for the home page
-        PageResponse? homePage = results.FirstOrDefault(p => p.IsHome);
+        PageResponse? homePage = results.Results.FirstOrDefault(p => p.IsHome);
         if (homePage != null)
         {
-            results.Remove(homePage);
-            results = results.OrderBy(p => p.Title).ToList();
-            results.Insert(0, homePage);
+            results.Results.Remove(homePage);
+            List<PageResponse> sortedResults = results.Results.OrderBy(p => p.Title).ToList();
+            results.Results.Clear();
+            results.Results.Add(homePage);
+            foreach (PageResponse result in sortedResults)
+            {
+                results.Results.Add(result);
+            }
         }
 
         return new PagedResponse<PageResponse>
         {
-            Results = results,
-            Paging = new PagingModel(totalRecords, results.Count, offset, take)
+            Results = results.Results,
+            Paging = new PagingModel(totalRecords, results.Paging?.TotalRecords ?? 0, offset, take)
         };
     }
 
     public async Task<IResponse> Get(string id)
     {
-        RepositoryActionResultModel<PageModel> actionResult = await Repository.Get(id);
-
-        return _getResponse(actionResult);
+        return await Get(id, _getResponse);
     }
 
     public async Task<IResponse> GetBySlug(string projectId, string slug)
     {
         if (string.IsNullOrWhiteSpace(slug))
             slug = "/";
-        
+
         FilterConfiguration filterConfig = new(projectId);
         filterConfig.Append(nameof(Page.Slug), slug, SearchTypes.EXACT);
         Page? page = await _context.GetByFields<Page>(filterConfig);
@@ -92,25 +96,72 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
     private static IResponse _getResponse(Page page)
     {
         return new PageResponse(
-            page.Id, 
-            page.ProjectId, 
-            page.Title, 
-            page.Slug, 
+            page.Id,
+            page.ProjectId,
+            page.Title,
+            page.Slug,
             page.Description,
-            page.PageState, 
+            page.PageState,
             page.IsHome,
             page.AuthenticatedOnly,
-            page.AuthenticatedUserRole, 
-            page.ParentPageId, 
-            page.HasNavigation, 
-            page.QueryStrings);
+            page.AuthenticatedUserRole,
+            page.ParentPageId,
+            page.HasNavigation,
+            page.QueryStrings,
+            page.Actions?.Select(a => new ActionDto
+            {
+                Id = a.Id,
+                Trigger = a.Trigger,
+                ActionType = a.ActionType,
+                SequentialTo = a.SequentialTo
+            }).ToList());
+    }
+    
+    public Func<Page, PageResponse> _getResponse()
+    {
+        return page => new PageResponse(
+            page.Id,
+            page.ProjectId,
+            page.Title,
+            page.Slug,
+            page.Description,
+            page.PageState,
+            page.IsHome,
+            page.AuthenticatedOnly,
+            page.AuthenticatedUserRole,
+            page.ParentPageId,
+            page.HasNavigation,
+            page.QueryStrings,
+            page.Actions?.Select(a => new ActionDto
+            {
+                Id = a.Id,
+                Trigger = a.Trigger,
+                ActionType = a.ActionType,
+                SequentialTo = a.SequentialTo
+            }).ToList());
     }
 
-    private static IResponse _getResponse(RepositoryActionResultModel<PageModel> actionResult)
+    public PageResponse _getResponse(PageModel model)
     {
-        return actionResult.ActionResult<PageResponse>(
-            actionResult,
-            m => new PageResponse(m.Id, m.ProjectId, m.Title, m.Slug,m.Description, m.PageState, m.IsHome, m.AuthenticatedOnly,
-                m.AuthenticatedUserRole, m.ParentPageId, m.HasNavigation, m.QueryStrings));
+        return new PageResponse(
+            model.Id,
+            model.ProjectId,
+            model.Title,
+            model.Slug,
+            model.Description,
+            model.PageState,
+            model.IsHome,
+            model.AuthenticatedOnly,
+            model.AuthenticatedUserRole,
+            model.ParentPageId,
+            model.HasNavigation,
+            model.QueryStrings,
+            model.Actions?.Select(a => new ActionDto
+            {
+                Id = a.Id,
+                Trigger = a.Trigger,
+                ActionType = a.ActionType,
+                SequentialTo = a.SequentialTo
+            }).ToList());
     }
 }
