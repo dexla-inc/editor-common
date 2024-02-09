@@ -29,7 +29,7 @@ public class PageResponse : ISuccess
     public string? ParentPageId { get; }
     public bool HasNavigation { get; }
     public Dictionary<string,string>? QueryStrings { get; }
-    public List<ActionDto>? Actions { get; set; }
+    public List<PageActionDto>? Actions { get; set; }
 
     public PageResponse(
         string? id,
@@ -44,7 +44,7 @@ public class PageResponse : ISuccess
         string? parentPageId,
         bool hasNavigation,
         Dictionary<string, string>? queryStrings,
-        List<ActionDto>? actions)
+        List<PageActionDto>? actions)
     {
         Id = id;
         ProjectId = projectId;

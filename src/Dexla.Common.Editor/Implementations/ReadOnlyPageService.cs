@@ -108,11 +108,11 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
             page.ParentPageId,
             page.HasNavigation,
             page.QueryStrings,
-            page.Actions?.Select(a => new ActionDto
+            page.Actions?.Select(a => new PageActionDto
             {
                 Id = a.Id,
                 Trigger = a.Trigger,
-                ActionType = a.ActionType,
+                Action = a.Action,
                 SequentialTo = a.SequentialTo
             }).ToList());
     }
@@ -132,11 +132,11 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
             page.ParentPageId,
             page.HasNavigation,
             page.QueryStrings,
-            page.Actions?.Select(a => new ActionDto
+            page.Actions?.Select(a => new PageActionDto
             {
                 Id = a.Id,
                 Trigger = a.Trigger,
-                ActionType = a.ActionType,
+                Action = a.Action,
                 SequentialTo = a.SequentialTo
             }).ToList());
     }
@@ -156,11 +156,11 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
             model.ParentPageId,
             model.HasNavigation,
             model.QueryStrings,
-            model.Actions?.Select(a => new ActionDto
+            model.Actions?.Select(a => new PageActionDto
             {
                 Id = a.Id,
                 Trigger = a.Trigger,
-                ActionType = a.ActionType,
+                Action = a.Action,
                 SequentialTo = a.SequentialTo
             }).ToList());
     }
