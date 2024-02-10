@@ -1,4 +1,6 @@
-﻿namespace Dexla.Common.Editor.Responses;
+﻿using Dexla.Common.Types.Enums;
+
+namespace Dexla.Common.Editor.Responses;
 
 public class FontDto
 {
@@ -10,11 +12,4 @@ public class FontDto
     public string LineHeight { get; set; } = string.Empty;
     public string LetterSpacing { get; set; } = string.Empty;
     public string Note { get; set; } = string.Empty;
-}
-
-// Needs deleting when component types is built
-public enum FontTypes
-{
-    TITLE,
-    TEXT
 }

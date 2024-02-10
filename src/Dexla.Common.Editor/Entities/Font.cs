@@ -1,7 +1,10 @@
-﻿namespace Dexla.Common.Editor.Entities;
+﻿using Dexla.Common.Types.Enums;
+
+namespace Dexla.Common.Editor.Entities;
 
 public class Font
 {
+    public FontTypes Type { get; set; }
     public string FontFamily { get; set; } = string.Empty;
     public string Tag { get; set; } = string.Empty;
     public string FontWeight { get; set; } = string.Empty;
