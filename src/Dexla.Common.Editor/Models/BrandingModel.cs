@@ -19,7 +19,7 @@ public class BrandingModel : IModelWithUserId
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
-    public string Theme { get; set; } = string.Empty; 
+    public string Theme { get; set; } = string.Empty;
     public List<FontDto> Fonts { get; set; } = [];
     public List<ColorDto> Colors { get; set; } = [];
     public List<ResponsiveBreakpointDto> ResponsiveBreakpoints { get; set; } = [];
@@ -63,85 +63,104 @@ public class BrandingModel : IModelWithUserId
             [
                 new FontDto
                 {
+                    Type = FontTypes.TITLE,
                     FontFamily = DefaultFontFamily,
                     Tag = "H1",
-                    FontWeight = "500",
-                    FontSize = "48px",
-                    LineHeight = "1.5",
+                    FontWeight = "500", 
+                    FontSize = "32px",
+                    LineHeight = "48px",
                     LetterSpacing = "0px",
                     Note = "Main Title"
                 },
                 new FontDto
                 {
+                    Type = FontTypes.TITLE,
                     FontFamily = DefaultFontFamily,
                     Tag = "H2",
                     FontWeight = "500",
                     FontSize = "28px",
-                    LineHeight = "1.5",
+                    LineHeight = "42px",
                     LetterSpacing = "0px",
                     Note = "Section Title"
                 },
                 new FontDto
                 {
+                    Type = FontTypes.TITLE,
                     FontFamily = DefaultFontFamily,
                     Tag = "H3",
-                    FontWeight = "500",
+                    FontWeight = "500", 
                     FontSize = "24px",
-                    LineHeight = "1.67",
+                    LineHeight = "40px", 
                     LetterSpacing = "0px",
                     Note = "Subsection Title"
                 },
                 new FontDto
                 {
+                    Type = FontTypes.TITLE,
                     FontFamily = DefaultFontFamily,
                     Tag = "H4",
-                    FontWeight = "600",
+                    FontWeight = "600", 
                     FontSize = "22px",
-                    LineHeight = "1.45",
+                    LineHeight = "32px", 
                     LetterSpacing = "0px",
                     Note = "Topic Title"
                 },
                 new FontDto
                 {
+                    Type = FontTypes.TITLE,
                     FontFamily = DefaultFontFamily,
                     Tag = "H5",
-                    FontWeight = "500",
+                    FontWeight = "500", 
                     FontSize = "20px",
-                    LineHeight = "1.2",
+                    LineHeight = "24px", 
                     LetterSpacing = "0px",
                     Note = "Subtopic Title"
                 },
-
                 new FontDto
                 {
+                    Type = FontTypes.TITLE,
                     FontFamily = DefaultFontFamily,
                     Tag = "H6",
-                    FontWeight = "600",
+                    FontWeight = "500", 
                     FontSize = "18px",
-                    LineHeight = "1.33",
+                    LineHeight = "24px",
                     LetterSpacing = "0px",
                     Note = "Minor Point"
                 },
-
                 new FontDto
                 {
+                    Type = FontTypes.TEXT,
                     FontFamily = DefaultFontFamily,
                     Tag = "P",
                     FontWeight = "400",
                     FontSize = "14px",
-                    LineHeight = "1.43",
+                    LineHeight = "20px",
                     LetterSpacing = "0px",
                     Note = "Paragraph"
+                },
+                new FontDto
+                {
+                    Type = FontTypes.TEXT,
+                    FontFamily = DefaultFontFamily,
+                    Tag = "Button",
+                    FontWeight = "500",
+                    FontSize = "14px",
+                    LineHeight = "20px",
+                    LetterSpacing = "0px",
+                    Note = "Button"
                 }
             ],
             Colors =
             [
                 new ColorDto { Hex = "#2F65CB", Name = "Primary", IsDefault = true, FriendlyName = "Primary", },
-                new ColorDto { Hex = "#FFFFFF", Name = "PrimaryText", IsDefault = true, FriendlyName = "Primary Text", },
+                new ColorDto
+                    { Hex = "#FFFFFF", Name = "PrimaryText", IsDefault = true, FriendlyName = "Primary Text", },
                 new ColorDto { Hex = "#D9D9D9", Name = "Secondary", IsDefault = true, FriendlyName = "Secondary" },
-                new ColorDto { Hex = "#000000", Name = "SecondaryText", IsDefault = true, FriendlyName = "Secondary Text" },
+                new ColorDto
+                    { Hex = "#000000", Name = "SecondaryText", IsDefault = true, FriendlyName = "Secondary Text" },
                 new ColorDto { Hex = "#E57F4F", Name = "Tertiary", IsDefault = true, FriendlyName = "Tertiary" },
-                new ColorDto { Hex = "#FFFFFF", Name = "TertiaryText", IsDefault = true, FriendlyName = "Tertiary Text" },
+                new ColorDto
+                    { Hex = "#FFFFFF", Name = "TertiaryText", IsDefault = true, FriendlyName = "Tertiary Text" },
                 new ColorDto { Hex = "#FF9600", Name = "Background", IsDefault = true, FriendlyName = "Background" },
                 new ColorDto { Hex = "#FE191C", Name = "Danger", IsDefault = true, FriendlyName = "Danger" },
                 new ColorDto { Hex = "#FFCC00", Name = "Warning", IsDefault = true, FriendlyName = "Warning" },
