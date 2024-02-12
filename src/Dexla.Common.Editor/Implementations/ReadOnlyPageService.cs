@@ -112,7 +112,7 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
             {
                 Id = a.Id,
                 Trigger = a.Trigger,
-                Action = a.Action,
+                Action = Json.Deserialize<object>(a.Action),
                 SequentialTo = a.SequentialTo
             }).ToList());
     }
@@ -136,7 +136,7 @@ public class ReadOnlyPageService : DexlaService<Page, PageModel>, IReadOnlyPageS
             {
                 Id = a.Id,
                 Trigger = a.Trigger,
-                Action = a.Action,
+                Action = Json.Deserialize<object>(a.Action),
                 SequentialTo = a.SequentialTo
             }).ToList());
     }
