@@ -22,7 +22,6 @@ public class PageResponse : ISuccess
     public string Title { get; }
     public string Slug { get; }
     public string Description { get; }
-    public string PageState { get; }
     public bool IsHome { get; }
     public bool AuthenticatedOnly { get; }
     public string AuthenticatedUserRole { get; }
@@ -37,7 +36,6 @@ public class PageResponse : ISuccess
         string title,
         string slug,
         string description,
-        string pageState,
         bool isHome,
         bool authenticatedOnly,
         string authenticatedUserRole,
@@ -51,7 +49,6 @@ public class PageResponse : ISuccess
         Title = title;
         Description = description;
         Slug = slug;
-        PageState = pageState;
         IsHome = isHome;
         AuthenticatedOnly = authenticatedOnly;
         AuthenticatedUserRole = authenticatedUserRole;

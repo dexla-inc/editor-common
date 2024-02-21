@@ -17,6 +17,7 @@ public class Page : IEntity
     public virtual string ProjectId { get; set; }
     public virtual string Title { get; set; }
     public virtual string Slug { get; set; }
+    [Obsolete("Use PageState instead")]
     public virtual string PageState { get; set; }
     public virtual bool IsHome { get; set; }
     public virtual bool AuthenticatedOnly { get; set; }

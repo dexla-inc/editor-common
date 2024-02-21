@@ -13,6 +13,7 @@ public class PageModel : IModelWithUserId
     public string Title { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
+    [Obsolete("Use PageState instead")]
     public string PageState { get; set; } = string.Empty;
     public bool IsHome { get; set; }
     public bool AuthenticatedOnly { get; set; }
@@ -41,7 +42,6 @@ public class PageModel : IModelWithUserId
             Title = "Home",
             Slug = "/",
             Description = "Home page",
-            PageState = "",
             IsHome = true,
             AuthenticatedOnly = false,
             AuthenticatedUserRole = string.Empty,
