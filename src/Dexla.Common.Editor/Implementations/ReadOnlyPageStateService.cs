@@ -10,7 +10,7 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Implementations;
 
-public class ReadOnlyPageStateService : DexlaService<PageState, PageStateModel>, IPageStateService
+public class ReadOnlyPageStateService : DexlaService<PageState, PageStateModel>, IReadOnlyPageStateService
 {
     private readonly IContext _context;
 

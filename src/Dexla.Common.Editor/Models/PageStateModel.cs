@@ -39,17 +39,6 @@ public class PageStateModel : IModelWithUserId
     public void SetState(string state)
     {
         const int chunkSize = 2;
-        State = SplitStringIntoChunks(state, chunkSize);
-    }
-
-    // Remove after next build of common.
-    private static List<string> SplitStringIntoChunks(string source, int chunkSize)
-    {
-        List<string> chunks = [];
-
-        for (int i = 0; i < source.Length; i += chunkSize)
-            chunks.Add(i + chunkSize <= source.Length ? source.Substring(i, chunkSize) : source[i..]);
-
-        return chunks;
+        State = state.SplitStringIntoChunks(chunkSize);
     }
 }
