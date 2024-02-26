@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Dexla.Common.Types.Interfaces;
+﻿using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
 
@@ -25,7 +24,7 @@ public class DeploymentPageResponse : ISuccess
         AuthenticatedUserRole = authenticatedUserRole;
     }
 
-    public List<string>? PageState { get; set; }
+    public string? PageState { get; set; }
 
     public string TrackingId { get; set; }
 

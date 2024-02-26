@@ -117,7 +117,7 @@ public class ReadOnlyDeploymentService(
     {
         return new DeploymentPageResponse(page.Id, page.Title, page.Slug, page.AuthenticatedOnly, page.AuthenticatedUserRole)
         {
-            PageState = includePages ? page.PageState : null,
+            PageState = includePages ? string.Join("", page.PageState) : null,
         };
     }
 }
