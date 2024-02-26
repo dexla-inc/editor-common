@@ -1,4 +1,6 @@
-﻿namespace Dexla.Common.Editor.Interfaces;
+﻿using System.Threading.Tasks;
+
+namespace Dexla.Common.Editor.Interfaces;
 
 public interface INotificationClient
 {

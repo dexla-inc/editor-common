@@ -1,4 +1,6 @@
-﻿using Dexla.Common.Repository.Types.Enums;
+﻿using System;
+using System.Collections.Generic;
+using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
 

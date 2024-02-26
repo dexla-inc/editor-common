@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Utilities;
@@ -13,8 +14,6 @@ public class PageModel : IModelWithUserId
     public string Title { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    [Obsolete("Use PageState instead")]
-    public string PageState { get; set; } = string.Empty;
     public bool IsHome { get; set; }
     public bool AuthenticatedOnly { get; set; }
     public string AuthenticatedUserRole { get; set; } = string.Empty;
