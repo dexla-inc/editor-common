@@ -157,7 +157,7 @@ public class ReadOnlyProjectService(
         try
         {
             ProjectWithBranding projectWithBranding =
-                await context.JoinCollections<Project, Branding, ProjectWithBranding>(
+                await context.JoinOneToOne<Project, Branding, ProjectWithBranding>(
                     filterConfig,
                     nameof(Project.Id),
                     nameof(Branding.ProjectId));
