@@ -1,6 +1,7 @@
 ﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Repository.Types.Models;
+using Dexla.Common.Types;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
@@ -41,7 +42,7 @@ public class VariableResponse : ISuccess
             m.Id,
             m.Name,
             m.Type,
-            m.DefaultValue,
+            Json.Deserialize<object>(m.DefaultValue),
             m.IsGlobal);
     }
     
