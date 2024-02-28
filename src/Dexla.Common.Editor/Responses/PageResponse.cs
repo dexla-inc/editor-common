@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Models;
+using Dexla.Common.Repository.Types.Models;
+using Dexla.Common.Types;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
@@ -60,4 +62,51 @@ public class PageResponse : ISuccess
     }
 
     public string TrackingId { get; set; }
+    
+    public static Func<Page, PageResponse> EntityToResponse()
+    {
+        return page => new PageResponse(
+            page.Id,
+            page.ProjectId,
+            page.Title,
+            page.Slug,
+            page.Description,
+            page.IsHome,
+            page.AuthenticatedOnly,
+            page.AuthenticatedUserRole,
+            page.ParentPageId,
+            page.HasNavigation,
+            page.QueryStrings,
+            page.Actions?.Select(a => new PageActionDto
+            {
+                Id = a.Id,
+                Trigger = a.Trigger,
+                Action = Json.Deserialize<object>(a.Action),
+                SequentialTo = a.SequentialTo
+            }).ToList());
+    }
+
+    public static PageResponse ModelToResponse(PageModel model)
+    {
+        return new PageResponse(
+            model.Id,
+            model.ProjectId,
+            model.Title,
+            model.Slug,
+            model.Description,
+            model.IsHome,
+            model.AuthenticatedOnly,
+            model.AuthenticatedUserRole,
+            model.ParentPageId,
+            model.HasNavigation,
+            model.QueryStrings,
+            model.Actions);
+    }
+    
+    public static IResponse ModelToResponse(RepositoryActionResultModel<PageModel>  actionResult)
+    {
+        return actionResult.ActionResult(
+            actionResult,
+            ModelToResponse);
+    }
 }
