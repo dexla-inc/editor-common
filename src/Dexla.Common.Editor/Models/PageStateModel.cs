@@ -16,7 +16,7 @@ public class PageStateModel : IModelWithUserId
     }
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; } = string.Empty;
-    public string ProjectId { get; private set; } = string.Empty;
+    public string ProjectId { get; set; } = string.Empty;
     public string PageId { get; set; } = string.Empty;
     public List<string> State { get; set; } = [];
     public long Created { get; set; } = DateTimeExtensions.GetTimestamp();
