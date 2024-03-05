@@ -44,7 +44,7 @@ public class ApiResponse : ISuccess
         AuthValue = authValue;
         IsTested = isTested;
     }
-    
+
     public ApiResponse(
         string id,
         string name,
@@ -70,28 +70,7 @@ public class ApiResponse : ISuccess
         IsTested = isTested;
         AuthEndpoints = authEndpoints;
     }
-    
-    //     .Select(m => new ApiEndpointResponse(
-    //         dataSourceId ?? m.DataSource.Id,
-    //         string.IsNullOrEmpty(m.Entity.BaseUrl) ? m.DataSource.BaseUrl : m.Entity.BaseUrl,
-    //         string.Join("/", m.DataSource.BaseUrl, m.Entity.RelativeUrl),
-    //         m.Entity.RelativeUrl,
-    //         m.Entity.Description,
-    //         m.Entity.MethodType,
-    //         m.Entity.AuthenticationScheme != null
-    //             ? Enum.Parse<AuthenticationSchemes>(m.Entity.AuthenticationScheme, true)
-    //             : AuthenticationSchemes.NONE,
-    //         m.Entity.WithCredentials,
-    //         m.Entity.MediaType,
-    //         m.Entity.Authentication,
-    //         m.Entity.Headers,
-    //         m.Entity.Parameters,
-    //         m.Entity.RequestBody,
-    //         m.Entity.Body,
-    //         m.Entity.ExampleResponse,
-    //         m.Entity.ErrorExampleResponse,
-    //         m.Entity.IsServerRequest)
-    
+
     public static Func<ApiEndpoint, ApiEndpointResponse> EntityToResponse()
     {
         return entity => new ApiEndpointResponse(
@@ -116,6 +95,7 @@ public class ApiResponse : ISuccess
             entity.ErrorExampleResponse,
             entity.IsServerRequest);
     }
+
     public static ApiResponse ModelToResponse(ApiModel model)
     {
         return new ApiResponse(
@@ -132,29 +112,27 @@ public class ApiResponse : ISuccess
             model.AuthValue,
             model.IsTested);
     }
-    
-    public static IResponse ModelToResponse(
-        RepositoryActionResultModel<ApiModel> actionResult,
+
+    public static ApiFullResponse ModelToFullResponse(
+        ApiModel model,
         IEnumerable<DataSourceEndpoint>? changedEndpoints = null,
         IEnumerable<DataSourceEndpoint>? deletedEndpoints = null)
     {
-        return actionResult.ActionResult<ApiFullResponse>(
-            actionResult,
-            m => new ApiFullResponse(
-                m.Id!,
-                m.Name,
-                m.AuthenticationScheme,
-                m.Environment != null ? Enum.Parse<EnvironmentTypes>(m.Environment) : EnvironmentTypes.None,
-                m.BaseUrl,
-                m.SwaggerUrl,
-                m.Updated,
-                m.Type,
-                m.AuthValue,
-                m.IsTested,
-                changedEndpoints,
-                deletedEndpoints));
+        return new ApiFullResponse(
+            model.Id!,
+            model.Name,
+            model.AuthenticationScheme,
+            model.Environment != null ? Enum.Parse<EnvironmentTypes>(model.Environment) : EnvironmentTypes.None,
+            model.BaseUrl,
+            model.SwaggerUrl,
+            model.Updated,
+            model.Type,
+            model.AuthValue,
+            model.IsTested,
+            changedEndpoints,
+            deletedEndpoints);
     }
-    
+
     public static ApiEndpointResponse ModelToResponse(ApiEndpointModel model)
     {
         return new ApiEndpointResponse(
@@ -184,19 +162,36 @@ public class ApiResponse : ISuccess
             model.ErrorExampleResponse,
             model.IsServerRequest);
     }
+
+    public static IResponse ModelToFullResponse(
+        RepositoryActionResultModel<ApiModel> actionResult,
+        IEnumerable<DataSourceEndpoint>? changedEndpoints = null,
+        IEnumerable<DataSourceEndpoint>? deletedEndpoints = null)
+    {
+        return actionResult.ActionResult<ApiFullResponse>(
+            actionResult,
+            m => ModelToFullResponse(m, changedEndpoints, deletedEndpoints));
+    }
     
+    public static IResponse ModelToResponse(RepositoryActionResultModel<ApiModel> actionResult)
+    {
+        return actionResult.ActionResult(
+            actionResult,
+            ModelToResponse);
+    }
+
     public static IResponse ModelToResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult)
     {
         return actionResult.ActionResult(
             actionResult,
             ModelToResponse);
     }
-    
+
     public static IResponse ModelToNoContentResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult)
     {
         return actionResult.ActionResult<Success>(
             actionResult,
-            m => Success.Instance);
+            _ => Success.Instance);
     }
 
     public string TrackingId { get; set; } = string.Empty;
