@@ -9,7 +9,7 @@ namespace Dexla.Common.Editor.Responses;
 public class ApiEndpointResponse : ISuccess
 {
     public string Id { get; set; }
-    public string DataSourceIdId { get; set; }
+    public string DataSourceId { get; set; }
     public string Url { get; set; }
     public string BaseUrl { get; set; }
     public string RelativeUrl { get; set; }
@@ -52,7 +52,7 @@ public class ApiEndpointResponse : ISuccess
         bool isServerRequest)
     {
         Id = id;
-        DataSourceIdId = dataSourceId;
+        DataSourceId = dataSourceId;
         BaseUrl = baseUrl;
         Url = url;
         RelativeUrl = relativeUrl;

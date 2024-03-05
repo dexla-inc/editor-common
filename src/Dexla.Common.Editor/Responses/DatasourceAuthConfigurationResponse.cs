@@ -3,6 +3,19 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
 
+public class DatasourceAuthConfigurationByIdResponse : ISuccess
+{
+    public Dictionary<string, DatasourceAuthConfigurationResponse> AuthConfigurations { get; }
+
+    public DatasourceAuthConfigurationByIdResponse(
+        Dictionary<string, DatasourceAuthConfigurationResponse> authConfigurations)
+    {
+        AuthConfigurations = authConfigurations;
+    }
+
+    public string TrackingId { get; set; }
+}
+
 public class DatasourceAuthConfigurationResponse : ISuccess
 {
     public AuthenticationSchemes Type { get; }
