@@ -1,6 +1,3 @@
-using System.Threading.Tasks;
-using Dexla.Common.Editor.Models;
-using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types;
 using Dexla.Common.Types.Interfaces;
 
@@ -30,6 +27,4 @@ public interface IReadOnlyApiService : IDexlaService
         string? dataSourceId,
         string? relativeUrl = null,
         string? methodType = null);
-
-    IResponse _getEndpointResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult);
 }

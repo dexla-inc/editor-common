@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Dexla.Common.Editor.Entities;
+﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Interfaces;
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Editor.Responses;
@@ -30,7 +26,7 @@ public class ReadOnlyApiService : DexlaService<Api, ApiModel>, IReadOnlyApiServi
 
     public async Task<IResponse> Get(string id, bool? withAuth)
     {
-        return await _fetchResponse(id);
+        return await Get(id, ApiResponse.ModelToResponse);
     }
 
     public async Task<IResponse> List(
@@ -111,7 +107,7 @@ public class ReadOnlyApiService : DexlaService<Api, ApiModel>, IReadOnlyApiServi
             dataSource => dataSource.Id,
             (entity, dataSource) => new { Entity = entity, DataSource = dataSource }
         );
-
+        
         List<ApiEndpointResponse> results = joinedResults
             .Select(m => new ApiEndpointResponse(
                 m.Entity.Id,
@@ -144,80 +140,11 @@ public class ReadOnlyApiService : DexlaService<Api, ApiModel>, IReadOnlyApiServi
         };
     }
 
-    public IResponse _getEndpointResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult)
-    {
-        return actionResult.ActionResult<ApiEndpointResponse>(
-            actionResult,
-            m => new ApiEndpointResponse(
-                m.Id!,
-                m.ApiId,
-                m.BaseUrl,
-                string.Join("/", m.BaseUrl, m.RelativeUrl),
-                m.RelativeUrl,
-                m.Description,
-                Enum.Parse<MethodTypes>(m.MethodType, true),
-                m.AuthenticationScheme != null
-                    ? Enum.Parse<AuthenticationSchemes>(m.AuthenticationScheme, true)
-                    : AuthenticationSchemes.NONE,
-                m.WithCredentials,
-                m.MediaType,
-                new EndpointAuthentication
-                {
-                    EndpointType = m.Authentication.EndpointType,
-                    TokenKey = m.Authentication.TokenKey,
-                    TokenSecondaryKey = m.Authentication.TokenSecondaryKey
-                },
-                m.Headers,
-                m.Parameters,
-                m.RequestBody,
-                m.Body,
-                m.ExampleResponse,
-                m.ErrorExampleResponse,
-                m.IsServerRequest));
-    }
-
-    public FilterConfiguration _addFilterConfiguration(
-        string projectId,
-        string? dataSourceId,
-        string? relativeUrl = null,
-        string? methodType = null)
-    {
-        FilterConfiguration filterConfiguration = new(projectId);
-
-        if (dataSourceId != null)
-            filterConfiguration.Append(nameof(ApiEndpoint.ApiId), dataSourceId, SearchTypes.EXACT);
-
-        if (relativeUrl != null)
-            filterConfiguration.Append(nameof(ApiEndpoint.RelativeUrl), relativeUrl, SearchTypes.EXACT);
-
-        if (methodType != null)
-            filterConfiguration.Append(nameof(ApiEndpoint.MethodType), methodType, SearchTypes.EXACT);
-
-        return filterConfiguration;
-    }
-
-    public async Task<IResponse> _fetchResponse(string apiId)
-    {
-        return await Get(apiId, apiModel => new ApiResponse(
-            apiModel.Id!,
-            apiModel.Name,
-            Enum.Parse<AuthenticationSchemes>(apiModel.AuthenticationScheme),
-            apiModel.Environment != null
-                ? Enum.Parse<EnvironmentTypes>(apiModel.Environment)
-                : EnvironmentTypes.None,
-            apiModel.BaseUrl,
-            apiModel.SwaggerUrl,
-            apiModel.Updated,
-            apiModel.Type,
-            apiModel.AuthValue,
-            apiModel.IsTested));
-    }
-
     public async Task<IResponse> GetEndpoint(string id)
     {
         RepositoryActionResultModel<ApiEndpointModel> actionResult = await _endpointRepository.Get(id);
 
-        return _getEndpointResponse(actionResult);
+        return ApiResponse.ModelToResponse(actionResult);
     }
 
     public async Task<IResponse> GetAuthConfig(string projectId, string id)
@@ -242,5 +169,25 @@ public class ReadOnlyApiService : DexlaService<Api, ApiModel>, IReadOnlyApiServi
             accessTokenEndpoint?.Authentication?.TokenKey,
             refreshTokenEndpoint?.Authentication?.TokenKey,
             accessTokenEndpoint?.Authentication?.TokenSecondaryKey);
+    }
+    
+    public FilterConfiguration _addFilterConfiguration(
+        string projectId,
+        string? dataSourceId,
+        string? relativeUrl = null,
+        string? methodType = null)
+    {
+        FilterConfiguration filterConfiguration = new(projectId);
+
+        if (dataSourceId != null)
+            filterConfiguration.Append(nameof(ApiEndpoint.ApiId), dataSourceId, SearchTypes.EXACT);
+
+        if (relativeUrl != null)
+            filterConfiguration.Append(nameof(ApiEndpoint.RelativeUrl), relativeUrl, SearchTypes.EXACT);
+
+        if (methodType != null)
+            filterConfiguration.Append(nameof(ApiEndpoint.MethodType), methodType, SearchTypes.EXACT);
+
+        return filterConfiguration;
     }
 }

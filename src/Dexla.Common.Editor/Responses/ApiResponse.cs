@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Dexla.Common.Editor.Entities;
+using Dexla.Common.Editor.Models;
+using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
+using Dexla.Common.Types.Models;
 
 namespace Dexla.Common.Editor.Responses;
 
@@ -66,6 +69,134 @@ public class ApiResponse : ISuccess
         AuthValue = authValue;
         IsTested = isTested;
         AuthEndpoints = authEndpoints;
+    }
+    
+    //     .Select(m => new ApiEndpointResponse(
+    //         dataSourceId ?? m.DataSource.Id,
+    //         string.IsNullOrEmpty(m.Entity.BaseUrl) ? m.DataSource.BaseUrl : m.Entity.BaseUrl,
+    //         string.Join("/", m.DataSource.BaseUrl, m.Entity.RelativeUrl),
+    //         m.Entity.RelativeUrl,
+    //         m.Entity.Description,
+    //         m.Entity.MethodType,
+    //         m.Entity.AuthenticationScheme != null
+    //             ? Enum.Parse<AuthenticationSchemes>(m.Entity.AuthenticationScheme, true)
+    //             : AuthenticationSchemes.NONE,
+    //         m.Entity.WithCredentials,
+    //         m.Entity.MediaType,
+    //         m.Entity.Authentication,
+    //         m.Entity.Headers,
+    //         m.Entity.Parameters,
+    //         m.Entity.RequestBody,
+    //         m.Entity.Body,
+    //         m.Entity.ExampleResponse,
+    //         m.Entity.ErrorExampleResponse,
+    //         m.Entity.IsServerRequest)
+    
+    public static Func<ApiEndpoint, ApiEndpointResponse> EntityToResponse()
+    {
+        return entity => new ApiEndpointResponse(
+            entity.Id,
+            entity.ApiId,
+            entity.BaseUrl,
+            string.Join("/", entity.BaseUrl, entity.RelativeUrl),
+            entity.RelativeUrl,
+            entity.Description,
+            entity.MethodType,
+            entity.AuthenticationScheme != null
+                ? Enum.Parse<AuthenticationSchemes>(entity.AuthenticationScheme, true)
+                : AuthenticationSchemes.NONE,
+            entity.WithCredentials,
+            entity.MediaType,
+            entity.Authentication,
+            entity.Headers,
+            entity.Parameters,
+            entity.RequestBody,
+            entity.Body,
+            entity.ExampleResponse,
+            entity.ErrorExampleResponse,
+            entity.IsServerRequest);
+    }
+    public static ApiResponse ModelToResponse(ApiModel model)
+    {
+        return new ApiResponse(
+            model.Id!,
+            model.Name,
+            Enum.Parse<AuthenticationSchemes>(model.AuthenticationScheme),
+            model.Environment != null
+                ? Enum.Parse<EnvironmentTypes>(model.Environment)
+                : EnvironmentTypes.None,
+            model.BaseUrl,
+            model.SwaggerUrl,
+            model.Updated,
+            model.Type,
+            model.AuthValue,
+            model.IsTested);
+    }
+    
+    public static IResponse ModelToResponse(
+        RepositoryActionResultModel<ApiModel> actionResult,
+        IEnumerable<DataSourceEndpoint>? changedEndpoints = null,
+        IEnumerable<DataSourceEndpoint>? deletedEndpoints = null)
+    {
+        return actionResult.ActionResult<ApiFullResponse>(
+            actionResult,
+            m => new ApiFullResponse(
+                m.Id!,
+                m.Name,
+                m.AuthenticationScheme,
+                m.Environment != null ? Enum.Parse<EnvironmentTypes>(m.Environment) : EnvironmentTypes.None,
+                m.BaseUrl,
+                m.SwaggerUrl,
+                m.Updated,
+                m.Type,
+                m.AuthValue,
+                m.IsTested,
+                changedEndpoints,
+                deletedEndpoints));
+    }
+    
+    public static ApiEndpointResponse ModelToResponse(ApiEndpointModel model)
+    {
+        return new ApiEndpointResponse(
+            model.Id!,
+            model.ApiId,
+            model.BaseUrl,
+            string.Join("/", model.BaseUrl, model.RelativeUrl),
+            model.RelativeUrl,
+            model.Description,
+            Enum.Parse<MethodTypes>(model.MethodType, true),
+            model.AuthenticationScheme != null
+                ? Enum.Parse<AuthenticationSchemes>(model.AuthenticationScheme, true)
+                : AuthenticationSchemes.NONE,
+            model.WithCredentials,
+            model.MediaType,
+            new EndpointAuthentication
+            {
+                EndpointType = model.Authentication.EndpointType,
+                TokenKey = model.Authentication.TokenKey,
+                TokenSecondaryKey = model.Authentication.TokenSecondaryKey
+            },
+            model.Headers,
+            model.Parameters,
+            model.RequestBody,
+            model.Body,
+            model.ExampleResponse,
+            model.ErrorExampleResponse,
+            model.IsServerRequest);
+    }
+    
+    public static IResponse ModelToResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult)
+    {
+        return actionResult.ActionResult(
+            actionResult,
+            ModelToResponse);
+    }
+    
+    public static IResponse ModelToNoContentResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult)
+    {
+        return actionResult.ActionResult<Success>(
+            actionResult,
+            m => Success.Instance);
     }
 
     public string TrackingId { get; set; } = string.Empty;
