@@ -1,4 +1,7 @@
-﻿using Dexla.Common.Types.Enums;
+﻿using Dexla.Common.Editor.Entities;
+using Dexla.Common.Editor.Models;
+using Dexla.Common.Repository.Types.Models;
+using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
@@ -24,7 +27,7 @@ public class ProjectResponse : ISuccess
     public string? CustomCode { get; set; }
     public string? RedirectSlug { get; }
     public string? FaviconUrl { get; }
-    
+
     public ProjectResponse(
         string id,
         string companyId,
@@ -65,8 +68,84 @@ public class ProjectResponse : ISuccess
 
     public ProjectResponse()
     {
-        
     }
 
     public string TrackingId { get; set; }
+
+    public static IResponse ModelToResponse(
+        RepositoryActionResultModel<ProjectModel> actionResult,
+        string? homePageId = null)
+    {
+        return actionResult.ActionResult<ProjectResponse>(
+            actionResult,
+            m => new ProjectResponse(
+                m.Id!,
+                m.CompanyId,
+                m.Name,
+                m.FriendlyName,
+                Regions.ParseRegion(m.Region),
+                Enum.Parse<ProjectTypes>(m.Type),
+                m.Industry,
+                m.Description,
+                m.SimilarCompany,
+                m.IsOwner,
+                m.Domain,
+                m.SubDomain,
+                m.Created,
+                m.Screenshots,
+                m.CustomCode,
+                m.RedirectSlug,
+                m.FaviconUrl
+            )
+            {
+                HomePageId = homePageId
+            });
+    }
+
+    public static ProjectResponse ModelToResponse(Project entity, bool? isOwner = false)
+    {
+        return new ProjectResponse(
+            entity.Id,
+            entity.CompanyId,
+            entity.Name,
+            entity.FriendlyName,
+            Regions.ParseRegion(entity.Region) ?? new Region(),
+            entity.Type,
+            entity.Industry,
+            entity.Description,
+            entity.SimilarCompany,
+            isOwner ?? entity.IsOwner,
+            entity.Domain,
+            entity.SubDomain,
+            entity.Created,
+            entity.Screenshots,
+            entity.CustomCode,
+            entity.RedirectSlug,
+            entity.FaviconUrl
+        );
+    }
+
+    public static ProjectWithBrandingResponse ModelToResponse(ProjectWithBranding entity)
+    {
+        return new ProjectWithBrandingResponse(
+            entity.Id,
+            entity.CompanyId,
+            entity.Name,
+            entity.FriendlyName,
+            Regions.ParseRegion(entity.Region) ?? new Region(),
+            entity.Type,
+            entity.Industry,
+            entity.Description,
+            entity.SimilarCompany,
+            entity.IsOwner,
+            entity.Domain,
+            entity.SubDomain,
+            entity.Created,
+            entity.Screenshots,
+            entity.CustomCode,
+            entity.RedirectSlug,
+            entity.FaviconUrl,
+            entity.Branding
+        );
+    }
 }
