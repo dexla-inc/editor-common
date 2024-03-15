@@ -4,7 +4,6 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
-
 public class PageStateModel : IModelWithUserId
 {
     public string? Id

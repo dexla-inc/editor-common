@@ -125,7 +125,7 @@ public class ProjectResponse : ISuccess
         );
     }
 
-    public static ProjectWithBrandingResponse ModelToResponse(ProjectWithBranding entity, string userId)
+    public static ProjectWithBrandingResponse ModelToBrandingResponse(ProjectWithBranding entity, string userId)
     {
         return new ProjectWithBrandingResponse(
             entity.Id,
