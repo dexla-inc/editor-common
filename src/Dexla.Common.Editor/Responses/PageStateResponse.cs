@@ -2,6 +2,7 @@
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types.Interfaces;
+using Dexla.Common.Types.Models;
 
 namespace Dexla.Common.Editor.Responses;
 
@@ -25,6 +26,11 @@ public class PageStateResponse : ISuccess
         return new PageStateResponse(model.Id, model.State, model.Created);
     }
     
+    public static CreatedSuccess ModelToResponse(string id)
+    {
+        return new CreatedSuccess(id);
+    }
+    
     public static IResponse ModelToResponse(RepositoryActionResultModel<PageStateModel> actionResult)
     {
         return actionResult.ActionResult(
@@ -38,6 +44,19 @@ public class PageStateResponse : ISuccess
             m.Id,
             m.State,
             m.Created);
+    }
+    
+    public static PageStateResponse EntityToResponse(PageState entity)
+    {
+        return new PageStateResponse(
+            entity.Id,
+            entity.State,
+            entity.Created);
+    }
+    
+    public static CreatedSuccess EntityToResponse(string id)
+    {
+        return new CreatedSuccess(id);
     }
 
     public string TrackingId { get; set; }
