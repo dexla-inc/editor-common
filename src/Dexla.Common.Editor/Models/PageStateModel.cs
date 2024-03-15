@@ -38,7 +38,7 @@ public class PageStateModel : IModelWithUserId
         PageId = pageId;
     }
 
-    public void SetState(string state, int? history)
+    public void SetState(string state)
     {
         const int chunkSize = 100000;
         State = state.SplitStringIntoChunks(chunkSize);
