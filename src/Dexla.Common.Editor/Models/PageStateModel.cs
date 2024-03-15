@@ -38,9 +38,15 @@ public class PageStateModel : IModelWithUserId
         PageId = pageId;
     }
 
-    public void SetState(string state)
+    public void SetState(string state, int? history)
     {
         const int chunkSize = 100000;
         State = state.SplitStringIntoChunks(chunkSize);
+        History.Add(new PageStateHistoryDto
+        {
+            UserId = UserId,
+            Created = DateTimeExtensions.GetTimestamp(),
+            State = State
+        });
     }
 }
