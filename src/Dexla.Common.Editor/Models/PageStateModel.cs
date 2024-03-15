@@ -4,6 +4,7 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
+
 public class PageStateModel : IModelWithUserId
 {
     public string? Id
@@ -19,6 +20,7 @@ public class PageStateModel : IModelWithUserId
     public string ProjectId { get; set; } = string.Empty;
     public string PageId { get; set; } = string.Empty;
     public List<string> State { get; set; } = [];
+    public List<PageStateHistoryDto> History { get; set; } = [];
     public long Created { get; set; } = DateTimeExtensions.GetTimestamp();
 
     public void SetProjectId(string projectId)
