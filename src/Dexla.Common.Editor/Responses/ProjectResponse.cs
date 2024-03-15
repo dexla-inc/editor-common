@@ -125,9 +125,33 @@ public class ProjectResponse : ISuccess
         );
     }
 
-    public static ProjectWithBrandingResponse ModelToResponse(ProjectWithBranding entity)
+    public static ProjectWithBrandingResponse ModelToResponse(ProjectWithBranding entity, string userId)
     {
         return new ProjectWithBrandingResponse(
+            entity.Id,
+            entity.CompanyId,
+            entity.Name,
+            entity.FriendlyName,
+            Regions.ParseRegion(entity.Region) ?? new Region(),
+            entity.Type,
+            entity.Industry,
+            entity.Description,
+            entity.SimilarCompany,
+            userId == entity.UserId,
+            entity.Domain,
+            entity.SubDomain,
+            entity.Created,
+            entity.Screenshots,
+            entity.CustomCode,
+            entity.RedirectSlug,
+            entity.FaviconUrl,
+            entity.Branding
+        );
+    }
+    
+    public static Func<Project, ProjectResponse> EntityToResponse()
+    {
+        return entity => new ProjectResponse(
             entity.Id,
             entity.CompanyId,
             entity.Name,
@@ -144,8 +168,6 @@ public class ProjectResponse : ISuccess
             entity.Screenshots,
             entity.CustomCode,
             entity.RedirectSlug,
-            entity.FaviconUrl,
-            entity.Branding
-        );
+            entity.FaviconUrl);
     }
 }
