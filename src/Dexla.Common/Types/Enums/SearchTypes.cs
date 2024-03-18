@@ -6,6 +6,7 @@ public enum SearchTypes
     PARTIAL,
     INCLUSIVE,
     GREATER_THAN,
+    LESS_THAN,
     ONE_OF,
     EXCLUDE,
     OR,
