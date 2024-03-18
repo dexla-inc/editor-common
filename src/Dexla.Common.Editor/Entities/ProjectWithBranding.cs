@@ -4,7 +4,7 @@ namespace Dexla.Common.Editor.Entities;
 
 public class ProjectWithBranding : Project
 {
-    public BrandingModel? Branding { get; set; }
+    public BrandingModel Branding { get; set; } = new();
 
     public void SetBranding()
     {
