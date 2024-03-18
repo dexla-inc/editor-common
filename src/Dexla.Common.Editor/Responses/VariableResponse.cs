@@ -7,7 +7,7 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
 
-public class VariableResponse : ISuccess
+public class VariableResponse : IMapperResponse<Variable, VariableModel, VariableResponse>, ISuccess
 {
     public string Id { get; }
     public string Name { get; }
@@ -31,11 +31,10 @@ public class VariableResponse : ISuccess
 
     internal VariableResponse()
     {
-        
     }
 
     public string TrackingId { get; set; }
-    
+
     public static Func<Variable, VariableResponse> EntityToResponse()
     {
         return m => new VariableResponse(
@@ -45,7 +44,7 @@ public class VariableResponse : ISuccess
             Json.Deserialize<object>(m.DefaultValue),
             m.IsGlobal);
     }
-    
+
     public static VariableResponse ModelToResponse(VariableModel model)
     {
         return new VariableResponse(
@@ -55,7 +54,7 @@ public class VariableResponse : ISuccess
             model.DefaultValue,
             model.IsGlobal);
     }
-    
+
     public static IResponse ModelToResponse(RepositoryActionResultModel<VariableModel> actionResult)
     {
         return actionResult.ActionResult(

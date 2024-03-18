@@ -1,9 +1,9 @@
 ﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 
-namespace Dexla.Common.Editor.Entities;
+namespace Dexla.Common.Editor.Models;
 
-public class DeploymentPage : IEntity, IEntityWithTimeStamp
+public class DeploymentPageModel : IModel
 {
     public string Id { get; set; } = string.Empty;
     public string DeploymentId { get; set; } = string.Empty;
