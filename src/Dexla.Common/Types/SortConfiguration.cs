@@ -1,15 +1,10 @@
 ﻿using Dexla.Common.Types.Enums;
+using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Types;
 
-public class SortConfiguration
+public class SortConfiguration(string propertyName, SortDirections sortDirections)
 {
-    public string PropertyName { get; }
-    public SortDirections SortDirections { get; }
-
-    public SortConfiguration(string propertyName, SortDirections sortDirections)
-    {
-        PropertyName = propertyName;
-        SortDirections = sortDirections;
-    }
+    public string PropertyName { get; } = propertyName.ToCamelCase();
+    public SortDirections SortDirections { get; } = sortDirections;
 }

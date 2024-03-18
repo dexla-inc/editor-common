@@ -1,4 +1,5 @@
 ﻿using Dexla.Common.Types.Enums;
+using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Types;
 
@@ -14,16 +15,16 @@ public class FilterConfiguration
         AddDefaults(projectId);
     }
     
-    public List<Filter> Filters { get; private set; } = new();
+    public List<Filter> Filters { get; private set; } = [];
 
     public void Append(string key, object value, SearchTypes searchType)
     {
-        Filters.Add(new Filter(key, value, searchType));
+        Filters.Add(new Filter(key.ToCamelCase(), value, searchType));
     }
     
     public void AppendArray(string key, List<string> value, SearchTypes searchType)
     {
-        Filters.Add(new Filter(key, value, searchType));
+        Filters.Add(new Filter(key.ToCamelCase(), value, searchType));
     }
     
     public void AppendArray(Dictionary<string, object> filters, SearchTypes searchType)
