@@ -14,7 +14,7 @@ public class DeploymentResponse : ISuccess
     public string CommitMessage { get; }
     public string TaskId { get; }
     public int Version { get; }
-    //public List<DeploymentPageResponse> Pages { get; }
+    public List<DeploymentPageResponse> Pages { get; private set; } = [];
 
     public DeploymentResponse(
         string id,
@@ -38,6 +38,17 @@ public class DeploymentResponse : ISuccess
 
     public string TrackingId { get; set; }
 
+    public void SetPages(IEnumerable<DeploymentPage> pages)
+    {
+        Pages = pages.Select(p => new DeploymentPageResponse(
+            p.Id,
+            p.Title,
+            p.Slug,
+            p.AuthenticatedOnly,
+            p.AuthenticatedUserRole)
+        ).ToList();
+    }
+
     public static Func<Deployment, DeploymentResponse> EntityToResponse()
     {
         return entity => new DeploymentResponse(
@@ -53,7 +64,7 @@ public class DeploymentResponse : ISuccess
     {
         return EntityToResponse()(model);
     }
-    
+
     public static Func<DeploymentModel, DeploymentResponse> ModelToResponse()
     {
         return model => new DeploymentResponse(
@@ -64,8 +75,9 @@ public class DeploymentResponse : ISuccess
             model.TaskId,
             model.Version);
     }
-    
-    public static IResponse ModelToResponse(RepositoryActionResultModel<DeploymentModel> actionResult)
+
+    public static IResponse ModelToResponse(
+        RepositoryActionResultModel<DeploymentModel> actionResult)
     {
         return actionResult.ActionResult(
             actionResult,
