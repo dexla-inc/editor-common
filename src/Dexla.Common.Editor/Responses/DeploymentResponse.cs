@@ -1,5 +1,6 @@
 ﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Models;
+using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
@@ -62,5 +63,12 @@ public class DeploymentResponse : ISuccess
             model.CommitMessage,
             model.TaskId,
             model.Version);
+    }
+    
+    public static IResponse ModelToResponse(RepositoryActionResultModel<DeploymentModel> actionResult)
+    {
+        return actionResult.ActionResult(
+            actionResult,
+            ModelToResponse());
     }
 }
