@@ -59,6 +59,29 @@ public class DeploymentResponse : ISuccess
             entity.TaskId,
             entity.Version);
     }
+    
+    public static DeploymentResponse EntityToResponse(DeploymentWithPages entity)
+    {
+        return new DeploymentResponse(
+            entity.Id,
+            entity.ProjectId,
+            entity.Environment,
+            entity.CommitMessage,
+            entity.TaskId,
+            entity.Version)
+        {
+            Pages = entity.Pages?.Select(p => new DeploymentPageResponse(
+                p.Id,
+                p.Title,
+                p.Slug,
+                p.AuthenticatedOnly,
+                p.AuthenticatedUserRole)
+                {
+                    PageState = string.Join("", p.PageState)
+                }
+            ).ToList() ?? []
+        };
+    }
 
     public static DeploymentResponse EntityToResponse(Deployment model)
     {
