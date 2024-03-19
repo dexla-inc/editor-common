@@ -1,11 +1,12 @@
 ﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
+using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Entities;
 
 public class DeploymentPage : IEntity
 {
-    public string Id { get; set; } = string.Empty;
+    public string Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
     public string DeploymentId { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
