@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Dexla.Common.Editor.Entities;
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
@@ -17,8 +16,6 @@ public class DeploymentModel : IModelWithUserId
     public string TaskId { get; set; } = string.Empty;
     public EnvironmentTypes Environment { get; set; }
     public int Version { get; set; }
-    [Obsolete("Use DeploymentPage Entity instead")]
-    public List<DeploymentPage> Pages { get; set; } = [];
 
     public void SetUserId(string value)
     {
@@ -33,10 +30,5 @@ public class DeploymentModel : IModelWithUserId
     public void SetEnvironment(bool forceProduction)
     {
         Environment = forceProduction ? EnvironmentTypes.Production : EnvironmentTypes.Staging;
-    }
-
-    public void AddPages(List<DeploymentPage> pages)
-    {
-        Pages = pages;
     }
 }

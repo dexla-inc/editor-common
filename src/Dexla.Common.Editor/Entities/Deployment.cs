@@ -21,6 +21,4 @@ public class Deployment : IEntity, IEntityWithTimeStamp
     public virtual string TaskId { get; set; }
     public virtual EnvironmentTypes Environment { get; set; }
     public virtual int Version { get; set; }
-    [Obsolete("Use DeploymentPage Entity instead")]
-    public List<DeploymentPage> Pages { get; set; } = [];
 }
