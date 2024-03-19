@@ -17,6 +17,7 @@ public class DeploymentModel : IModelWithUserId
     public string TaskId { get; set; } = string.Empty;
     public EnvironmentTypes Environment { get; set; }
     public int Version { get; set; }
+    [Obsolete("Use DeploymentPage Entity instead")]
     public List<DeploymentPage> Pages { get; set; } = [];
 
     public void SetUserId(string value)
