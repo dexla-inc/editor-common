@@ -7,14 +7,14 @@ namespace Dexla.Common.Editor.Entities;
 
 public class Deployment : IEntity, IEntityWithTimeStamp
 {
-    public Deployment()
+    protected Deployment()
     {
         
     }
-    public string Id { get; set; } = UtilityExtensions.GetId();
+    public virtual string Id { get; set; } = UtilityExtensions.GetId();
     
-    public EntityStatus EntityStatus { get; set; }
-    public long Timestamp { get; set; } = DateTimeExtensions.GetTimestamp();
+    public virtual EntityStatus EntityStatus { get; set; }
+    public virtual long Timestamp { get; set; } = DateTimeExtensions.GetTimestamp();
     public virtual string UserId { get; set; }
     public virtual string ProjectId { get; set; }
     public virtual string CommitMessage { get; set; }

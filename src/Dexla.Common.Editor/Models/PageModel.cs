@@ -1,13 +1,11 @@
-using System.Collections.Generic;
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
-using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
 public class PageModel : IModelWithUserId
 {
-    public string? Id { get; set; }  = UtilityExtensions.GetId();
+    public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; } = string.Empty;
     public string ProjectId { get; private set; } = string.Empty;

@@ -3,7 +3,7 @@ using Dexla.Common.Repository.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Models;
 
-public class DeploymentPageModel : IModel
+public class DeploymentPageHistoryModel : IModel
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }

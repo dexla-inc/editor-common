@@ -2,7 +2,7 @@
 
 namespace Dexla.Common.Editor.Responses;
 
-public class DeploymentPageResponse : ISuccess
+public class DeploymentPageHistoryResponse : ISuccess
 {
     public string Id { get; }
     public string Title { get; }
@@ -11,7 +11,7 @@ public class DeploymentPageResponse : ISuccess
     public string AuthenticatedUserRole { get; }
     public string? PageState { get; set; }
 
-    public DeploymentPageResponse(
+    public DeploymentPageHistoryResponse(
         string id,
         string title,
         string slug,
@@ -29,12 +29,4 @@ public class DeploymentPageResponse : ISuccess
 
 
     public string TrackingId { get; set; }
-
-    public static DeploymentPageResponse Empty => new(
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        false,
-        string.Empty,
-        new List<string>());
 }
