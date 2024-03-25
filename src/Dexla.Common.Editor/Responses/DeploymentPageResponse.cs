@@ -1,4 +1,5 @@
-﻿using Dexla.Common.Types.Interfaces;
+﻿using Dexla.Common.Editor.Entities;
+using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
 
@@ -29,6 +30,22 @@ public class DeploymentPageResponse : ISuccess
 
 
     public string TrackingId { get; set; }
+    
+    public static Func<DeploymentPage, DeploymentPageResponse> EntityToResponse()
+    {
+        return entity => new DeploymentPageResponse(
+            entity.Id,
+            entity.Title,
+            entity.Slug,
+            entity.AuthenticatedOnly,
+            entity.AuthenticatedUserRole,
+            entity.PageState);
+    }
+    
+    public static DeploymentPageResponse EntityToResponse(DeploymentPage entity)
+    {
+        return EntityToResponse()(entity);
+    }
 
     public static DeploymentPageResponse Empty => new(
         string.Empty,
