@@ -1,14 +1,12 @@
-using Dexla.Common.Editor.Entities;
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
-using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
 public class DeploymentModel : IModelWithUserId
 {
-    public string? Id { get; set; } = UtilityExtensions.GetId();
+    public string? Id { get; set; } 
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;

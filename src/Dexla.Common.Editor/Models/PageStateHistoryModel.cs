@@ -6,7 +6,7 @@ namespace Dexla.Common.Editor.Models;
 
 public class PageStateHistoryModel : IModelWithUserId
 {
-    public string? Id { get; set; }  = UtilityExtensions.GetId();
+    public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
