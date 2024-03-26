@@ -17,7 +17,7 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="Dexla.Common.Types" Version="1.7.0" />
+        <PackageReference Include="Dexla.Common.Types" Version="1.7.1" />
     </ItemGroup>
 
     <ItemGroup>
