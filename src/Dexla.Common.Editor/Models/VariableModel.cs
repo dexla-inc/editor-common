@@ -34,8 +34,8 @@ public class VariableModel : IModelWithUserId
         Id ??= UtilityExtensions.GetId();
     }
 
-    public void SetName(string value)
+    public void SnakeCaseName()
     {
-        Name = value.Kebaberise();
+        Name = Name.ToSnakeCase();
     }
 }
