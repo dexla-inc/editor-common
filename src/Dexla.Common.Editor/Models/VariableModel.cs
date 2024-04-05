@@ -33,4 +33,9 @@ public class VariableModel : IModelWithUserId
     {
         Id ??= UtilityExtensions.GetId();
     }
+
+    public void SetName(string value)
+    {
+        Name = value.Kebaberise();
+    }
 }

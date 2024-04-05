@@ -25,7 +25,7 @@ public class SortConfiguration
 
     public void Append(string propertyName, SortDirections sortDirections)
     {
-        Sorts.Add(new Sort(propertyName, sortDirections));
+        Sorts.Add(new Sort(propertyName.ToCamelCase(), sortDirections));
     }
     
     public List<Sort> Sorts { get; private set; } = [];
