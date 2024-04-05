@@ -41,4 +41,17 @@ public class PageStateModel : IModelWithUserId
         const int chunkSize = 10000;
         State = state.SplitStringIntoChunks(chunkSize);
     }
+    
+    public static PageStateModel Empty(string userId, string projectId, string pageId)
+    {
+        return new PageStateModel
+        {
+            UserId = userId,
+            ProjectId = projectId,
+            PageId = pageId,
+            EntityStatus = EntityStatus.Active,
+            State = [],
+            Created = DateTimeExtensions.GetTimestamp()
+        };
+    }
 }
