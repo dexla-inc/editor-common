@@ -1,6 +1,7 @@
 ﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Repository.Types.Models;
+using Dexla.Common.Types;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
@@ -46,7 +47,14 @@ public class DeploymentResponse : ISuccess
             p.Slug,
             p.AuthenticatedOnly,
             p.AuthenticatedUserRole,
-            p.PageState)
+            p.PageState,
+            p.Actions?.Select(a => new PageActionDto
+            {
+                Id = a.Id,
+                Trigger = a.Trigger,
+                Action = Json.Deserialize<object>(a.Action),
+                SequentialTo = a.SequentialTo
+            }).ToList())
         ).ToList();
     }
 
@@ -77,7 +85,14 @@ public class DeploymentResponse : ISuccess
                 p.Slug,
                 p.AuthenticatedOnly,
                 p.AuthenticatedUserRole,
-                p.PageState)
+                p.PageState,
+                p.Actions?.Select(a => new PageActionDto
+                {
+                    Id = a.Id,
+                    Trigger = a.Trigger,
+                    Action = Json.Deserialize<object>(a.Action),
+                    SequentialTo = a.SequentialTo
+                }).ToList())
             ).ToList()
         };
     }
