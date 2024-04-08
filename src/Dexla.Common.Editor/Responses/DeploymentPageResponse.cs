@@ -1,4 +1,6 @@
 ﻿using Dexla.Common.Editor.Entities;
+using Dexla.Common.Editor.Models;
+using Dexla.Common.Types;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
@@ -11,6 +13,7 @@ public class DeploymentPageResponse : ISuccess
     public bool AuthenticatedOnly { get; }
     public string AuthenticatedUserRole { get; }
     public string? PageState { get; set; }
+    public List<PageActionDto>? Actions { get; set; }
 
     public DeploymentPageResponse(
         string id,
@@ -18,7 +21,8 @@ public class DeploymentPageResponse : ISuccess
         string slug,
         bool authenticatedOnly,
         string authenticatedUserRole,
-        IEnumerable<string> pageState)
+        IEnumerable<string> pageState,
+        List<PageActionDto>? actions)
     {
         Id = id;
         Title = title;
@@ -26,6 +30,7 @@ public class DeploymentPageResponse : ISuccess
         AuthenticatedOnly = authenticatedOnly;
         AuthenticatedUserRole = authenticatedUserRole;
         PageState = string.Join("", pageState);
+        Actions = actions;
     }
 
 
@@ -39,7 +44,14 @@ public class DeploymentPageResponse : ISuccess
             entity.Slug,
             entity.AuthenticatedOnly,
             entity.AuthenticatedUserRole,
-            entity.PageState);
+            entity.PageState,
+            entity.Actions?.Select(a => new PageActionDto
+            {
+                Id = a.Id,
+                Trigger = a.Trigger,
+                Action = Json.Deserialize<object>(a.Action),
+                SequentialTo = a.SequentialTo
+            }).ToList());
     }
     
     public static DeploymentPageResponse EntityToResponse(DeploymentPage entity)
@@ -53,5 +65,6 @@ public class DeploymentPageResponse : ISuccess
         string.Empty,
         false,
         string.Empty,
-        new List<string>());
+        new List<string>(),
+        new List<PageActionDto>());
 }

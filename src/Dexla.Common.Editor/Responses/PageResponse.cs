@@ -74,7 +74,7 @@ public class PageResponse : ISuccess
             page.IsHome,
             page.AuthenticatedOnly,
             page.AuthenticatedUserRole,
-            page.ParentPageId,
+            page.ParentPageId,  
             page.HasNavigation,
             page.QueryStrings,
             page.Actions?.Select(a => new PageActionDto
