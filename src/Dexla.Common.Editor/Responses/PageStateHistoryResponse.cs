@@ -11,25 +11,28 @@ public class PageStateHistoryResponse : ISuccess
     public string? Id { get; }
     public string State { get; }
     public long Created { get; }
+    public string? Description { get; set; }
 
-    public PageStateHistoryResponse(string? id, IEnumerable<string> state, long created)
+    public PageStateHistoryResponse(string? id, IEnumerable<string> state, long created, string? description)
     {
         Id = id;
         State = SetState(state);
         Created = created;
+        Description = description;
     }
     
-    public PageStateHistoryResponse(string? id, long created)
+    public PageStateHistoryResponse(string? id, long created, string? description)
     {
         Id = id;
         Created = created;
+        Description = description;
     }
 
     private static string SetState(IEnumerable<string> state) => string.Join("", state);
     
     public static PageStateHistoryResponse ModelToResponse(PageStateHistoryModel model)
     {
-        return new PageStateHistoryResponse(model.Id, model.State, model.Created);
+        return new PageStateHistoryResponse(model.Id, model.State, model.Created, model.Description);
     }
     
     public static CreatedSuccess ModelToResponse(string id)
@@ -49,7 +52,8 @@ public class PageStateHistoryResponse : ISuccess
         return m => new PageStateHistoryResponse(
             m.Id,
             m.State,
-            m.Created);
+            m.Created,
+            m.Description);
     }
     
     public static PageStateHistoryResponse EntityToResponse(PageStateHistory entity, bool? state = false)
@@ -58,12 +62,14 @@ public class PageStateHistoryResponse : ISuccess
         {
             return new PageStateHistoryResponse(
                 entity.Id,
-                entity.Created);
+                entity.Created,
+                entity.Description);
         }
         return new PageStateHistoryResponse(
             entity.Id,
             entity.State,
-            entity.Created);
+            entity.Created,
+            entity.Description);
     }
     
     public static CreatedSuccess EntityToResponse(string id)

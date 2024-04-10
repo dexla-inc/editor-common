@@ -12,5 +12,6 @@ public class PageStateHistory : IEntity
     public virtual string ProjectId { get; private set; } = string.Empty;
     public virtual string PageId { get; set; } = string.Empty;
     public virtual List<string> State { get; set; } = [];
+    public string? Description { get; set; }
     public virtual long Created { get; set; }
 }
