@@ -18,6 +18,12 @@ public class PageStateHistoryResponse : ISuccess
         State = SetState(state);
         Created = created;
     }
+    
+    public PageStateHistoryResponse(string? id, long created)
+    {
+        Id = id;
+        Created = created;
+    }
 
     private static string SetState(IEnumerable<string> state) => string.Join("", state);
     
@@ -46,8 +52,14 @@ public class PageStateHistoryResponse : ISuccess
             m.Created);
     }
     
-    public static PageStateHistoryResponse EntityToResponse(PageStateHistory entity)
+    public static PageStateHistoryResponse EntityToResponse(PageStateHistory entity, bool? state = false)
     {
+        if (state is false or null)
+        {
+            return new PageStateHistoryResponse(
+                entity.Id,
+                entity.Created);
+        }
         return new PageStateHistoryResponse(
             entity.Id,
             entity.State,
