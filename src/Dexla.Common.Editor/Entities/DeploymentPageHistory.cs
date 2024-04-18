@@ -17,4 +17,6 @@ public class DeploymentPageHistory : IEntity
     public string AuthenticatedUserRole { get; set; } = string.Empty;
     public List<string> PageState { get; set; } = [];
     public virtual List<PageAction>? Actions { get; set; }
+    public virtual string PageId { get; set; } = string.Empty;
+    public virtual long Created { get; set; }
 }
