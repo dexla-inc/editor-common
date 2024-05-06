@@ -1,7 +1,7 @@
-﻿using Dexla.Common.Repository.Types.Enums;
+﻿using Dexla.Common.Editor.Entities;
+using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
-using Dexla.Common.Types.Models;
 using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
@@ -20,9 +20,9 @@ public class ApiEndpointModel : IModelWithUserId
     public string MediaType { get; set; } = string.Empty;
     public bool? WithCredentials { get; set; }
     public string? AuthenticationScheme { get; set; }
-    public List<ApiHeader> Headers { get; set; } = new();
-    public List<ApiParameter> Parameters { get; set; } = new();
-    public List<ApiBodyParameter> RequestBody { get; set; } = new();
+    public List<ApiHeaderDto> Headers { get; set; } = [];
+    public List<ApiParameterDto> Parameters { get; set; } = [];
+    public List<ApiBodyParameterDto> RequestBody { get; set; } = [];
     public string? Body { get; set; }
     public string? ExampleResponse { get; set; }
     public string? ErrorExampleResponse { get; set; }

@@ -26,9 +26,10 @@ public class ProjectWithBrandingResponse : ProjectResponse
         string? customCode,
         string? redirectSlug,
         string? faviconUrl,
-        BrandingModel? branding)
+        BrandingModel? branding,
+        RedirectsDto redirects)
         : base(id, companyId, name, friendlyName, region, type, industry, description, similarCompany, isOwner, domain,
-            subDomain, created, screenshots, customCode, redirectSlug, faviconUrl)
+            subDomain, created, screenshots, customCode, redirectSlug, faviconUrl, redirects)
     {
         Branding = ReadOnlyBrandingService.GetResponse(branding ?? BrandingModel.GetDefault(string.Empty, string.Empty));
     }
