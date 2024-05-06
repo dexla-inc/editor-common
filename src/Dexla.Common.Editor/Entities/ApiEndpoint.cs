@@ -1,8 +1,6 @@
-﻿using Dexla.Common.Editor.Entities;
-using Dexla.Common.Repository.Types.Enums;
+﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
-using Dexla.Common.Types.Models;
 
 namespace Dexla.Common.Editor.Entities;
 
@@ -20,9 +18,9 @@ public class ApiEndpoint : IEntity
     public string MediaType { get; set; } = string.Empty;
     public bool? WithCredentials { get; set; }
     public string? AuthenticationScheme { get; set; }
-    public List<ApiHeader> Headers { get; set; } = new();
-    public List<ApiParameter> Parameters { get; set; } = new();
-    public List<ApiBodyParameter> RequestBody { get; set; } = new();
+    public List<ApiHeaderDto> Headers { get; set; } = [];
+    public List<ApiParameterDto> Parameters { get; set; } = [];
+    public List<ApiBodyParameterDto> RequestBody { get; set; } = [];
     public string? Body { get; set; }
     public string? ExampleResponse { get; set; }
     public string? ErrorExampleResponse { get; set; }
@@ -36,7 +34,6 @@ public class ApiEndpoint : IEntity
 
     public static string[] AllowedEndpointTypes()
     {
-        return new[]
-            { EndpointTypes.ACCESS.ToString(), EndpointTypes.REFRESH.ToString(), EndpointTypes.USER.ToString() };
+        return [EndpointTypes.ACCESS.ToString(), EndpointTypes.REFRESH.ToString(), EndpointTypes.USER.ToString()];
     }
 }

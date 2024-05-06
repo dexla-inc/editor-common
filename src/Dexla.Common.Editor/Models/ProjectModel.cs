@@ -27,6 +27,7 @@ public class ProjectModel : IModelWithUserId
     public string? CustomCode { get; set; }
     public string? RedirectSlug { get; set; }
     public string? FaviconUrl { get; set; }
+    public RedirectsDto Redirects { get; set; } = new();
     
     public void SetUserId(string value)
     {

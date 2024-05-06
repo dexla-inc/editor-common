@@ -27,6 +27,7 @@ public class ProjectResponse : ISuccess
     public string? CustomCode { get; set; }
     public string? RedirectSlug { get; }
     public string? FaviconUrl { get; }
+    public RedirectsDto Redirects { get; }
 
     public ProjectResponse(
         string id,
@@ -45,7 +46,8 @@ public class ProjectResponse : ISuccess
         string[] screenshots,
         string? customCode,
         string? redirectSlug,
-        string? faviconUrl)
+        string? faviconUrl,
+        RedirectsDto redirects)
     {
         Id = id;
         CompanyId = companyId;
@@ -64,6 +66,7 @@ public class ProjectResponse : ISuccess
         CustomCode = customCode;
         RedirectSlug = redirectSlug;
         FaviconUrl = faviconUrl;
+        Redirects = redirects;
     }
 
     public ProjectResponse()
@@ -95,7 +98,8 @@ public class ProjectResponse : ISuccess
                 m.Screenshots,
                 m.CustomCode,
                 m.RedirectSlug,
-                m.FaviconUrl
+                m.FaviconUrl,
+                m.Redirects
             )
             {
                 HomePageId = homePageId
@@ -121,7 +125,12 @@ public class ProjectResponse : ISuccess
             entity.Screenshots,
             entity.CustomCode,
             entity.RedirectSlug,
-            entity.FaviconUrl
+            entity.FaviconUrl,
+            new RedirectsDto
+            {
+                SignInPageId = entity.Redirects.SignInPageId,
+                NotFoundPageId = entity.Redirects.NotFoundPageId
+            }
         );
     }
 
@@ -145,10 +154,15 @@ public class ProjectResponse : ISuccess
             entity.CustomCode,
             entity.RedirectSlug,
             entity.FaviconUrl,
-            entity.Branding
+            entity.Branding,
+            new RedirectsDto
+            {
+                SignInPageId = entity.Redirects.SignInPageId,
+                NotFoundPageId = entity.Redirects.NotFoundPageId
+            }
         );
     }
-    
+
     public static Func<Project, ProjectResponse> EntityToResponse()
     {
         return entity => new ProjectResponse(
@@ -168,6 +182,12 @@ public class ProjectResponse : ISuccess
             entity.Screenshots,
             entity.CustomCode,
             entity.RedirectSlug,
-            entity.FaviconUrl);
+            entity.FaviconUrl,
+            new RedirectsDto
+            {
+                SignInPageId = entity.Redirects.SignInPageId,
+                NotFoundPageId = entity.Redirects.NotFoundPageId
+            }
+        );
     }
 }

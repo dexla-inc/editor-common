@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Dexla.Common.Repository.Types.Enums;
+﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Utilities;
@@ -30,6 +29,12 @@ public class Project : IEntity
     public string[] Screenshots { get; set; }
     public bool IsOwner { get; set; }
     public string? CustomCode { get; set; }
+    [Obsolete("Use RedirectSlug instead.")]
     public string? RedirectSlug { get; set; }
     public string? FaviconUrl { get; set; }
+    //redirects: {
+//     signInPageId: project?.redirects?.signInPageId,
+//     notFoundPageId: project?.redirects?.notFoundPageId,
+// }
+    public Redirects Redirects { get; set; } = new();
 }

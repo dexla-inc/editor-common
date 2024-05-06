@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Dexla.Common.Editor.Entities;
+﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
-using Dexla.Common.Types.Models;
 
 namespace Dexla.Common.Editor.Responses;
 
@@ -19,9 +17,9 @@ public class ApiEndpointResponse : ISuccess
     public bool? WithCredentials { get; set; }
     public string MediaType { get; set; }
     public EndpointAuthentication? Authentication { get; set; } = new();
-    public List<ApiHeader> Headers { get; set; }
-    public List<ApiParameter> Parameters { get; set; }
-    public List<ApiBodyParameter> RequestBody { get; set; }
+    public List<ApiHeaderDto> Headers { get; set; }
+    public List<ApiParameterDto> Parameters { get; set; }
+    public List<ApiBodyParameterDto> RequestBody { get; set; }
     public string? Body { get; set; }
     public string? ExampleResponse { get; set; } = string.Empty;
     public string? ErrorExampleResponse { get; set; } = string.Empty;
@@ -43,9 +41,9 @@ public class ApiEndpointResponse : ISuccess
         bool? withCredentials,
         string mediaType,
         EndpointAuthentication? authentication,
-        List<ApiHeader> headers,
-        List<ApiParameter> parameters,
-        List<ApiBodyParameter> requestBody,
+        List<ApiHeaderDto> headers,
+        List<ApiParameterDto> parameters,
+        List<ApiBodyParameterDto> requestBody,
         string? body,
         string? exampleResponse,
         string? errorExampleResponse,

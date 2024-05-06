@@ -1,15 +1,18 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
-namespace Dexla.Common.Types.Models;
+namespace Dexla.Common.Editor.Entities;
 
-public class FieldTypeBase
+public class FieldTypeBaseDto
 {
     [JsonPropertyOrder(1)]
     public string? Name { get; set; } = string.Empty;
+
     [JsonPropertyOrder(2)]
     public string? Type { get; set; } = string.Empty;
+
     [JsonPropertyOrder(3)]
     public string? Description { get; set; }
+
     [JsonPropertyOrder(4)]
-    public object? Value { get; set; }
+    public string? Value { get; set; }
 }
