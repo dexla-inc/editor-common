@@ -27,7 +27,7 @@ public class ProjectResponse : ISuccess
     public string? CustomCode { get; set; }
     public string? RedirectSlug { get; }
     public string? FaviconUrl { get; }
-    public RedirectsDto Redirects { get; }
+    public RedirectsDto? Redirects { get; }
 
     public ProjectResponse(
         string id,
@@ -47,7 +47,7 @@ public class ProjectResponse : ISuccess
         string? customCode,
         string? redirectSlug,
         string? faviconUrl,
-        RedirectsDto redirects)
+        RedirectsDto? redirects)
     {
         Id = id;
         CompanyId = companyId;
@@ -154,7 +154,7 @@ public class ProjectResponse : ISuccess
             entity.CustomCode,
             entity.RedirectSlug,
             entity.FaviconUrl,
-            entity.Branding,
+            string.IsNullOrEmpty(entity.Branding.Id) ? null : entity.Branding,
             new RedirectsDto
             {
                 SignInPageId = entity.Redirects.SignInPageId,
