@@ -154,7 +154,7 @@ public class ProjectResponse : ISuccess
             entity.CustomCode,
             entity.RedirectSlug,
             entity.FaviconUrl,
-            string.IsNullOrEmpty(entity.Branding.Id) ? null : entity.Branding,
+            string.IsNullOrEmpty(entity.Branding.Id) ? BrandingModel.GetDefault(userId, entity.Id) : entity.Branding,
             new RedirectsDto
             {
                 SignInPageId = entity.Redirects.SignInPageId,
