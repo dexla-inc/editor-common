@@ -67,7 +67,7 @@ public class DeploymentPageResponse : ISuccess
         return EntityToResponse(exclude)(entity);
     }
 
-    public static DeploymentPageResponse Empty => new(
+    public static DeploymentPageResponse Empty(ProjectResponse? project = null, BrandingResponse? branding = null) => new(
         string.Empty,
         string.Empty,
         string.Empty,
@@ -75,6 +75,6 @@ public class DeploymentPageResponse : ISuccess
         string.Empty,
         new List<string>(),
         new List<PageActionDto>(),
-        null,
-        null);
+        project,
+        branding);
 }
