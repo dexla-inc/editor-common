@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Dexla.Common.Editor.Models;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
@@ -73,4 +74,27 @@ public class BrandingResponse(
     }
 
     public string TrackingId { get; set; }
+
+    public static BrandingResponse ModelToResponse(BrandingModel entityBranding)
+    {
+        return new BrandingResponse(
+            entityBranding.Id,
+            entityBranding.Theme,
+            entityBranding.WebsiteUrl,
+            entityBranding.Fonts,
+            entityBranding.Colors,
+            entityBranding.ResponsiveBreakpoints,
+            entityBranding.FaviconUrl,
+            entityBranding.LogoUrl,
+            entityBranding.Logos,
+            entityBranding.DefaultFont,
+            entityBranding.HasCompactButtons,
+            entityBranding.DefaultRadius,
+            entityBranding.DefaultSpacing,
+            entityBranding.InputSize,
+            Enum.Parse<LoaderTypes>(entityBranding.Loader),
+            Enum.Parse<FocusRingTypes>(entityBranding.FocusRing),
+            Enum.Parse<CardStyleTypes>(entityBranding.CardStyle)
+        );
+    }
 }

@@ -16,6 +16,8 @@ public class DeploymentResponse : ISuccess
     public string TaskId { get; }
     public int Version { get; }
     public List<DeploymentPageResponse> Pages { get; private set; } = [];
+    public ProjectResponse Project { get; }
+    public BrandingResponse Branding { get; }
 
     public DeploymentResponse(
         string id,
@@ -23,7 +25,9 @@ public class DeploymentResponse : ISuccess
         EnvironmentTypes environment,
         string commitMessage,
         string taskId,
-        int version)
+        int version,
+        ProjectResponse project,
+        BrandingResponse branding)
     {
         Id = id;
         ProjectId = projectId;
@@ -31,6 +35,8 @@ public class DeploymentResponse : ISuccess
         CommitMessage = commitMessage;
         TaskId = taskId;
         Version = version;
+        Project = project;
+        Branding = branding;
     }
 
     public DeploymentResponse()
@@ -66,9 +72,11 @@ public class DeploymentResponse : ISuccess
             entity.Environment,
             entity.CommitMessage,
             entity.TaskId,
-            entity.Version);
+            entity.Version,
+            ProjectResponse.ModelToResponse(entity.Project),
+            BrandingResponse.ModelToResponse(entity.Branding));
     }
-    
+
     public static DeploymentResponse EntityToResponse(DeploymentWithPages entity)
     {
         return new DeploymentResponse(
@@ -77,7 +85,9 @@ public class DeploymentResponse : ISuccess
             entity.Environment,
             entity.CommitMessage,
             entity.TaskId,
-            entity.Version)
+            entity.Version,
+            ProjectResponse.ModelToResponse(entity.Project),
+            BrandingResponse.ModelToResponse(entity.Branding))
         {
             Pages = entity.Pages.Select(p => new DeploymentPageResponse(
                 p.Id,
@@ -107,7 +117,9 @@ public class DeploymentResponse : ISuccess
             model.Environment,
             model.CommitMessage,
             model.TaskId,
-            model.Version);
+            model.Version,
+            ProjectResponse.ModelToResponse(model.Project),
+            BrandingResponse.ModelToResponse(model.Branding));
     }
 
     public static IResponse ModelToResponse(
