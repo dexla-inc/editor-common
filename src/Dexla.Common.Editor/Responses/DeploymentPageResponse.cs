@@ -42,7 +42,7 @@ public class DeploymentPageResponse : ISuccess
 
     public string TrackingId { get; set; }
 
-    public static Func<DeploymentPage, DeploymentPageResponse> EntityToResponse()
+    public static Func<DeploymentPage, DeploymentPageResponse> EntityToResponse(bool? exclude)
     {
         return entity => new DeploymentPageResponse(
             entity.Id,
@@ -58,13 +58,13 @@ public class DeploymentPageResponse : ISuccess
                 Action = Json.Deserialize<object>(a.Action),
                 SequentialTo = a.SequentialTo
             }).ToList(),
-            entity.Project != null ? ProjectResponse.EntityToResponse(entity.Project) : null,
-            entity.Branding != null ? BrandingResponse.EntityToResponse(entity.Branding) : null);
+            entity.Project != null && exclude != true ? ProjectResponse.EntityToResponse(entity.Project) : null,
+            entity.Branding != null && exclude != true ? BrandingResponse.EntityToResponse(entity.Branding) : null);
     }
 
-    public static DeploymentPageResponse EntityToResponse(DeploymentPage entity)
+    public static DeploymentPageResponse EntityToResponse(DeploymentPage entity, bool exclude = false)
     {
-        return EntityToResponse()(entity);
+        return EntityToResponse(exclude)(entity);
     }
 
     public static DeploymentPageResponse Empty => new(
