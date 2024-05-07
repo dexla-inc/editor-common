@@ -14,6 +14,8 @@ public class DeploymentPageResponse : ISuccess
     public string AuthenticatedUserRole { get; }
     public string? PageState { get; set; }
     public List<PageActionDto>? Actions { get; set; }
+    public ProjectResponse? Project { get; set; }
+    public BrandingResponse? Branding { get; set; }
 
     public DeploymentPageResponse(
         string id,
@@ -22,7 +24,9 @@ public class DeploymentPageResponse : ISuccess
         bool authenticatedOnly,
         string authenticatedUserRole,
         IEnumerable<string> pageState,
-        List<PageActionDto>? actions)
+        List<PageActionDto>? actions,
+        ProjectResponse? project,
+        BrandingResponse? branding)
     {
         Id = id;
         Title = title;
@@ -51,7 +55,9 @@ public class DeploymentPageResponse : ISuccess
                 Trigger = a.Trigger,
                 Action = Json.Deserialize<object>(a.Action),
                 SequentialTo = a.SequentialTo
-            }).ToList());
+            }).ToList(),
+            ProjectResponse.EntityToResponse(entity.Project),
+            BrandingResponse.EntityToResponse(entity.Branding));
     }
     
     public static DeploymentPageResponse EntityToResponse(DeploymentPage entity)
@@ -66,5 +72,7 @@ public class DeploymentPageResponse : ISuccess
         false,
         string.Empty,
         new List<string>(),
-        new List<PageActionDto>());
+        new List<PageActionDto>(),
+        null,
+        null);
 }

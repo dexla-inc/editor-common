@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
@@ -75,26 +74,74 @@ public class BrandingResponse(
 
     public string TrackingId { get; set; }
 
-    public static BrandingResponse ModelToResponse(BrandingModel entityBranding)
+    public static BrandingResponse ModelToResponse(BrandingModel model)
     {
         return new BrandingResponse(
-            entityBranding.Id,
-            entityBranding.Theme,
-            entityBranding.WebsiteUrl,
-            entityBranding.Fonts,
-            entityBranding.Colors,
-            entityBranding.ResponsiveBreakpoints,
-            entityBranding.FaviconUrl,
-            entityBranding.LogoUrl,
-            entityBranding.Logos,
-            entityBranding.DefaultFont,
-            entityBranding.HasCompactButtons,
-            entityBranding.DefaultRadius,
-            entityBranding.DefaultSpacing,
-            entityBranding.InputSize,
-            Enum.Parse<LoaderTypes>(entityBranding.Loader),
-            Enum.Parse<FocusRingTypes>(entityBranding.FocusRing),
-            Enum.Parse<CardStyleTypes>(entityBranding.CardStyle)
+            model.Id,
+            model.Theme,
+            model.WebsiteUrl,
+            model.Fonts,
+            model.Colors,
+            model.ResponsiveBreakpoints,
+            model.FaviconUrl,
+            model.LogoUrl,
+            model.Logos,
+            model.DefaultFont,
+            model.HasCompactButtons,
+            model.DefaultRadius,
+            model.DefaultSpacing,
+            model.InputSize,
+            Enum.Parse<LoaderTypes>(model.Loader),
+            Enum.Parse<FocusRingTypes>(model.FocusRing),
+            Enum.Parse<CardStyleTypes>(model.CardStyle)
+        );
+    }
+    
+    public static BrandingResponse EntityToResponse(Branding entity)
+    {
+        return new BrandingResponse(
+            entity.Id,
+            entity.Theme,
+            entity.WebsiteUrl,
+            entity.Fonts.Select(f => new FontDto
+            {
+                Type = f.Type,
+                FontFamily = f.FontFamily,
+                Tag = f.Tag,
+                FontWeight = f.FontWeight,
+                FontSize = f.FontSize,
+                LineHeight = f.LineHeight,
+                LetterSpacing = f.LetterSpacing,
+                Note = f.Note
+            }),
+            entity.Colors.Select(c => new ColorDto
+            {
+                Name = c.Name,
+                FriendlyName = c.FriendlyName,
+                Hex = c.Hex,
+                Brightness = c.Brightness,
+                IsDefault = c.IsDefault
+            }).ToList(),
+            entity.ResponsiveBreakpoints.Select(rb => new ResponsiveBreakpointDto
+            {
+                Breakpoint = rb.Breakpoint,
+                Type = rb.Type.ToString()
+            }),
+            entity.FaviconUrl,
+            entity.LogoUrl,
+            entity.Logos?.Select(l => new LogoDto
+            {
+                Url = l.Url,
+                Type = l.Type.ToString()
+            }).ToList(),
+            entity.DefaultFont,
+            entity.HasCompactButtons,
+            entity.DefaultRadius,
+            entity.DefaultSpacing,
+            entity.InputSize,
+            entity.Loader,
+            entity.FocusRing,
+            entity.CardStyle
         );
     }
 }

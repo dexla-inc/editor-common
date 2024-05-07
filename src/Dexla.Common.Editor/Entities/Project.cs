@@ -7,7 +7,7 @@ namespace Dexla.Common.Editor.Entities;
 
 public class Project : IEntity
 {
-    protected Project()
+    protected internal Project()
     {
     }
 

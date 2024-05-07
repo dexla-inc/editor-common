@@ -15,4 +15,6 @@ public class DeploymentPageModel : IModel
     public bool AuthenticatedOnly { get; set; }
     public string AuthenticatedUserRole { get; set; } = string.Empty;
     public List<string> PageState { get; set; } = [];
+    public ProjectModel Project { get; set; } = new();
+    public BrandingModel Branding { get; set; } = new();
 }

@@ -60,7 +60,9 @@ public class DeploymentResponse : ISuccess
                 Trigger = a.Trigger,
                 Action = Json.Deserialize<object>(a.Action),
                 SequentialTo = a.SequentialTo
-            }).ToList())
+            }).ToList(),
+            ProjectResponse.EntityToResponse(p.Project),
+            BrandingResponse.EntityToResponse(p.Branding))
         ).ToList();
     }
 
@@ -102,7 +104,9 @@ public class DeploymentResponse : ISuccess
                     Trigger = a.Trigger,
                     Action = Json.Deserialize<object>(a.Action),
                     SequentialTo = a.SequentialTo
-                }).ToList())
+                }).ToList(),
+                ProjectResponse.EntityToResponse(p.Project),
+                BrandingResponse.EntityToResponse(p.Branding))
             ).ToList()
         };
     }

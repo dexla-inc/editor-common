@@ -8,7 +8,7 @@ namespace Dexla.Common.Editor.Entities;
 
 public class Branding : IEntity
 {
-    protected Branding()
+    protected internal Branding()
     {
     }
 
