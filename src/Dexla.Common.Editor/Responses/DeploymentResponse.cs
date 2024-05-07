@@ -16,8 +16,8 @@ public class DeploymentResponse : ISuccess
     public string TaskId { get; }
     public int Version { get; }
     public List<DeploymentPageResponse> Pages { get; private set; } = [];
-    public ProjectResponse Project { get; }
-    public BrandingResponse Branding { get; }
+    public ProjectResponse? Project { get; }
+    public BrandingResponse? Branding { get; }
 
     public DeploymentResponse(
         string id,
@@ -26,8 +26,8 @@ public class DeploymentResponse : ISuccess
         string commitMessage,
         string taskId,
         int version,
-        ProjectResponse project,
-        BrandingResponse branding)
+        ProjectResponse? project,
+        BrandingResponse? branding)
     {
         Id = id;
         ProjectId = projectId;
@@ -61,8 +61,8 @@ public class DeploymentResponse : ISuccess
                 Action = Json.Deserialize<object>(a.Action),
                 SequentialTo = a.SequentialTo
             }).ToList(),
-            ProjectResponse.EntityToResponse(p.Project),
-            BrandingResponse.EntityToResponse(p.Branding))
+            p.Project != null ? ProjectResponse.EntityToResponse(p.Project) : null,
+            p.Branding != null ? BrandingResponse.EntityToResponse(p.Branding) : null)
         ).ToList();
     }
 
@@ -75,8 +75,8 @@ public class DeploymentResponse : ISuccess
             entity.CommitMessage,
             entity.TaskId,
             entity.Version,
-            ProjectResponse.ModelToResponse(entity.Project),
-            BrandingResponse.ModelToResponse(entity.Branding));
+            entity.Project != null ? ProjectResponse.ModelToResponse(entity.Project) : null,
+            entity.Branding != null ? BrandingResponse.ModelToResponse(entity.Branding) : null);
     }
 
     public static DeploymentResponse EntityToResponse(DeploymentWithPages entity)

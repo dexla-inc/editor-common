@@ -16,6 +16,6 @@ public class DeploymentPage : IEntity
     public string AuthenticatedUserRole { get; set; } = string.Empty;
     public List<string> PageState { get; set; } = [];
     public virtual List<PageAction>? Actions { get; set; }
-    public Project Project { get; set; } = new();
-    public Branding Branding { get; set; } = new();
+    public Project? Project { get; set; }
+    public Branding? Branding { get; set; }
 }

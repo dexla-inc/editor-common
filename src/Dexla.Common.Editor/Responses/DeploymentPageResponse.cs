@@ -35,11 +35,13 @@ public class DeploymentPageResponse : ISuccess
         AuthenticatedUserRole = authenticatedUserRole;
         PageState = string.Join("", pageState);
         Actions = actions;
+        Project = project;
+        Branding = branding;
     }
 
 
     public string TrackingId { get; set; }
-    
+
     public static Func<DeploymentPage, DeploymentPageResponse> EntityToResponse()
     {
         return entity => new DeploymentPageResponse(
@@ -56,10 +58,10 @@ public class DeploymentPageResponse : ISuccess
                 Action = Json.Deserialize<object>(a.Action),
                 SequentialTo = a.SequentialTo
             }).ToList(),
-            ProjectResponse.EntityToResponse(entity.Project),
-            BrandingResponse.EntityToResponse(entity.Branding));
+            entity.Project != null ? ProjectResponse.EntityToResponse(entity.Project) : null,
+            entity.Branding != null ? BrandingResponse.EntityToResponse(entity.Branding) : null);
     }
-    
+
     public static DeploymentPageResponse EntityToResponse(DeploymentPage entity)
     {
         return EntityToResponse()(entity);

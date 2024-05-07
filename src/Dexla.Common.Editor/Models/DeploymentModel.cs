@@ -6,7 +6,7 @@ namespace Dexla.Common.Editor.Models;
 
 public class DeploymentModel : IModelWithUserId
 {
-    public string? Id { get; set; } 
+    public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
@@ -14,8 +14,8 @@ public class DeploymentModel : IModelWithUserId
     public string TaskId { get; set; } = string.Empty;
     public EnvironmentTypes Environment { get; set; }
     public int Version { get; set; }
-    public ProjectModel Project { get; set; } = new();
-    public BrandingModel Branding { get; set; } = new();
+    public ProjectModel? Project { get; set; }
+    public BrandingModel? Branding { get; set; }
 
     public void SetUserId(string value)
     {
@@ -31,12 +31,12 @@ public class DeploymentModel : IModelWithUserId
     {
         Environment = forceProduction ? EnvironmentTypes.Production : EnvironmentTypes.Staging;
     }
-    
+
     public void SetProject(ProjectModel project)
     {
         Project = project;
     }
-    
+
     public void SetBranding(BrandingModel branding)
     {
         Branding = branding;
