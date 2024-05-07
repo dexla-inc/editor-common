@@ -106,7 +106,7 @@ public class ProjectResponse : ISuccess
             });
     }
 
-    public static ProjectResponse ModelToResponse(Project entity, bool? isOwner = false)
+    public static ProjectResponse EntityToResponse(Project entity, bool? isOwner = false)
     {
         return new ProjectResponse(
             entity.Id,
@@ -188,6 +188,30 @@ public class ProjectResponse : ISuccess
                 SignInPageId = entity.Redirects.SignInPageId,
                 NotFoundPageId = entity.Redirects.NotFoundPageId
             }
+        );
+    }
+
+    public static ProjectResponse ModelToResponse(ProjectModel entityProject)
+    {
+        return new ProjectResponse(
+            entityProject.Id!,
+            entityProject.CompanyId,
+            entityProject.Name,
+            entityProject.FriendlyName,
+            Regions.ParseRegion(entityProject.Region),
+            Enum.Parse<ProjectTypes>(entityProject.Type),
+            entityProject.Industry,
+            entityProject.Description,
+            entityProject.SimilarCompany,
+            entityProject.IsOwner,
+            entityProject.Domain,
+            entityProject.SubDomain,
+            entityProject.Created,
+            entityProject.Screenshots,
+            entityProject.CustomCode,
+            entityProject.RedirectSlug,
+            entityProject.FaviconUrl,
+            entityProject.Redirects
         );
     }
 }
