@@ -71,7 +71,7 @@ public class ApiFullResponse : ISuccess
             swaggerApiModel.BaseUrl,
             swaggerApiModel.SwaggerUrl,
             swaggerApiModel.Updated,
-            swaggerApiModel.Type,
+            !string.IsNullOrWhiteSpace(swaggerApiModel.Type) ? Enum.Parse<DataSourceTypes>(swaggerApiModel.Type) : DataSourceTypes.API,
             swaggerApiModel.AuthValue,
             swaggerApiModel.ApiKey,
             swaggerApiModel.IsTested,

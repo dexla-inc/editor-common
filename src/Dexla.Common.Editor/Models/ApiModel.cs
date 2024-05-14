@@ -18,8 +18,7 @@ public class ApiModel : IModelWithUserId
     public string? SwaggerUrl { get; set; }
     public bool IsTested { get; set; }
     public long Updated { get; set; }
-    public bool IsManual => string.IsNullOrEmpty(SwaggerUrl);
-    public DataSourceTypes Type { get; set; }
+    public string Type { get; set; } = string.Empty;
     public string? AuthValue { get; set; }
     public string? ApiKey { get; set; }
     
@@ -38,9 +37,9 @@ public class ApiModel : IModelWithUserId
         Updated = DateTimeExtensions.GetTimestamp();
     }
 
-    public void SetDataSource(DataSourceTypes dataSourceType)
+    public void SetDataSource(string value)
     {
-        Type = dataSourceType;
+        Type = value;
     }
 
     public void SetNoAuthenticationScheme()

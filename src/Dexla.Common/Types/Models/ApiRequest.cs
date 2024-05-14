@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Types.Models;
 
@@ -22,6 +23,8 @@ public class ApiRequest
     public bool IsTested { get; set; }
     [JsonPropertyOrder(8)]
     public string? ApiKey { get; set; }
+    [JsonPropertyOrder(9)]
+    public string Type { get; set; } = string.Empty;
 }
 
 public class ApiUpdateRequest : ApiRequest

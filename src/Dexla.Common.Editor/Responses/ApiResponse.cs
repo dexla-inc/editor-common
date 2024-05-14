@@ -113,7 +113,7 @@ public class ApiResponse : ISuccess
             model.BaseUrl,
             model.SwaggerUrl,
             model.Updated,
-            model.Type,
+            !string.IsNullOrWhiteSpace(model.Type) ? Enum.Parse<DataSourceTypes>(model.Type) : DataSourceTypes.API,
             model.AuthValue,
             model.ApiKey,
             model.IsTested);
@@ -132,7 +132,7 @@ public class ApiResponse : ISuccess
             model.BaseUrl,
             model.SwaggerUrl,
             model.Updated,
-            model.Type,
+            !string.IsNullOrWhiteSpace(model.Type) ? Enum.Parse<DataSourceTypes>(model.Type) : DataSourceTypes.API,
             model.AuthValue,
             model.ApiKey,
             model.IsTested,

@@ -25,6 +25,8 @@ public class DatasourceAuthConfigurationResponse : ISuccess
     public string? AccessTokenProperty { get; }
     public string? RefreshTokenProperty { get; }
     public string? ExpiryTokenProperty { get; }
+    public string? ApiKey { get; }
+    public DataSourceTypes? DataType { get; }
 
     public DatasourceAuthConfigurationResponse(
         AuthenticationSchemes type,
@@ -33,7 +35,9 @@ public class DatasourceAuthConfigurationResponse : ISuccess
         string? userEndpointUrl,
         string? accessTokenProperty,
         string? refreshTokenProperty,
-        string? expiryTokenProperty)
+        string? expiryTokenProperty,
+        string? apiKey,
+        DataSourceTypes? dataType)
     {
         Type = type;
         AccessTokenUrl = accessTokenUrl;
@@ -42,6 +46,8 @@ public class DatasourceAuthConfigurationResponse : ISuccess
         AccessTokenProperty = accessTokenProperty;
         RefreshTokenProperty = refreshTokenProperty;
         ExpiryTokenProperty = expiryTokenProperty;
+        ApiKey = apiKey;
+        DataType = dataType;
     }
 
     public string TrackingId { get; set; }
