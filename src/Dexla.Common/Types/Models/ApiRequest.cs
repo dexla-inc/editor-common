@@ -20,6 +20,8 @@ public class ApiRequest
     public string? AuthValue { get; set;  }
     [JsonPropertyOrder(7)]
     public bool IsTested { get; set; }
+    [JsonPropertyOrder(8)]
+    public string ApiKey { get; set; } = string.Empty;
 }
 
 public class ApiUpdateRequest : ApiRequest
