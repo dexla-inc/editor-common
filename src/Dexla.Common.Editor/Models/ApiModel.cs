@@ -21,6 +21,7 @@ public class ApiModel : IModelWithUserId
     public bool IsManual => string.IsNullOrEmpty(SwaggerUrl);
     public DataSourceTypes Type { get; set; }
     public string? AuthValue { get; set; }
+    public string? ApiKey { get; set; }
     
     public void SetUserId(string value)
     {

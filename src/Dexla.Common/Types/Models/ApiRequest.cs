@@ -21,7 +21,7 @@ public class ApiRequest
     [JsonPropertyOrder(7)]
     public bool IsTested { get; set; }
     [JsonPropertyOrder(8)]
-    public string ApiKey { get; set; } = string.Empty;
+    public string? ApiKey { get; set; }
 }
 
 public class ApiUpdateRequest : ApiRequest

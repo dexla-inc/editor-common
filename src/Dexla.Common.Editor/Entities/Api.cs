@@ -20,4 +20,5 @@ public class Api : IEntity
     public long Updated { get; set; }
     public DataSourceTypes Type { get; set; }
     public string? AuthValue { get; set;  }
+    public string? ApiKey { get; set; }
 }

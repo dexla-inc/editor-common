@@ -17,6 +17,7 @@ public class ApiFullResponse : ISuccess
     public long Updated { get; }
     public DataSourceTypes Type { get; }
     public string? AuthValue { get; }
+    public string? ApiKey { get; }
     public bool IsTested { get; }
     public IEnumerable<DataSourceEndpoint>? ChangedEndpoints { get; }
     public IEnumerable<DataSourceEndpoint>? DeletedEndpoints { get; }
@@ -35,6 +36,7 @@ public class ApiFullResponse : ISuccess
         long updated,
         DataSourceTypes type,
         string? authValue,
+        string? apiKey,
         bool isTested,
         IEnumerable<DataSourceEndpoint>? changedEndpoints = null,
         IEnumerable<DataSourceEndpoint>? deletedEndpoints = null)
@@ -48,6 +50,7 @@ public class ApiFullResponse : ISuccess
         Updated = updated;
         Type = type;
         AuthValue = authValue;
+        ApiKey = apiKey;
         IsTested = isTested;
         ChangedEndpoints = changedEndpoints ?? new List<DataSourceEndpoint>();
         DeletedEndpoints = deletedEndpoints ?? new List<DataSourceEndpoint>();
@@ -70,6 +73,7 @@ public class ApiFullResponse : ISuccess
             swaggerApiModel.Updated,
             swaggerApiModel.Type,
             swaggerApiModel.AuthValue,
+            swaggerApiModel.ApiKey,
             swaggerApiModel.IsTested,
             changedEndpoints,
             deletedEndpoints);

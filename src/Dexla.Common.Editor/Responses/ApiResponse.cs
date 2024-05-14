@@ -19,6 +19,7 @@ public class ApiResponse : ISuccess
     public DataSourceTypes Type { get; }
     public List<ApiEndpointResponse> AuthEndpoints { get; }
     public string? AuthValue { get; }
+    public string? ApiKey { get; }
     public bool IsTested { get; }
 
     public ApiResponse(
@@ -31,6 +32,7 @@ public class ApiResponse : ISuccess
         long updated,
         DataSourceTypes type,
         string? authValue,
+        string? apiKey,
         bool isTested)
     {
         Id = id;
@@ -42,6 +44,7 @@ public class ApiResponse : ISuccess
         Updated = updated;
         Type = type;
         AuthValue = authValue;
+        ApiKey = apiKey;
         IsTested = isTested;
     }
 
@@ -55,6 +58,7 @@ public class ApiResponse : ISuccess
         long updated,
         DataSourceTypes type,
         string? authValue,
+        string? apiKey,
         bool isTested,
         List<ApiEndpointResponse> authEndpoints)
     {
@@ -67,6 +71,7 @@ public class ApiResponse : ISuccess
         Updated = updated;
         Type = type;
         AuthValue = authValue;
+        ApiKey = apiKey;
         IsTested = isTested;
         AuthEndpoints = authEndpoints;
     }
@@ -110,6 +115,7 @@ public class ApiResponse : ISuccess
             model.Updated,
             model.Type,
             model.AuthValue,
+            model.ApiKey,
             model.IsTested);
     }
 
@@ -128,6 +134,7 @@ public class ApiResponse : ISuccess
             model.Updated,
             model.Type,
             model.AuthValue,
+            model.ApiKey,
             model.IsTested,
             changedEndpoints,
             deletedEndpoints);
