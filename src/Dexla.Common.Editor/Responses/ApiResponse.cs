@@ -76,7 +76,23 @@ public class ApiResponse : ISuccess
         AuthEndpoints = authEndpoints;
     }
 
-    public static Func<ApiEndpoint, ApiEndpointResponse> EntityToResponse()
+    public static Func<Api, ApiResponse> EntityToResponse()
+    {
+        return entity => new ApiResponse(
+            entity.Id,
+            entity.Name,
+            entity.AuthenticationScheme,
+            entity.Environment,
+            entity.BaseUrl,
+            entity.SwaggerUrl,
+            entity.Updated,
+            entity.Type,
+            entity.AuthValue,
+            entity.ApiKey,
+            entity.IsTested);
+    }
+
+    public static Func<ApiEndpoint, ApiEndpointResponse> EntityToEndpointResponse()
     {
         return entity => new ApiEndpointResponse(
             entity.Id,
