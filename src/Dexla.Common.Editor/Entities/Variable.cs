@@ -1,10 +1,11 @@
 ﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
+using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class Variable : IEntity
+public class Variable : IProjectEntity
 {
     protected Variable()
     {
@@ -18,4 +19,11 @@ public class Variable : IEntity
     public FrontEndTypes Type { get; set; }
     public string DefaultValue { get; set; }
     public bool IsGlobal { get; set; }
+    public IProjectEntity SetNewValues(string userId, string projectId)
+    {
+        UserId = userId;
+        ProjectId = projectId;
+        Id = UtilityExtensions.GetId();
+        return this;
+    }
 }

@@ -19,11 +19,14 @@ public class FilterConfiguration
 
     public void Append(string key, object value, SearchTypes searchType)
     {
-        Filters.Add(new Filter(key.ToCamelCase(), value, searchType));
+        string fieldName = _transformFieldName(key);
+
+        Filters.Add(new Filter(fieldName, value, searchType));
     }
-    
     public void AppendArray(string key, List<string> value, SearchTypes searchType)
     {
+        string fieldName = _transformFieldName(key);
+        
         Filters.Add(new Filter(key.ToCamelCase(), value, searchType));
     }
     
@@ -35,5 +38,10 @@ public class FilterConfiguration
     private void AddDefaults(string projectId)
     {
         Filters.Add(new Filter(nameof(projectId), projectId, SearchTypes.EXACT));
+    }
+    
+    private static string _transformFieldName(string key)
+    {
+        return key is "Id" or "id" ? "_id" : key.ToCamelCase();
     }
 }

@@ -1,9 +1,10 @@
 ﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
+using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class LogicFlow : IEntity
+public class LogicFlow : IProjectEntity
 {
     protected LogicFlow()
     {
@@ -17,4 +18,11 @@ public class LogicFlow : IEntity
     public string Data { get; set; }
     public long CreatedAt { get; set; }
     public long UpdatedAt { get; set; }
+    public IProjectEntity SetNewValues(string userId, string projectId)
+    {
+        UserId = userId;
+        ProjectId = projectId;
+        Id = UtilityExtensions.GetId();
+        return this;
+    }
 }

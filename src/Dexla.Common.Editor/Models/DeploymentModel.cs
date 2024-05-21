@@ -4,11 +4,17 @@ using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Models;
 
-public class DeploymentModel : IModelWithUserId
+public class DeploymentModel : IModelWithProjectId
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
+    public void SetCompanyId(string value)
+    {
+        CompanyId = value;
+    }
+
     public string UserId { get; set; } = string.Empty;
+    public string CompanyId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
     public string CommitMessage { get; set; } = string.Empty;
     public string TaskId { get; set; } = string.Empty;

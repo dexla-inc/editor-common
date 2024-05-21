@@ -6,11 +6,13 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
-public class ApiEndpointModel : IModelWithUserId
+public class ApiEndpointModel : IModelWithProjectId
 {
     public string? Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
+
     public string UserId { get; set; } = string.Empty;
+    public string CompanyId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
     public string ApiId { get; set; } = string.Empty;
     public string BaseUrl { get; set; } = string.Empty;
@@ -40,6 +42,11 @@ public class ApiEndpointModel : IModelWithUserId
         ProjectId = projectId;
     }
 
+    public void SetCompanyId(string value)
+    {
+        CompanyId = value;
+    }
+    
     public void SetApiId(string apiId)
     {
         ApiId = apiId;

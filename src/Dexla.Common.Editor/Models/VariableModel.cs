@@ -12,7 +12,13 @@ public class VariableModel : IModelWithUserId
 
     public string? Id { get; set; } 
     public EntityStatus EntityStatus { get; set; }
+    public void SetCompanyId(string value)
+    {
+        CompanyId = value;
+    }
+
     public string UserId { get; set; }
+    public string CompanyId { get; set; }
     public string ProjectId { get; set; }
     public string Name { get; set; }
     public string Type { get; set; }

@@ -5,11 +5,12 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
-public class ApiModel : IModelWithUserId
+public class ApiModel : IModelWithProjectId
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
     public string UserId { get; set; } = string.Empty;
+    public string CompanyId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string AuthenticationScheme { get; set; } = string.Empty;
@@ -31,7 +32,12 @@ public class ApiModel : IModelWithUserId
     {
         ProjectId = projectId;
     }
-
+    
+    public void SetCompanyId(string value)
+    {
+        CompanyId = value;
+    }
+    
     public void SetUpdated()
     {
         Updated = DateTimeExtensions.GetTimestamp();

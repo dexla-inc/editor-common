@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class Page : IEntity
+public class Page : IPageEntity
 {
     protected Page()
     {
@@ -26,4 +25,12 @@ public class Page : IEntity
     public Dictionary<string,string>? QueryStrings { get; set; }
     public virtual string Description { get; set; }
     public virtual List<PageAction>? Actions { get; set; }
+    
+    public IPageEntity SetNewValues(string userId, string projectId, string pageId)
+    {
+        UserId = userId;
+        ProjectId = projectId;
+        Id = pageId;
+        return this;
+    }
 }

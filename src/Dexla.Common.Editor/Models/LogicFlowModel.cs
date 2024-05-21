@@ -4,7 +4,7 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
-public class LogicFlowModel : IModelWithUserId
+public class LogicFlowModel : IModelWithProjectId
 {
     internal LogicFlowModel()
     {
@@ -12,7 +12,13 @@ public class LogicFlowModel : IModelWithUserId
 
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
+    public void SetCompanyId(string value)
+    {
+        CompanyId = value;
+    }
+
     public string UserId { get; set; }
+    public string CompanyId { get; set; } = string.Empty;
     public string ProjectId { get; set; }
     public string Name { get; set; }
     public string Data { get; set; }

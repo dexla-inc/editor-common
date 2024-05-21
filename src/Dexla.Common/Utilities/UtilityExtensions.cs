@@ -116,6 +116,14 @@ namespace Dexla.Common.Utilities
                 "app.dexla.co.uk",
                 "beta.dexla.co.uk",
                 "*-dexla-inc.vercel.app",
+                "localhost:3000",
+                "localhost:*",
+                "auth.dexla.io",
+                "dexla.dev",
+                "dev.dexla.io",
+                "www.dexla.dev",
+                "bnkability.dexla.io",
+                "sitemaps.dexla.dev"
             ];
         }
     }

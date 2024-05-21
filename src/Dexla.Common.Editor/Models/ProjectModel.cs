@@ -28,6 +28,10 @@ public class ProjectModel : IModelWithUserId
     public string? RedirectSlug { get; set; }
     public string? FaviconUrl { get; set; }
     public RedirectsDto Redirects { get; set; } = new();
+    public void SetCompanyId(string value)
+    {
+        CompanyId = value;
+    }
     
     public void SetUserId(string value)
     {
@@ -49,11 +53,6 @@ public class ProjectModel : IModelWithUserId
         Created = DateTimeExtensions.GetTimestamp();
     }
 
-    public void SetCompanyId(string value)
-    {
-        CompanyId = value;
-    }
-    
     public void SetOwner(bool value)
     {
         IsOwner = value;

@@ -16,32 +16,18 @@ public static class HttpService
         Dictionary<string, string>? parameters = null,
         string mediaType = MediaTypes.ApplicationJson)
     {
-        HttpMethod httpMethod = new(HttpMethod.Post.ToString());
+        return CreateRequestMessage(HttpMethod.Post, relativeUrl, jsonContent, authHeaderValue, headers, parameters, mediaType);
+    }
 
-        HttpRequestMessage request = _buildRequest(relativeUrl, httpMethod, authHeaderValue, headers, parameters, mediaType);
-
-        // Adding the Accept header with the mediaType
-        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
-        
-        if (jsonContent == null) 
-            return request;
-        
-        switch (mediaType)
-        {
-            case MediaTypes.ApplicationJson:
-                request.Content = new StringContent(jsonContent, Encoding.UTF8, mediaType);
-                break;
-            case MediaTypes.ApplicationFormUrlEncoded:
-            {
-                List<KeyValuePair<string, string>> keyValueContent = Json.Deserialize<List<KeyValuePair<string, string>>>(jsonContent);
-                request.Content = new FormUrlEncodedContent(keyValueContent);
-                break;
-            }
-            default:
-                throw new Exception("Unsupported media type");
-        }
-
-        return request;
+    public static HttpRequestMessage CreatePutRequestMessage(
+        string relativeUrl,
+        string? jsonContent = null,
+        string? authHeaderValue = null,
+        Dictionary<string, string>? headers = null,
+        Dictionary<string, string>? parameters = null,
+        string mediaType = MediaTypes.ApplicationJson)
+    {
+        return CreateRequestMessage(HttpMethod.Put, relativeUrl, jsonContent, authHeaderValue, headers, parameters, mediaType);
     }
 
     public static HttpRequestMessage CreateGetRequestMessage(
@@ -51,20 +37,53 @@ public static class HttpService
         Dictionary<string, string>? parameters = null,
         string mediaType = MediaTypes.ApplicationJson)
     {
-        HttpMethod httpMethod = new(HttpMethod.Get.ToString());
-
-        return _buildRequest(relativeUrl, httpMethod, authHeaderValue, headers, parameters, mediaType);
+        return _buildRequest(HttpMethod.Get, relativeUrl, authHeaderValue, headers, parameters, mediaType);
     }
-    
-    private static HttpRequestMessage _buildRequest(
-        string relativeUrl, 
-        HttpMethod httpMethod,
-        string? authHeaderValue, 
+
+    private static HttpRequestMessage CreateRequestMessage(
+        HttpMethod method,
+        string relativeUrl,
+        string? jsonContent,
+        string? authHeaderValue,
         Dictionary<string, string>? headers,
-        Dictionary<string, string>? parameters, 
+        Dictionary<string, string>? parameters,
         string mediaType)
     {
-        HttpRequestMessage request = new(httpMethod, relativeUrl);
+        HttpRequestMessage request = _buildRequest(method, relativeUrl, authHeaderValue, headers, parameters, mediaType);
+
+        // Adding the Accept header with the mediaType
+        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
+
+        if (jsonContent == null)
+            return request;
+
+        switch (mediaType)
+        {
+            case MediaTypes.ApplicationJson:
+                request.Content = new StringContent(jsonContent, Encoding.UTF8, mediaType);
+                break;
+            case MediaTypes.ApplicationFormUrlEncoded:
+                {
+                    List<KeyValuePair<string, string>> keyValueContent = Json.Deserialize<List<KeyValuePair<string, string>>>(jsonContent);
+                    request.Content = new FormUrlEncodedContent(keyValueContent);
+                    break;
+                }
+            default:
+                throw new Exception("Unsupported media type");
+        }
+
+        return request;
+    }
+
+    private static HttpRequestMessage _buildRequest(
+        HttpMethod method,
+        string relativeUrl,
+        string? authHeaderValue,
+        Dictionary<string, string>? headers,
+        Dictionary<string, string>? parameters,
+        string mediaType)
+    {
+        HttpRequestMessage request = new(method, relativeUrl);
 
         if (!string.IsNullOrEmpty(authHeaderValue))
         {
@@ -72,21 +91,20 @@ public static class HttpService
         }
 
         request.Headers.Add("Accept", mediaType);
-       
-        if (httpMethod == HttpMethod.Post || httpMethod == HttpMethod.Put || httpMethod == HttpMethod.Patch)
+
+        if (method == HttpMethod.Post || method == HttpMethod.Put || method == HttpMethod.Patch)
         {
             HttpContent content = new FormUrlEncodedContent(parameters ?? new Dictionary<string, string>());
             content.Headers.ContentType = new MediaTypeWithQualityHeaderValue(mediaType);
             request.Content = content;
         }
-        
+
         if (headers != null)
         {
             foreach ((string key, string value) in headers.Where(h => !string.IsNullOrEmpty(h.Key)))
             {
                 request.Headers.Add(key, value);
             }
-            
         }
 
         if (parameters != null)

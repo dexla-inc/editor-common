@@ -8,6 +8,7 @@ namespace Dexla.Common.Editor.Responses;
 public class DeploymentPageResponse : ISuccess
 {
     public string Id { get; }
+    public string ProjectId { get; }
     public string Title { get; }
     public string Slug { get; }
     public bool AuthenticatedOnly { get; }
@@ -19,6 +20,7 @@ public class DeploymentPageResponse : ISuccess
 
     public DeploymentPageResponse(
         string id,
+        string projectId,
         string title,
         string slug,
         bool authenticatedOnly,
@@ -29,6 +31,7 @@ public class DeploymentPageResponse : ISuccess
         BrandingResponse? branding)
     {
         Id = id;
+        ProjectId = projectId;
         Title = title;
         Slug = slug;
         AuthenticatedOnly = authenticatedOnly;
@@ -46,6 +49,7 @@ public class DeploymentPageResponse : ISuccess
     {
         return entity => new DeploymentPageResponse(
             entity.Id,
+            entity.ProjectId,
             entity.Title,
             entity.Slug,
             entity.AuthenticatedOnly,
@@ -71,10 +75,23 @@ public class DeploymentPageResponse : ISuccess
         string.Empty,
         string.Empty,
         string.Empty,
+        string.Empty,
         false,
         string.Empty,
         new List<string>(),
         new List<PageActionDto>(),
         project,
         branding);
+    
+    public static DeploymentPageResponse InvalidResponse(ProjectWithBrandingResponse project) => new(
+        string.Empty,
+        project.Id,
+        string.Empty,
+        string.Empty,
+        false,
+        string.Empty,
+        new List<string>(),
+        null,
+        project,
+        project.Branding);
 }

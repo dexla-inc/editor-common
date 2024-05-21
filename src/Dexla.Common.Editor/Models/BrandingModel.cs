@@ -5,7 +5,7 @@ using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Models;
 
-public class BrandingModel : IModelWithUserId
+public class BrandingModel : IModelWithProjectId
 {
     public string? Id // Need to refactor to support multiple themes
     {
@@ -17,7 +17,13 @@ public class BrandingModel : IModelWithUserId
     }
 
     public EntityStatus EntityStatus { get; set; }
+    public void SetCompanyId(string value)
+    {
+        CompanyId = value;
+    }
+
     public string UserId { get; set; } = string.Empty;
+    public string CompanyId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
     public string Theme { get; set; } = string.Empty;
     public List<FontDto> Fonts { get; set; } = [];
@@ -49,6 +55,13 @@ public class BrandingModel : IModelWithUserId
     public void CleanWebsiteUrl()
     {
         WebsiteUrl = WebsiteUrl?.TrimEnd('/');
+    }
+    
+    public void SetIds(string userId, string projectId)
+    {
+        UserId = userId;
+        ProjectId = projectId;
+        Id = projectId;
     }
 
     const string DefaultFontFamily = "Open Sans";
@@ -161,7 +174,7 @@ public class BrandingModel : IModelWithUserId
                 new ColorDto { Hex = "#E57F4F", Name = "Tertiary", IsDefault = true, FriendlyName = "Tertiary" },
                 new ColorDto
                     { Hex = "#FFFFFF", Name = "TertiaryText", IsDefault = true, FriendlyName = "Tertiary Text" },
-                new ColorDto { Hex = "#FF9600", Name = "Background", IsDefault = true, FriendlyName = "Background" },
+                new ColorDto { Hex = "#FFFFFF", Name = "Background", IsDefault = true, FriendlyName = "Background" },
                 new ColorDto { Hex = "#FE191C", Name = "Danger", IsDefault = true, FriendlyName = "Danger" },
                 new ColorDto { Hex = "#FFCC00", Name = "Warning", IsDefault = true, FriendlyName = "Warning" },
                 new ColorDto { Hex = "#10D48E", Name = "Success", IsDefault = true, FriendlyName = "Success" },

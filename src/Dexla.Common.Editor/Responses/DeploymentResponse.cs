@@ -49,6 +49,7 @@ public class DeploymentResponse : ISuccess
     {
         Pages = pages.Select(p => new DeploymentPageResponse(
             p.Id,
+            p.ProjectId,
             p.Title,
             p.Slug,
             p.AuthenticatedOnly,
@@ -93,6 +94,7 @@ public class DeploymentResponse : ISuccess
         {
             Pages = entity.Pages.Select(p => new DeploymentPageResponse(
                 p.Id,
+                p.ProjectId,
                 p.Title,
                 p.Slug,
                 p.AuthenticatedOnly,

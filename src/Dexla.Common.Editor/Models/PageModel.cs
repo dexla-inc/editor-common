@@ -3,12 +3,18 @@ using Dexla.Common.Repository.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Models;
 
-public class PageModel : IModelWithUserId
+public class PageModel : IModelWithProjectId
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
+    public void SetCompanyId(string value)
+    {
+        CompanyId = value;
+    }
+
     public string UserId { get; set; } = string.Empty;
-    public string ProjectId { get; private set; } = string.Empty;
+    public string CompanyId { get; set; } = string.Empty;
+    public string ProjectId { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
