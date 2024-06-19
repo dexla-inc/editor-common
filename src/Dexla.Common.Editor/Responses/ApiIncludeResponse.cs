@@ -71,7 +71,7 @@ public class ApiIncludeResponse : ISuccess
                 entity.AuthValue,
                 entity.ApiKey,
                 entity.IsTested,
-                entity.ApiEndpoints.Select(e => ApiResponse.EntityToEndpointResponse()(e)).ToList(),
+                entity.ApiEndpoints.Select(e => ApiEndpointResponse.EntityToEndpointResponse()(e)).ToList(),
                 authConfig
             );
         };

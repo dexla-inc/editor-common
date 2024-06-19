@@ -1,6 +1,7 @@
 ﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Repository.Types.Models;
+using Dexla.Common.Types;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
@@ -25,9 +26,10 @@ public class ProjectResponse : ISuccess
     public string[] Screenshots { get; }
     public string? HomePageId { get; set; }
     public string? CustomCode { get; set; }
-    public string? RedirectSlug { get; }
     public string? FaviconUrl { get; }
     public RedirectsDto? Redirects { get; }
+    public Dictionary<string, object> Metadata { get; }
+    public List<AppDto>? Apps { get; }
 
     public ProjectResponse(
         string id,
@@ -45,9 +47,10 @@ public class ProjectResponse : ISuccess
         long created,
         string[] screenshots,
         string? customCode,
-        string? redirectSlug,
         string? faviconUrl,
-        RedirectsDto? redirects)
+        RedirectsDto? redirects,
+        Dictionary<string, object> metadata,
+        List<AppDto>? apps)
     {
         Id = id;
         CompanyId = companyId;
@@ -64,9 +67,10 @@ public class ProjectResponse : ISuccess
         Created = created;
         Screenshots = screenshots;
         CustomCode = customCode;
-        RedirectSlug = redirectSlug;
         FaviconUrl = faviconUrl;
         Redirects = redirects;
+        Metadata = metadata;
+        Apps = apps;
     }
 
     public ProjectResponse()
@@ -97,16 +101,27 @@ public class ProjectResponse : ISuccess
                 m.Created,
                 m.Screenshots,
                 m.CustomCode,
-                m.RedirectSlug,
                 m.FaviconUrl,
-                m.Redirects
+                m.Redirects,
+                m.Metadata,
+                m.Apps
             )
             {
                 HomePageId = homePageId
             });
     }
 
+    public static Func<Project, ProjectResponse> EntityToResponse()
+    {
+        return entity => CreateProjectResponse(entity, entity.IsOwner);
+    }
+
     public static ProjectResponse EntityToResponse(Project entity, bool? isOwner = false)
+    {
+        return CreateProjectResponse(entity, isOwner ?? entity.IsOwner);
+    }
+
+    private static ProjectResponse CreateProjectResponse(Project entity, bool isOwner)
     {
         return new ProjectResponse(
             entity.Id,
@@ -118,19 +133,25 @@ public class ProjectResponse : ISuccess
             entity.Industry,
             entity.Description,
             entity.SimilarCompany,
-            isOwner ?? entity.IsOwner,
+            isOwner,
             entity.Domain,
             entity.SubDomain,
             entity.Created,
             entity.Screenshots,
             entity.CustomCode,
-            entity.RedirectSlug,
             entity.FaviconUrl,
             new RedirectsDto
             {
                 SignInPageId = entity.Redirects.SignInPageId,
                 NotFoundPageId = entity.Redirects.NotFoundPageId
-            }
+            },
+            entity.Metadata,
+            entity.Apps?.Select(a => new AppDto
+            {
+                Id = a.Id,
+                Type = a.Type,
+                Configuration = Json.Deserialize<object>(a.Configuration)
+            }).ToList()
         );
     }
 
@@ -152,42 +173,20 @@ public class ProjectResponse : ISuccess
             entity.Created,
             entity.Screenshots,
             entity.CustomCode,
-            entity.RedirectSlug,
             entity.FaviconUrl,
             string.IsNullOrEmpty(entity.Branding.Id) ? BrandingModel.GetDefault(userId, entity.Id) : entity.Branding,
             new RedirectsDto
             {
                 SignInPageId = entity.Redirects.SignInPageId,
                 NotFoundPageId = entity.Redirects.NotFoundPageId
-            }
-        );
-    }
-
-    public static Func<Project, ProjectResponse> EntityToResponse()
-    {
-        return entity => new ProjectResponse(
-            entity.Id,
-            entity.CompanyId,
-            entity.Name,
-            entity.FriendlyName,
-            Regions.ParseRegion(entity.Region) ?? new Region(),
-            entity.Type,
-            entity.Industry,
-            entity.Description,
-            entity.SimilarCompany,
-            entity.IsOwner,
-            entity.Domain,
-            entity.SubDomain,
-            entity.Created,
-            entity.Screenshots,
-            entity.CustomCode,
-            entity.RedirectSlug,
-            entity.FaviconUrl,
-            new RedirectsDto
+            },
+            entity.Metadata,
+            entity.Apps?.Select(a => new AppDto
             {
-                SignInPageId = entity.Redirects.SignInPageId,
-                NotFoundPageId = entity.Redirects.NotFoundPageId
-            }
+                Id = a.Id,
+                Type = a.Type,
+                Configuration = Json.Deserialize<object>(a.Configuration)
+            }).ToList()
         );
     }
 
@@ -209,9 +208,10 @@ public class ProjectResponse : ISuccess
             entityProject.Created,
             entityProject.Screenshots,
             entityProject.CustomCode,
-            entityProject.RedirectSlug,
             entityProject.FaviconUrl,
-            entityProject.Redirects
+            entityProject.Redirects,
+            entityProject.Metadata,
+            entityProject.Apps
         );
     }
 }

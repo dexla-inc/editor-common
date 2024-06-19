@@ -32,9 +32,7 @@ public class Project : IEntity
     [Obsolete("Use RedirectSlug instead.")]
     public string? RedirectSlug { get; set; }
     public string? FaviconUrl { get; set; }
-    //redirects: {
-//     signInPageId: project?.redirects?.signInPageId,
-//     notFoundPageId: project?.redirects?.notFoundPageId,
-// }
     public Redirects Redirects { get; set; } = new();
+    public Dictionary<string, object> Metadata { get; set; } = new();
+    public List<App>? Apps { get; set; } 
 }

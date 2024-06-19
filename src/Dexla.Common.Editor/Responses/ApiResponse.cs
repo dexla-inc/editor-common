@@ -92,31 +92,6 @@ public class ApiResponse : ISuccess
             entity.IsTested);
     }
 
-    public static Func<ApiEndpoint, ApiEndpointResponse> EntityToEndpointResponse()
-    {
-        return entity => new ApiEndpointResponse(
-            entity.Id,
-            entity.ApiId,
-            entity.BaseUrl,
-            string.Join("/", entity.BaseUrl, entity.RelativeUrl),
-            entity.RelativeUrl,
-            entity.Description,
-            entity.MethodType,
-            entity.AuthenticationScheme != null
-                ? Enum.Parse<AuthenticationSchemes>(entity.AuthenticationScheme, true)
-                : AuthenticationSchemes.NONE,
-            entity.WithCredentials,
-            entity.MediaType,
-            entity.Authentication,
-            entity.Headers,
-            entity.Parameters,
-            entity.RequestBody,
-            entity.Body,
-            entity.ExampleResponse,
-            entity.ErrorExampleResponse,
-            entity.IsServerRequest);
-    }
-
     public static ApiResponse ModelToResponse(ApiModel model)
     {
         return new ApiResponse(
@@ -156,36 +131,6 @@ public class ApiResponse : ISuccess
             deletedEndpoints);
     }
 
-    public static ApiEndpointResponse ModelToResponse(ApiEndpointModel model)
-    {
-        return new ApiEndpointResponse(
-            model.Id!,
-            model.ApiId,
-            model.BaseUrl,
-            string.Join("/", model.BaseUrl, model.RelativeUrl),
-            model.RelativeUrl,
-            model.Description,
-            Enum.Parse<MethodTypes>(model.MethodType, true),
-            model.AuthenticationScheme != null
-                ? Enum.Parse<AuthenticationSchemes>(model.AuthenticationScheme, true)
-                : AuthenticationSchemes.NONE,
-            model.WithCredentials,
-            model.MediaType,
-            new EndpointAuthentication
-            {
-                EndpointType = model.Authentication.EndpointType,
-                TokenKey = model.Authentication.TokenKey,
-                TokenSecondaryKey = model.Authentication.TokenSecondaryKey
-            },
-            model.Headers,
-            model.Parameters,
-            model.RequestBody,
-            model.Body,
-            model.ExampleResponse,
-            model.ErrorExampleResponse,
-            model.IsServerRequest);
-    }
-
     public static IResponse ModelToFullResponse(
         RepositoryActionResultModel<ApiModel> actionResult,
         IEnumerable<DataSourceEndpoint>? changedEndpoints = null,
@@ -201,20 +146,6 @@ public class ApiResponse : ISuccess
         return actionResult.ActionResult(
             actionResult,
             ModelToResponse);
-    }
-
-    public static IResponse ModelToResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult)
-    {
-        return actionResult.ActionResult(
-            actionResult,
-            ModelToResponse);
-    }
-
-    public static IResponse ModelToNoContentResponse(RepositoryActionResultModel<ApiEndpointModel> actionResult)
-    {
-        return actionResult.ActionResult<Success>(
-            actionResult,
-            _ => Success.Instance);
     }
 
     public string TrackingId { get; set; } = string.Empty;
