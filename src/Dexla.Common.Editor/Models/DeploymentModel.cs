@@ -22,6 +22,24 @@ public class DeploymentModel : IModelWithProjectId
     public int Version { get; set; }
     public ProjectModel? Project { get; set; }
     public BrandingModel? Branding { get; set; }
+    
+    public DeploymentModel CloneWithEnvironment(EnvironmentTypes environment)
+    {
+        return new DeploymentModel
+        {
+            Id = Id,
+            EntityStatus = EntityStatus,
+            UserId = UserId,
+            CompanyId = CompanyId,
+            ProjectId = ProjectId,
+            CommitMessage = CommitMessage,
+            TaskId = TaskId,
+            Environment = environment,
+            Version = Version,
+            Project = Project,
+            Branding = Branding
+        };
+    }
 
     public void SetUserId(string value)
     {

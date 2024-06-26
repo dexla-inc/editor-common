@@ -10,6 +10,8 @@ public class DeploymentPageModel : IModel
     public string ProjectId { get; set; } = string.Empty;
     public string UserId { get; set; } = string.Empty;
     public string DeploymentId { get; set; } = string.Empty;
+    public string PageId { get; set; } = string.Empty;
+    public string Environment { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public bool AuthenticatedOnly { get; set; }
@@ -17,4 +19,25 @@ public class DeploymentPageModel : IModel
     public List<string> PageState { get; set; } = [];
     public ProjectModel Project { get; set; } = new();
     public BrandingModel Branding { get; set; } = new();
+
+    public DeploymentPageModel Clone()
+    {
+        return new DeploymentPageModel
+        {
+            Id = Id,
+            EntityStatus = EntityStatus,
+            ProjectId = ProjectId,
+            UserId = UserId,
+            DeploymentId = DeploymentId,
+            PageId = PageId,
+            Environment = Environment,
+            Title = Title,
+            Slug = Slug,
+            AuthenticatedOnly = AuthenticatedOnly,
+            AuthenticatedUserRole = AuthenticatedUserRole,
+            PageState = PageState,
+            Project = Project,
+            Branding = Branding
+        };
+    }
 }

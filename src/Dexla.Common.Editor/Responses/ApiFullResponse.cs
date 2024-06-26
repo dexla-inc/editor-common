@@ -67,7 +67,7 @@ public class ApiFullResponse : ISuccess
             swaggerApiModel.AuthenticationScheme,
             swaggerApiModel.Environment != null
                 ? Enum.Parse<EnvironmentTypes>(swaggerApiModel.Environment)
-                : EnvironmentTypes.None,
+                : EnvironmentTypes.Editor,
             swaggerApiModel.BaseUrl,
             swaggerApiModel.SwaggerUrl,
             swaggerApiModel.Updated,

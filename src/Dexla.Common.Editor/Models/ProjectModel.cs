@@ -1,5 +1,4 @@
-﻿using Dexla.Common.Editor.Responses;
-using Dexla.Common.Repository.Types.Enums;
+﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Utilities;
 
@@ -18,14 +17,15 @@ public class ProjectModel : IModelWithUserId
     public string Industry { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string? SimilarCompany { get; set; }
-    public List<ProjectCollaboratorDto> Collaborators { get; set; } = [];
+    [Obsolete("Use LiveUrls instead")]
     public string Domain { get; set; } = string.Empty;
+    [Obsolete("Use LiveUrls instead")]
     public string SubDomain { get; set; } = string.Empty;
+    public Dictionary<string, LiveUrlDto> LiveUrls { get; set; } = [];
     public long Created { get; set; }
-    public string[] Screenshots { get; set; } = Array.Empty<string>();
+    public string[] Screenshots { get; set; } = [];
     public bool IsOwner { get; set; }
     public string? CustomCode { get; set; }
-    public string? RedirectSlug { get; set; }
     public string? FaviconUrl { get; set; }
     public RedirectsDto Redirects { get; set; } = new();
     public Dictionary<string, object> Metadata { get; set; } = new();

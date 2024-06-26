@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Dexla.Common.Editor.Entities;
+using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
@@ -14,6 +15,7 @@ public class DeploymentPageHistoryResponse : ISuccess
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? PageState { get; set; }
     public string PageId { get; }
+    public EnvironmentTypes Environment { get; }
     public long Created { get; }
 
     public DeploymentPageHistoryResponse(
@@ -24,6 +26,7 @@ public class DeploymentPageHistoryResponse : ISuccess
         bool authenticatedOnly,
         string authenticatedUserRole,
         IEnumerable<string> pageState,
+        EnvironmentTypes environment,
         long created)
     {
         Id = id;
@@ -33,6 +36,7 @@ public class DeploymentPageHistoryResponse : ISuccess
         AuthenticatedOnly = authenticatedOnly;
         AuthenticatedUserRole = authenticatedUserRole;
         PageState = string.Join("", pageState);
+        Environment = environment;
         Created = created;
     }
 
@@ -43,6 +47,7 @@ public class DeploymentPageHistoryResponse : ISuccess
         string slug,
         bool authenticatedOnly,
         string authenticatedUserRole,
+        EnvironmentTypes environment,
         long created)
     {
         Id = id;
@@ -51,6 +56,7 @@ public class DeploymentPageHistoryResponse : ISuccess
         Slug = slug;
         AuthenticatedOnly = authenticatedOnly;
         AuthenticatedUserRole = authenticatedUserRole;
+        Environment = environment;
         Created = created;
     }
 
@@ -68,6 +74,7 @@ public class DeploymentPageHistoryResponse : ISuccess
                 entity.AuthenticatedOnly,
                 entity.AuthenticatedUserRole,
                 entity.PageState,
+                entity.Environment,
                 entity.Created);
         
         return entity => new DeploymentPageHistoryResponse(
@@ -77,6 +84,7 @@ public class DeploymentPageHistoryResponse : ISuccess
             entity.Slug,
             entity.AuthenticatedOnly,
             entity.AuthenticatedUserRole,
+            entity.Environment,
             entity.Created);
     }
 }

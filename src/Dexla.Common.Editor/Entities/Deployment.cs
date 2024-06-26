@@ -22,6 +22,6 @@ public class Deployment : IEntity, IEntityWithTimeStamp
     public virtual string TaskId { get; set; }
     public virtual EnvironmentTypes Environment { get; set; }
     public virtual int Version { get; set; }
-    public virtual ProjectModel? Project { get; set; }
-    public virtual BrandingModel? Branding { get; set; }
+    public virtual Project? Project { get; set; }
+    public virtual Branding? Branding { get; set; }
 }

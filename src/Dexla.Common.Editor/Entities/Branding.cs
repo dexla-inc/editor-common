@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Dexla.Common.Repository.Types.Enums;
+﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
 
@@ -14,6 +12,7 @@ public class Branding : IEntity
 
     public string Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
+    public string CompanyId { get; set; } = string.Empty;
     public string UserId { get; set; }
     public string ProjectId { get; set; } = string.Empty;
     public string Theme { get; set; } = string.Empty;

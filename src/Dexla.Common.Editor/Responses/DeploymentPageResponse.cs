@@ -1,6 +1,7 @@
 ﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Types;
+using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
@@ -9,6 +10,9 @@ public class DeploymentPageResponse : ISuccess
 {
     public string Id { get; }
     public string ProjectId { get; }
+    public string DeploymentId { get; }
+    public string PageId { get; }
+    public EnvironmentTypes Environment { get; }
     public string Title { get; }
     public string Slug { get; }
     public bool AuthenticatedOnly { get; }
@@ -21,6 +25,9 @@ public class DeploymentPageResponse : ISuccess
     public DeploymentPageResponse(
         string id,
         string projectId,
+        string deploymentId,
+        string pageId,
+        EnvironmentTypes environment,
         string title,
         string slug,
         bool authenticatedOnly,
@@ -32,6 +39,9 @@ public class DeploymentPageResponse : ISuccess
     {
         Id = id;
         ProjectId = projectId;
+        DeploymentId = deploymentId;
+        PageId = pageId;
+        Environment = environment;
         Title = title;
         Slug = slug;
         AuthenticatedOnly = authenticatedOnly;
@@ -50,6 +60,9 @@ public class DeploymentPageResponse : ISuccess
         return entity => new DeploymentPageResponse(
             entity.Id,
             entity.ProjectId,
+            entity.PageId,
+            entity.DeploymentId,
+            entity.Environment,
             entity.Title,
             entity.Slug,
             entity.AuthenticatedOnly,
@@ -76,6 +89,9 @@ public class DeploymentPageResponse : ISuccess
         string.Empty,
         string.Empty,
         string.Empty,
+        EnvironmentTypes.Editor,
+        string.Empty,
+        string.Empty,
         false,
         string.Empty,
         new List<string>(),
@@ -86,6 +102,9 @@ public class DeploymentPageResponse : ISuccess
     public static DeploymentPageResponse InvalidResponse(ProjectWithBrandingResponse project) => new(
         string.Empty,
         project.Id,
+        string.Empty,
+        string.Empty,
+        EnvironmentTypes.Editor,
         string.Empty,
         string.Empty,
         false,

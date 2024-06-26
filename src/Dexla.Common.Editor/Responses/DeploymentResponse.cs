@@ -50,6 +50,9 @@ public class DeploymentResponse : ISuccess
         Pages = pages.Select(p => new DeploymentPageResponse(
             p.Id,
             p.ProjectId,
+            p.PageId,
+            p.DeploymentId,
+            p.Environment,
             p.Title,
             p.Slug,
             p.AuthenticatedOnly,
@@ -76,8 +79,8 @@ public class DeploymentResponse : ISuccess
             entity.CommitMessage,
             entity.TaskId,
             entity.Version,
-            entity.Project != null ? ProjectResponse.ModelToResponse(entity.Project) : null,
-            entity.Branding != null ? BrandingResponse.ModelToResponse(entity.Branding) : null);
+            entity.Project != null ? ProjectResponse.EntityToResponse(entity.Project) : null,
+            entity.Branding != null ? BrandingResponse.EntityToResponse(entity.Branding) : null);
     }
 
     public static DeploymentResponse EntityToResponse(DeploymentWithPages entity)
@@ -89,12 +92,15 @@ public class DeploymentResponse : ISuccess
             entity.CommitMessage,
             entity.TaskId,
             entity.Version,
-            ProjectResponse.ModelToResponse(entity.Project),
-            BrandingResponse.ModelToResponse(entity.Branding))
+            ProjectResponse.EntityToResponse(entity.Project),
+            BrandingResponse.EntityToResponse(entity.Branding))
         {
             Pages = entity.Pages.Select(p => new DeploymentPageResponse(
                 p.Id,
                 p.ProjectId,
+                p.PageId,
+                p.DeploymentId,
+                p.Environment,
                 p.Title,
                 p.Slug,
                 p.AuthenticatedOnly,

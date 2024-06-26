@@ -100,7 +100,7 @@ public class ApiResponse : ISuccess
             Enum.Parse<AuthenticationSchemes>(model.AuthenticationScheme),
             model.Environment != null
                 ? Enum.Parse<EnvironmentTypes>(model.Environment)
-                : EnvironmentTypes.None,
+                : EnvironmentTypes.Editor,
             model.BaseUrl,
             model.SwaggerUrl,
             model.Updated,
@@ -119,7 +119,7 @@ public class ApiResponse : ISuccess
             model.Id!,
             model.Name,
             model.AuthenticationScheme,
-            model.Environment != null ? Enum.Parse<EnvironmentTypes>(model.Environment) : EnvironmentTypes.None,
+            model.Environment != null ? Enum.Parse<EnvironmentTypes>(model.Environment) : EnvironmentTypes.Editor,
             model.BaseUrl,
             model.SwaggerUrl,
             model.Updated,

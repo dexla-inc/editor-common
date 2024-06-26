@@ -18,7 +18,6 @@ public class ProjectResponse : ISuccess
     public string Industry { get; }
     public string Description { get; }
     public string? SimilarCompany { get; }
-    public UserRoles AccessLevel { get; }
     public bool IsOwner { get; }
     public string Domain { get; }
     public string SubDomain { get; }
@@ -30,6 +29,7 @@ public class ProjectResponse : ISuccess
     public RedirectsDto? Redirects { get; }
     public Dictionary<string, object> Metadata { get; }
     public List<AppDto>? Apps { get; }
+    public Dictionary<string, LiveUrlDto> LiveUrls { get; set; } = [];
 
     public ProjectResponse(
         string id,
@@ -50,7 +50,8 @@ public class ProjectResponse : ISuccess
         string? faviconUrl,
         RedirectsDto? redirects,
         Dictionary<string, object> metadata,
-        List<AppDto>? apps)
+        List<AppDto>? apps,
+        Dictionary<string, LiveUrlDto> liveUrls)
     {
         Id = id;
         CompanyId = companyId;
@@ -71,6 +72,7 @@ public class ProjectResponse : ISuccess
         Redirects = redirects;
         Metadata = metadata;
         Apps = apps;
+        LiveUrls = liveUrls;
     }
 
     public ProjectResponse()
@@ -104,7 +106,8 @@ public class ProjectResponse : ISuccess
                 m.FaviconUrl,
                 m.Redirects,
                 m.Metadata,
-                m.Apps
+                m.Apps,
+                m.LiveUrls
             )
             {
                 HomePageId = homePageId
@@ -151,7 +154,15 @@ public class ProjectResponse : ISuccess
                 Id = a.Id,
                 Type = a.Type,
                 Configuration = Json.Deserialize<object>(a.Configuration)
-            }).ToList()
+            }).ToList(),
+            entity.LiveUrls.ToDictionary(
+                kvp => kvp.Key.ToString(),
+                kvp => new LiveUrlDto
+                {
+                    Domain = kvp.Value.Domain,
+                    SubDomain = kvp.Value.SubDomain
+                }
+            )
         );
     }
 
@@ -186,7 +197,15 @@ public class ProjectResponse : ISuccess
                 Id = a.Id,
                 Type = a.Type,
                 Configuration = Json.Deserialize<object>(a.Configuration)
-            }).ToList()
+            }).ToList(),
+            entity.LiveUrls.ToDictionary(
+                kvp => kvp.Key.ToString(),
+                kvp => new LiveUrlDto
+                {
+                    Domain = kvp.Value.Domain,
+                    SubDomain = kvp.Value.SubDomain
+                }
+            )
         );
     }
 
@@ -211,7 +230,8 @@ public class ProjectResponse : ISuccess
             entityProject.FaviconUrl,
             entityProject.Redirects,
             entityProject.Metadata,
-            entityProject.Apps
+            entityProject.Apps,
+            entityProject.LiveUrls
         );
     }
 }
