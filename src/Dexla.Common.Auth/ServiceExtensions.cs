@@ -80,10 +80,17 @@ public static class ServiceExtensions
 
             options.DefaultPolicy = options.GetPolicy("RequiredAuthentication");
         });
+
+        services.AddScoped<IAuthorizationHandler, RequiredAuthenticationHandler>();
         
-        services
-            .AddScoped<IAuthorizationHandler, RequiredAuthenticationHandler>()
-            .AddScoped<IUserTokenService, UserTokenService>();
+        AddUserTokenService(services);
+
+        return services;
+    }
+    
+    public static IServiceCollection AddUserTokenService(this IServiceCollection services)
+    {
+        services.AddScoped<IUserTokenService, UserTokenService>();
 
         return services;
     }

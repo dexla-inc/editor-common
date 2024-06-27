@@ -8,6 +8,7 @@ public class ComponentModel : IModelWithProjectId
 {
     public string? Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public string Type { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
     public string UserId { get; set; } = string.Empty;

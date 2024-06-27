@@ -8,6 +8,7 @@ public class TileModel : IModel
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public string Name { get; set; } = string.Empty;
     public string State { get; set; } = string.Empty;
     public string Prompt { get; set; } = string.Empty;

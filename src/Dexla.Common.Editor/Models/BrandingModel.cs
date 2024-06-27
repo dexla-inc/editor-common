@@ -17,6 +17,8 @@ public class BrandingModel : IModelWithProjectId
     }
 
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
+
     public void SetCompanyId(string value)
     {
         CompanyId = value;

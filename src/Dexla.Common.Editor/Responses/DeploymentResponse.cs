@@ -7,7 +7,7 @@ using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
 
-public class DeploymentResponse : ISuccess
+public class DeploymentResponse : ISuccess, IAuditInformation
 {
     public string Id { get; }
     public string ProjectId { get; }
@@ -18,10 +18,12 @@ public class DeploymentResponse : ISuccess
     public List<DeploymentPageResponse> Pages { get; private set; } = [];
     public ProjectResponse? Project { get; }
     public BrandingResponse? Branding { get; }
+    public AuditUserDto UpdatedBy { get; }
 
     public DeploymentResponse(
         string id,
         string projectId,
+        AuditUserDto updatedBy,
         EnvironmentTypes environment,
         string commitMessage,
         string taskId,
@@ -31,6 +33,7 @@ public class DeploymentResponse : ISuccess
     {
         Id = id;
         ProjectId = projectId;
+        UpdatedBy = updatedBy;
         Environment = environment;
         CommitMessage = commitMessage;
         TaskId = taskId;
@@ -75,6 +78,7 @@ public class DeploymentResponse : ISuccess
         return entity => new DeploymentResponse(
             entity.Id,
             entity.ProjectId,
+            new AuditUserDto(entity.AuditInformation),
             entity.Environment,
             entity.CommitMessage,
             entity.TaskId,
@@ -88,6 +92,7 @@ public class DeploymentResponse : ISuccess
         return new DeploymentResponse(
             entity.Id,
             entity.ProjectId,
+            new AuditUserDto(entity.AuditInformation),
             entity.Environment,
             entity.CommitMessage,
             entity.TaskId,
@@ -126,6 +131,7 @@ public class DeploymentResponse : ISuccess
         return model => new DeploymentResponse(
             model.Id!,
             model.ProjectId,
+            new AuditUserDto(model.AuditInformation),
             model.Environment,
             model.CommitMessage,
             model.TaskId,

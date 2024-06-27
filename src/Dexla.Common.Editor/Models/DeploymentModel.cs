@@ -8,6 +8,8 @@ public class DeploymentModel : IModelWithProjectId
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
+
     public void SetCompanyId(string value)
     {
         CompanyId = value;

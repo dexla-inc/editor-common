@@ -10,6 +10,7 @@ public class ApiEndpointModel : IModelWithProjectId
 {
     public string? Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
 
     public string UserId { get; set; } = string.Empty;
     public string CompanyId { get; set; } = string.Empty;
