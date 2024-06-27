@@ -13,6 +13,7 @@ public class Project : IEntity
 
     public string Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public virtual string UserId { get; set; }
     public virtual string CompanyId { get; set; }
     public virtual string FriendlyName { get; set; }

@@ -8,6 +8,7 @@ public class DeploymentPage : IEntity
 {
     public string Id { get; set; } = string.Empty;
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public string UserId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
     public string DeploymentId { get; set; } = string.Empty;

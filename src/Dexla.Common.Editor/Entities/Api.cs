@@ -9,6 +9,7 @@ public class Api : IEntity
 {
     public string Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public string UserId { get; set; } = string.Empty;
     public string ProjectId { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;

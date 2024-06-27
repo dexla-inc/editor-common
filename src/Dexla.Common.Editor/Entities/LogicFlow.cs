@@ -12,6 +12,7 @@ public class LogicFlow : IProjectEntity
 
     public string Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public string UserId { get; set; }
     public string ProjectId { get; set; }
     public string Name { get; set; }

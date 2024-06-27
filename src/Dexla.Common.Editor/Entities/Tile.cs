@@ -11,6 +11,7 @@ public class Tile : IEntity
 
     public string Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public string Name { get; set; }
     public string State { get; set; }
     public string Prompt { get; set; }

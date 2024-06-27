@@ -15,6 +15,7 @@ public class Deployment : IEntity, IEntityWithTimeStamp
     public virtual string Id { get; set; } = UtilityExtensions.GetId();
 
     public virtual EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public virtual long Timestamp { get; set; } = DateTimeExtensions.GetTimestamp();
     public virtual string UserId { get; set; }
     public virtual string ProjectId { get; set; }

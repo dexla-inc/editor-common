@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>Dexla.Common.Core</PackageId>
+        <PackageId>Dexla.Common.Auth</PackageId>
         <Company>Dexla</Company>
         <Authors>Dexla</Authors>
         <PackageProjectUrl>https://github.com/dexla-inc/editor-common</PackageProjectUrl>
@@ -18,8 +18,9 @@
 
     <ItemGroup>
         <PackageReference Include="Dexla.Common.Types" Version="1.9.0" />
-        <PackageReference Include="Dexla.Common.Repository.Types" Version="1.10.1" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />
     </ItemGroup>
+    
 
 </Project>

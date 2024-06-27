@@ -13,6 +13,7 @@ public class Page : IPageEntity
     
     public string Id { get; set; } = UtilityExtensions.GetId();
     public virtual EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public virtual string UserId { get; set; }
     public virtual string ProjectId { get; set; }
     public virtual string Title { get; set; }

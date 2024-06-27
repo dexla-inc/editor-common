@@ -12,6 +12,7 @@ public class PageState : IPageEntity
 
     public virtual string Id { get; set; } = UtilityExtensions.GetId();
     public virtual EntityStatus EntityStatus { get; set; }
+    public BasicAuditInformation? AuditInformation { get; set; }
     public virtual string UserId { get; set; } = string.Empty;
 
     public virtual string ProjectId { get; set; } = string.Empty;
