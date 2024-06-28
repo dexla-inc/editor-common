@@ -15,19 +15,21 @@ public class DeploymentResponse : ISuccess, IAuditInformation
     public string CommitMessage { get; }
     public string TaskId { get; }
     public int Version { get; }
+    public bool CanPromote { get; }
     public List<DeploymentPageResponse> Pages { get; private set; } = [];
+    public AuditUserDto UpdatedBy { get; }
     public ProjectResponse? Project { get; }
     public BrandingResponse? Branding { get; }
-    public AuditUserDto UpdatedBy { get; }
 
     public DeploymentResponse(
         string id,
         string projectId,
-        AuditUserDto updatedBy,
         EnvironmentTypes environment,
         string commitMessage,
         string taskId,
         int version,
+        bool canPromote,
+        AuditUserDto updatedBy,
         ProjectResponse? project,
         BrandingResponse? branding)
     {
@@ -38,6 +40,7 @@ public class DeploymentResponse : ISuccess, IAuditInformation
         CommitMessage = commitMessage;
         TaskId = taskId;
         Version = version;
+        CanPromote = canPromote;
         Project = project;
         Branding = branding;
     }
@@ -73,30 +76,32 @@ public class DeploymentResponse : ISuccess, IAuditInformation
         ).ToList();
     }
 
-    public static Func<Deployment, DeploymentResponse> EntityToResponse()
+    public static Func<Deployment, DeploymentResponse> EntityToResponse(bool canPromote)
     {
         return entity => new DeploymentResponse(
             entity.Id,
             entity.ProjectId,
-            new AuditUserDto(entity.AuditInformation),
             entity.Environment,
             entity.CommitMessage,
             entity.TaskId,
             entity.Version,
+            canPromote && entity.Environment != EnvironmentTypes.Production,
+            new AuditUserDto(entity.AuditInformation),
             entity.Project != null ? ProjectResponse.EntityToResponse(entity.Project) : null,
             entity.Branding != null ? BrandingResponse.EntityToResponse(entity.Branding) : null);
     }
 
-    public static DeploymentResponse EntityToResponse(DeploymentWithPages entity)
+    public static DeploymentResponse EntityToResponse(DeploymentWithPages entity, bool canPromote)
     {
         return new DeploymentResponse(
             entity.Id,
             entity.ProjectId,
-            new AuditUserDto(entity.AuditInformation),
             entity.Environment,
             entity.CommitMessage,
             entity.TaskId,
             entity.Version,
+            canPromote && entity.Environment != EnvironmentTypes.Production,
+            new AuditUserDto(entity.AuditInformation),
             ProjectResponse.EntityToResponse(entity.Project),
             BrandingResponse.EntityToResponse(entity.Branding))
         {
@@ -124,27 +129,29 @@ public class DeploymentResponse : ISuccess, IAuditInformation
         };
     }
 
-    public static DeploymentResponse EntityToResponse(Deployment model) => EntityToResponse()(model);
+    public static DeploymentResponse EntityToResponse(Deployment model, bool canPromote) => EntityToResponse(canPromote)(model);
 
-    public static Func<DeploymentModel, DeploymentResponse> ModelToResponse()
+    public static Func<DeploymentModel, DeploymentResponse> ModelToResponse(bool canPromote)
     {
         return model => new DeploymentResponse(
             model.Id!,
             model.ProjectId,
-            new AuditUserDto(model.AuditInformation),
             model.Environment,
             model.CommitMessage,
             model.TaskId,
             model.Version,
+            canPromote && model.Environment != EnvironmentTypes.Production,
+            new AuditUserDto(model.AuditInformation),
             ProjectResponse.ModelToResponse(model.Project),
             BrandingResponse.ModelToResponse(model.Branding));
     }
 
     public static IResponse ModelToResponse(
-        RepositoryActionResultModel<DeploymentModel> actionResult)
+        RepositoryActionResultModel<DeploymentModel> actionResult,
+        bool canPromote)
     {
         return actionResult.ActionResult(
             actionResult,
-            ModelToResponse());
+            ModelToResponse(canPromote));
     }
 }
