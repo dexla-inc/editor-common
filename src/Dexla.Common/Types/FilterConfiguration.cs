@@ -35,6 +35,18 @@ public class FilterConfiguration
         Filters.Add(new Filter(filters, searchType));
     }
     
+    public void And(params Filter[] filters)
+    {
+        Filter combinedFilter = Filter.And(filters);
+        Filters.Add(combinedFilter);
+    }
+
+    public void Or(params Filter[] filters)
+    {
+        Filter combinedFilter = Filter.Or(filters);
+        Filters.Add(combinedFilter);
+    }
+    
     private void AddDefaults(string projectId)
     {
         Filters.Add(new Filter(nameof(projectId), projectId, SearchTypes.EXACT));

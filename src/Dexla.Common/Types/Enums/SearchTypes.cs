@@ -12,5 +12,7 @@ public enum SearchTypes
     ONE_OF,
     EXCLUDE,
     OR,
-    EXACT_IGNORE_CASE
+    EXACT_IGNORE_CASE,
+    OR_AND,
+    AND
 }

@@ -9,6 +9,7 @@ public class Filter
     public List<string>? Values { get; }
     public Dictionary<string, object>? Names { get; }
     public SearchTypes SearchType { get; }
+    public List<Filter>? ChildFilters { get; }
     
     public static Filter Add(string name, object value, SearchTypes searchType)
     {
@@ -33,5 +34,21 @@ public class Filter
     {
         Names = names;
         SearchType = searchType;
+    }
+    
+    public Filter(List<Filter> childFilters, SearchTypes searchType)
+    {
+        ChildFilters = childFilters;
+        SearchType = searchType;
+    }
+    
+    public static Filter And(params Filter[] filters)
+    {
+        return new Filter([..filters], SearchTypes.AND);
+    }
+
+    public static Filter Or(params Filter[] filters)
+    {
+        return new Filter([..filters], SearchTypes.OR);
     }
 }
