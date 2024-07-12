@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Dexla.Common.Editor.Entities;
+﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Interfaces;
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Editor.Responses;
@@ -33,6 +30,7 @@ public class ReadOnlyBrandingService(IRepository<Branding, BrandingModel> reposi
             model.WebsiteUrl,
             model.Fonts,
             model.Colors,
+            model.ColorShades,
             model.ResponsiveBreakpoints,
             model.FaviconUrl,
             model.LogoUrl,

@@ -11,6 +11,7 @@ public class BrandingResponse(
         string? websiteUrl,
         IEnumerable<FontDto> fonts,
         List<ColorDto> colors,
+        List<ColorShadeDto> colorShades,
         IEnumerable<ResponsiveBreakpointDto> responsiveBreakpoints,
         string faviconUrl,
         string logoUrl,
@@ -30,6 +31,7 @@ public class BrandingResponse(
     public string? Id { get; } = id;
     public string Theme { get; } = theme;
     public List<ColorDto> Colors { get; } = colors;
+    public List<ColorShadeDto> ColorShades { get; } = colorShades;
     public IEnumerable<FontDto> Fonts { get; } = fonts;
     public IEnumerable<ResponsiveBreakpointDto> ResponsiveBreakpoints { get; } = responsiveBreakpoints;
     public string FaviconUrl { get; } = faviconUrl;
@@ -82,6 +84,7 @@ public class BrandingResponse(
             model.WebsiteUrl,
             model.Fonts,
             model.Colors,
+            model.ColorShades,
             model.ResponsiveBreakpoints,
             model.FaviconUrl,
             model.LogoUrl,
@@ -120,6 +123,13 @@ public class BrandingResponse(
                 FriendlyName = c.FriendlyName,
                 Hex = c.Hex,
                 Brightness = c.Brightness,
+                IsDefault = c.IsDefault
+            }).ToList(),
+            entity.ColorShades.Select(c => new ColorShadeDto
+            {
+                Name = c.Name,
+                FriendlyName = c.FriendlyName,
+                Hex = c.Hex,
                 IsDefault = c.IsDefault
             }).ToList(),
             entity.ResponsiveBreakpoints.Select(rb => new ResponsiveBreakpointDto

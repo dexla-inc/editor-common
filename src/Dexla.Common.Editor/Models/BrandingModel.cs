@@ -30,6 +30,7 @@ public class BrandingModel : IModelWithProjectId
     public string Theme { get; set; } = string.Empty;
     public List<FontDto> Fonts { get; set; } = [];
     public List<ColorDto> Colors { get; set; } = [];
+    public List<ColorShadeDto> ColorShades { get; set; } = [];
     public List<ResponsiveBreakpointDto> ResponsiveBreakpoints { get; set; } = [];
     public string LogoUrl { get; set; } = string.Empty;
     public List<LogoDto>? Logos { get; set; }
@@ -165,6 +166,7 @@ public class BrandingModel : IModelWithProjectId
                     Note = "Button"
                 }
             ],
+            ColorShades = Models.ColorShades.Colors,
             Colors =
             [
                 new ColorDto { Hex = "#2F65CB", Name = "Primary", IsDefault = true, FriendlyName = "Primary", },
