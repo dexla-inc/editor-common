@@ -4,6 +4,8 @@ using Azure.Storage.Blobs.Models;
 using Dexla.Common.BlobStorage.Contracts;
 using Dexla.Common.Types;
 using Dexla.Common.Types.Interfaces;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Jpeg;
 
 namespace Dexla.Common.BlobStorage;
 
@@ -26,11 +28,18 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
             {
                 ContentType = blobStorage.ContentType
             };
-            
-            await blobClient.UploadAsync(blobStorage.Data, blobHttpHeader);
+
+            if (blobStorage.ContentType.StartsWith("image"))
+            {
+                await using Stream compressedStream =
+                    await CompressImage(blobStorage.Data, blobStorage.CompressionLevel);
+                await blobClient.UploadAsync(compressedStream, blobHttpHeader);
+            }
+            else 
+                await blobClient.UploadAsync(blobStorage.Data, blobHttpHeader);
             
             string blobUrl = blobClient.Uri.ToString();
-            
+
             return new BlobResponse(blobUrl);
         }
         catch (Exception e)
@@ -50,11 +59,11 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
         Response<BlobProperties>? properties = await blobClient.GetPropertiesAsync();
         return (stream, properties.Value.ContentType);
     }
-    
+
     public async Task<ListBlobResponse> SearchBlobsAsync(string searchString)
     {
         List<string> blobUrls = new();
-    
+
         await foreach (BlobItem blobItem in _containerClient.GetBlobsAsync())
         {
             if (!blobItem.Name.Contains(searchString)) continue;
@@ -64,14 +73,14 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
 
         return new ListBlobResponse(blobUrls);
     }
-    
+
     public async Task<BlobResponse?> GetBlobUrlByName(string blobName)
     {
         BlobClient blobClient = GetBlobClient(blobName);
 
         if (!await blobClient.ExistsAsync()) return null;
         string blobUrl = blobClient.Uri.ToString();
-            
+
         return new BlobResponse(blobUrl);
     }
 
@@ -92,5 +101,20 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
         {
             await _containerClient.CreateAsync();
         }
+    }
+
+    private async Task<Stream> CompressImage(Stream inputStream, int quality = 60)
+    {
+        inputStream.Position = 0;
+        using Image image = await Image.LoadAsync(inputStream);
+        JpegEncoder jpegEncoder = new()
+        {
+            Quality = quality
+        };
+
+        MemoryStream compressedStream = new();
+        await image.SaveAsync(compressedStream, jpegEncoder);
+        compressedStream.Position = 0;
+        return compressedStream;
     }
 }

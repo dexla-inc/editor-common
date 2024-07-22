@@ -18,6 +18,7 @@
     
     <ItemGroup>
         <PackageReference Include="Dexla.Common.Types" Version="1.11.2" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" />
     </ItemGroup>
 
     <ItemGroup>
