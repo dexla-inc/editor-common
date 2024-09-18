@@ -68,6 +68,9 @@ public static class HttpService
                     request.Content = new FormUrlEncodedContent(keyValueContent);
                     break;
                 }
+            case MediaTypes.OpenApiJson:
+                request.Content = new StringContent(jsonContent, Encoding.UTF8, mediaType);
+                break;
             default:
                 throw new Exception("Unsupported media type");
         }

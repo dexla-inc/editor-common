@@ -20,6 +20,5 @@ public class Api : IEntity
     public bool IsTested { get; set; }
     public long Updated { get; set; }
     public DataSourceTypes Type { get; set; }
-    public string? AuthValue { get; set;  }
     public string? ApiKey { get; set; }
 }

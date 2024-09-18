@@ -7,4 +7,5 @@ public static class MediaTypes
     public const string GraphQl = "application/graphql";
     public const string EventStream = "text/event-stream";
     public const string OctetStream = "application/octet-stream";
+    public const string OpenApiJson = "application/openapi+json";
 }

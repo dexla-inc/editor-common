@@ -16,7 +16,6 @@ public class ApiFullResponse : ISuccess
     public string? SwaggerUrl { get; }
     public long Updated { get; }
     public DataSourceTypes Type { get; }
-    public string? AuthValue { get; }
     public string? ApiKey { get; }
     public bool IsTested { get; }
     public IEnumerable<DataSourceEndpoint>? ChangedEndpoints { get; }
@@ -35,7 +34,6 @@ public class ApiFullResponse : ISuccess
         string? swaggerUrl,
         long updated,
         DataSourceTypes type,
-        string? authValue,
         string? apiKey,
         bool isTested,
         IEnumerable<DataSourceEndpoint>? changedEndpoints = null,
@@ -49,7 +47,6 @@ public class ApiFullResponse : ISuccess
         SwaggerUrl = swaggerUrl;
         Updated = updated;
         Type = type;
-        AuthValue = authValue;
         ApiKey = apiKey;
         IsTested = isTested;
         ChangedEndpoints = changedEndpoints ?? new List<DataSourceEndpoint>();
@@ -72,7 +69,6 @@ public class ApiFullResponse : ISuccess
             swaggerApiModel.SwaggerUrl,
             swaggerApiModel.Updated,
             !string.IsNullOrWhiteSpace(swaggerApiModel.Type) ? Enum.Parse<DataSourceTypes>(swaggerApiModel.Type) : DataSourceTypes.API,
-            swaggerApiModel.AuthValue,
             swaggerApiModel.ApiKey,
             swaggerApiModel.IsTested,
             changedEndpoints,

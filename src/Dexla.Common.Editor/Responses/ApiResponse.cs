@@ -18,7 +18,6 @@ public class ApiResponse : ISuccess
     public long Updated { get; }
     public DataSourceTypes Type { get; }
     public List<ApiEndpointResponse> AuthEndpoints { get; }
-    public string? AuthValue { get; }
     public string? ApiKey { get; }
     public bool IsTested { get; }
 
@@ -31,7 +30,6 @@ public class ApiResponse : ISuccess
         string? swaggerUrl,
         long updated,
         DataSourceTypes type,
-        string? authValue,
         string? apiKey,
         bool isTested)
     {
@@ -43,7 +41,6 @@ public class ApiResponse : ISuccess
         SwaggerUrl = swaggerUrl;
         Updated = updated;
         Type = type;
-        AuthValue = authValue;
         ApiKey = apiKey;
         IsTested = isTested;
     }
@@ -57,7 +54,6 @@ public class ApiResponse : ISuccess
         string? swaggerUrl,
         long updated,
         DataSourceTypes type,
-        string? authValue,
         string? apiKey,
         bool isTested,
         List<ApiEndpointResponse> authEndpoints)
@@ -70,7 +66,6 @@ public class ApiResponse : ISuccess
         SwaggerUrl = swaggerUrl;
         Updated = updated;
         Type = type;
-        AuthValue = authValue;
         ApiKey = apiKey;
         IsTested = isTested;
         AuthEndpoints = authEndpoints;
@@ -87,7 +82,6 @@ public class ApiResponse : ISuccess
             entity.SwaggerUrl,
             entity.Updated,
             entity.Type,
-            entity.AuthValue,
             entity.ApiKey,
             entity.IsTested);
     }
@@ -105,7 +99,6 @@ public class ApiResponse : ISuccess
             model.SwaggerUrl,
             model.Updated,
             !string.IsNullOrWhiteSpace(model.Type) ? Enum.Parse<DataSourceTypes>(model.Type) : DataSourceTypes.API,
-            model.AuthValue,
             model.ApiKey,
             model.IsTested);
     }
@@ -124,7 +117,6 @@ public class ApiResponse : ISuccess
             model.SwaggerUrl,
             model.Updated,
             !string.IsNullOrWhiteSpace(model.Type) ? Enum.Parse<DataSourceTypes>(model.Type) : DataSourceTypes.API,
-            model.AuthValue,
             model.ApiKey,
             model.IsTested,
             changedEndpoints,

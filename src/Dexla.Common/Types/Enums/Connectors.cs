@@ -12,5 +12,6 @@ public enum Connectors
     PROPEL_AUTH,
     SEND_GRID,
     STRIPE,
-    SUPABASE
+    SUPABASE,
+    SALESFORCE
 }

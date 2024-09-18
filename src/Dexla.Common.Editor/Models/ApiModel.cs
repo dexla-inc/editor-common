@@ -21,7 +21,6 @@ public class ApiModel : IModelWithProjectId
     public bool IsTested { get; set; }
     public long Updated { get; set; }
     public string Type { get; set; } = string.Empty;
-    public string? AuthValue { get; set; }
     public string? ApiKey { get; set; }
     
     public void SetUserId(string value)

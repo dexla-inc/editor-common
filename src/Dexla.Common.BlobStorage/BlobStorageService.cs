@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Dexla.Common.BlobStorage.Contracts;
 using Dexla.Common.Types;
 using Dexla.Common.Types.Interfaces;
@@ -12,7 +13,8 @@ namespace Dexla.Common.BlobStorage;
 public class BlobStorageService : IStorageService<BlobStorageModel>
 {
     private readonly BlobContainerClient _containerClient;
-
+    private const int ChunkSize = 4 * 1024 * 1024; // 4 MB chunk size
+    
     public BlobStorageService(string connectionString, string container)
     {
         _containerClient = new BlobContainerClient(connectionString, container);
@@ -29,14 +31,27 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
                 ContentType = blobStorage.ContentType
             };
 
+             Stream uploadStream;
             if (blobStorage.ContentType.StartsWith("image"))
             {
-                await using Stream compressedStream =
-                    await CompressImage(blobStorage.Data, blobStorage.CompressionLevel);
-                await blobClient.UploadAsync(compressedStream, blobHttpHeader);
+                uploadStream = await CompressImage(blobStorage.Data, blobStorage.CompressionLevel);
             }
-            else 
-                await blobClient.UploadAsync(blobStorage.Data, blobHttpHeader);
+            else
+            {
+                uploadStream = blobStorage.Data;
+            }
+
+            long streamLength = uploadStream.Length;
+            uploadStream.Position = 0;
+
+            if (streamLength >= ChunkSize)
+            {
+                await UploadStreamInChunks(blobClient, uploadStream, blobHttpHeader);
+            }
+            else
+            {
+                await blobClient.UploadAsync(uploadStream, blobHttpHeader);
+            }
             
             string blobUrl = blobClient.Uri.ToString();
 
@@ -46,6 +61,33 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
         {
             return new ErrorResponse(e.Message, nameof(blobStorage));
         }
+    }
+    
+    private async Task UploadStreamInChunks(BlobClient blobClient, Stream stream, BlobHttpHeaders headers)
+    {
+        stream.Position = 0;
+        long streamLength = stream.Length;
+
+        // Create BlockBlobClient using the same approach as BlobContainerClient
+        BlockBlobClient blockBlobClient = _containerClient.GetBlockBlobClient(blobClient.Name);
+        List<string> blockList = [];
+
+        int blockId = 0;
+        for (int i = 0; i < streamLength; i += ChunkSize)
+        {
+            byte[] buffer = new byte[Math.Min(ChunkSize, streamLength - i)];
+            int bytesRead = await stream.ReadAsync(buffer);
+
+            string blockIdString = Convert.ToBase64String(BitConverter.GetBytes(blockId));
+            using (MemoryStream ms = new(buffer, 0, bytesRead))
+            {
+                await blockBlobClient.StageBlockAsync(blockIdString, ms);
+            }
+            blockList.Add(blockIdString);
+            blockId++;
+        }
+
+        await blockBlobClient.CommitBlockListAsync(blockList, headers);
     }
 
     public async ValueTask<(Stream, string?)> DownloadToStream(string name)

@@ -14,7 +14,6 @@ public class ApiIncludeResponse : ISuccess
     public string? SwaggerUrl { get; }
     public long Updated { get; }
     public DataSourceTypes Type { get; }
-    public string? AuthValue { get; }
     public string? ApiKey { get; }
     public bool IsTested { get; }
     public IEnumerable<ApiEndpointResponse>? Endpoints { get; }
@@ -33,7 +32,6 @@ public class ApiIncludeResponse : ISuccess
         string? swaggerUrl,
         long updated,
         DataSourceTypes type,
-        string? authValue,
         string? apiKey,
         bool isTested,
         IEnumerable<ApiEndpointResponse>? endpoints = null,
@@ -47,7 +45,6 @@ public class ApiIncludeResponse : ISuccess
         SwaggerUrl = swaggerUrl;
         Updated = updated;
         Type = type;
-        AuthValue = authValue;
         ApiKey = apiKey;
         IsTested = isTested;
         Endpoints = endpoints ?? [];
@@ -68,7 +65,6 @@ public class ApiIncludeResponse : ISuccess
                 entity.SwaggerUrl,
                 entity.Updated,
                 entity.Type,
-                entity.AuthValue,
                 entity.ApiKey,
                 entity.IsTested,
                 entity.ApiEndpoints.Select(e => ApiEndpointResponse.EntityToEndpointResponse()(e)).ToList(),

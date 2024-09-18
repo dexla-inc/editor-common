@@ -17,12 +17,12 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="Dexla.Common.Types" Version="1.11.2" />
-        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" />
+        <PackageReference Include="Dexla.Common.Types" Version="1.11.6" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azure.Storage.Blobs" Version="12.20.0" />
+        <PackageReference Include="Azure.Storage.Blobs" Version="12.21.2" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
     </ItemGroup>

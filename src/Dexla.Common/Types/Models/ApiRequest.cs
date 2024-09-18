@@ -18,12 +18,10 @@ public class ApiRequest
     [JsonPropertyOrder(5)]
     public string? SwaggerUrl { get; set; }
     [JsonPropertyOrder(6)]
-    public string? AuthValue { get; set;  }
-    [JsonPropertyOrder(7)]
     public bool IsTested { get; set; }
-    [JsonPropertyOrder(8)]
+    [JsonPropertyOrder(7)]
     public string? ApiKey { get; set; }
-    [JsonPropertyOrder(9)]
+    [JsonPropertyOrder(8)]
     public string Type { get; set; } = string.Empty;
 }
 
