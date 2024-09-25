@@ -1,6 +1,6 @@
 ﻿namespace Dexla.Common.Editor.Responses;
 
-public class ColorDto
+public class ColorDto : IColor
 {
     public string Name { get; set; }= string.Empty;
     public string FriendlyName { get; set; }= string.Empty;

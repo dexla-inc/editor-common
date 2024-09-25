@@ -32,14 +32,14 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
             };
 
              Stream uploadStream;
-            if (blobStorage.ContentType.StartsWith("image"))
-            {
-                uploadStream = await CompressImage(blobStorage.Data, blobStorage.CompressionLevel);
-            }
-            else
-            {
-                uploadStream = blobStorage.Data;
-            }
+             if (_compressibleImageTypes.Contains(blobStorage.ContentType, StringComparer.OrdinalIgnoreCase))
+             {
+                 uploadStream = await CompressImage(blobStorage.Data, blobStorage.CompressionLevel);
+             }
+             else
+             {
+                 uploadStream = blobStorage.Data;
+             }
 
             long streamLength = uploadStream.Length;
             uploadStream.Position = 0;
@@ -159,4 +159,13 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
         compressedStream.Position = 0;
         return compressedStream;
     }
+
+    private readonly List<string> _compressibleImageTypes =
+    [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/bmp"
+    ];
+
 }

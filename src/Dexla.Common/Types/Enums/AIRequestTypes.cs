@@ -12,5 +12,6 @@ public enum AIRequestTypes
     DATA,
     API,
     CSS_MODIFIER,
-    THEME
+    THEME,
+    FEATURES
 }

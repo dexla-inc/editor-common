@@ -6,24 +6,24 @@ using Dexla.Common.Types.Interfaces;
 namespace Dexla.Common.Editor.Responses;
 
 public class BrandingResponse(
-        string? id,
-        string theme,
-        string? websiteUrl,
-        IEnumerable<FontDto> fonts,
-        List<ColorDto> colors,
-        List<ColorShadeDto> colorShades,
-        IEnumerable<ResponsiveBreakpointDto> responsiveBreakpoints,
-        string faviconUrl,
-        string logoUrl,
-        List<LogoDto>? logos,
-        string defaultFont,
-        bool hasCompactButtons,
-        string defaultRadius,
-        string defaultSpacing,
-        string inputSize,
-        LoaderTypes loader,
-        FocusRingTypes focusRing,
-        CardStyleTypes cardStyle)
+    string? id,
+    string theme,
+    string? websiteUrl,
+    IEnumerable<FontDto> fonts,
+    List<ColorDto> colors,
+    List<ColorShadeDto> colorShades,
+    IEnumerable<ResponsiveBreakpointDto> responsiveBreakpoints,
+    string faviconUrl,
+    string logoUrl,
+    List<LogoDto>? logos,
+    string defaultFont,
+    bool hasCompactButtons,
+    string defaultRadius,
+    string defaultSpacing,
+    string inputSize,
+    LoaderTypes loader,
+    FocusRingTypes focusRing,
+    CardStyleTypes cardStyle)
     : ISuccess
 {
     const string DefaultFontFamily = "Open Sans";
@@ -49,12 +49,42 @@ public class BrandingResponse(
 
     private static IEnumerable<string> _getDefaultColorNames()
     {
-        return new[]
-        {
-            "Primary", "PrimaryText", "Secondary", "SecondaryText", "Tertiary", "TertiaryText", "Danger", "Warning",
-            "Success", "Neutral", "Black",
-            "White", "Border"
-        };
+        return
+        [
+            "Primary",
+            "PrimaryText", 
+            "Secondary", 
+            "SecondaryText", 
+            "Tertiary", 
+            "TertiaryText", 
+            "Danger", 
+            "Warning",
+            "Success", 
+            "Neutral", 
+            "Black",
+            "White", 
+            "Border"
+        ];
+    }
+    
+    private static IEnumerable<string> _getDefaultColorShadeNames()
+    {
+        return
+        [
+            "Primary.6",
+            "PrimaryText.6", 
+            "Secondary.6", 
+            "SecondaryText.6", 
+            "Tertiary.6", 
+            "TertiaryText.6", 
+            "Danger.6", 
+            "Warning.6",
+            "Success.6", 
+            "Neutral.6", 
+            "Black.6",
+            "White.6", 
+            "Border.6"
+        ];
     }
 
     public static bool CheckAllDefaultColorsExists(
@@ -63,6 +93,23 @@ public class BrandingResponse(
     {
         // Check to make sure all default colors exist
         IEnumerable<string> defaultColorNames = _getDefaultColorNames();
+        List<string> missingColors = defaultColorNames.Where(colorName => !colorNames.Contains(colorName)).ToList();
+        if (missingColors.Any())
+        {
+            missingColorNames = missingColors;
+            return false;
+        }
+
+        missingColorNames = new List<string>();
+        return true;
+    }
+
+    public static bool CheckAllDefaultColorShadesExist(
+        IEnumerable<string> colorNames,
+        out IEnumerable<string> missingColorNames)
+    {
+        // Check to make sure all default colors exist
+        IEnumerable<string> defaultColorNames = _getDefaultColorShadeNames();
         List<string> missingColors = defaultColorNames.Where(colorName => !colorNames.Contains(colorName)).ToList();
         if (missingColors.Any())
         {
@@ -99,7 +146,7 @@ public class BrandingResponse(
             Enum.Parse<CardStyleTypes>(model.CardStyle)
         );
     }
-    
+
     public static BrandingResponse EntityToResponse(Branding entity)
     {
         return new BrandingResponse(
