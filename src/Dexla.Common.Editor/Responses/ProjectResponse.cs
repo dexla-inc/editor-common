@@ -30,6 +30,7 @@ public class ProjectResponse : ISuccess
     public Dictionary<string, object> Metadata { get; }
     public List<AppDto>? Apps { get; }
     public Dictionary<string, LiveUrlDto> LiveUrls { get; set; } = [];
+    public bool IsOnboarding { get; set; }
 
     public ProjectResponse(
         string id,
@@ -51,7 +52,8 @@ public class ProjectResponse : ISuccess
         RedirectsDto? redirects,
         Dictionary<string, object> metadata,
         List<AppDto>? apps,
-        Dictionary<string, LiveUrlDto> liveUrls)
+        Dictionary<string, LiveUrlDto> liveUrls,
+        bool isOnboarding = false)
     {
         Id = id;
         CompanyId = companyId;
@@ -73,6 +75,7 @@ public class ProjectResponse : ISuccess
         Metadata = metadata;
         Apps = apps;
         LiveUrls = liveUrls;
+        IsOnboarding = isOnboarding;
     }
 
     public ProjectResponse()
@@ -107,7 +110,8 @@ public class ProjectResponse : ISuccess
                 m.Redirects,
                 m.Metadata,
                 m.Apps,
-                m.LiveUrls
+                m.LiveUrls,
+                m.IsOnboarding
             )
             {
                 HomePageId = homePageId
@@ -162,7 +166,8 @@ public class ProjectResponse : ISuccess
                     Domain = kvp.Value.Domain,
                     SubDomain = kvp.Value.SubDomain
                 }
-            )
+            ),
+            entity.IsOnboarding
         );
     }
 
@@ -205,7 +210,8 @@ public class ProjectResponse : ISuccess
                     Domain = kvp.Value.Domain,
                     SubDomain = kvp.Value.SubDomain
                 }
-            )
+            ), 
+            entity.IsOnboarding
         );
     }
 
@@ -231,7 +237,8 @@ public class ProjectResponse : ISuccess
             entityProject.Redirects,
             entityProject.Metadata,
             entityProject.Apps,
-            entityProject.LiveUrls
+            entityProject.LiveUrls,
+            entityProject.IsOnboarding
         );
     }
 }

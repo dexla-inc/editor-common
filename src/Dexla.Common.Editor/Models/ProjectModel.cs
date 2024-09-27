@@ -31,6 +31,8 @@ public class ProjectModel : IModelWithUserId
     public RedirectsDto Redirects { get; set; } = new();
     public Dictionary<string, object> Metadata { get; set; } = new();
     public List<AppDto>? Apps { get; set; }
+    public bool IsOnboarding { get; set; }
+    
     public void SetCompanyId(string value)
     {
         CompanyId = value;
@@ -64,5 +66,10 @@ public class ProjectModel : IModelWithUserId
     public void SetOwner(bool value)
     {
         IsOwner = value;
+    }
+    
+    public void SetOnboarding(bool value)
+    {
+        IsOnboarding = value;
     }
 }

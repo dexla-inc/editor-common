@@ -35,11 +35,11 @@ public static class ServiceExtensions
                     IssuerSigningKey = new RsaSecurityKey(rsa),
                 };
             })
-            .AddJwtBearer("Test", options =>
+            .AddJwtBearer("Onboarding", options =>
             {
                 string jwtSecretKey = StandardAccessTokenRefreshTokenTest.JWT_TOKEN_SECRET_KEY;
                 byte[] key = Encoding.UTF8.GetBytes(jwtSecretKey);
-                
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = false,
@@ -52,7 +52,7 @@ public static class ServiceExtensions
                     ClockSkew = TimeSpan.Zero // the default for this setting is 5 minutes
                 };
             })
-            .AddJwtBearer("TestRefresh", options =>
+            .AddJwtBearer("OnboardingRefresh", options =>
             {
                 string jwtSecretKey = StandardAccessTokenRefreshTokenTest.JWT_TOKEN_SECRET_KEY;
                 byte[] key = Encoding.UTF8.GetBytes(jwtSecretKey);
@@ -71,35 +71,32 @@ public static class ServiceExtensions
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("RequiredAuthentication", policy => 
-                policy.RequireAuthenticatedUser()
+            options.AddPolicy(AuthPolicy.RequiredAuthentication, policy =>
+                policy
+                    .RequireAuthenticatedUser()
                     .Requirements.Add(new RequiredAuthentication()));
 
-            options.AddPolicy("Test", policy => 
-                policy.Requirements.Add(new TestAuthentication()));
+            options.AddPolicy(AuthPolicy.Onboarding, policy =>
+                policy
+                    .RequireAuthenticatedUser()
+                    .Requirements.Add(new OnboardingAuthentication()));
+            
+            options.AddPolicy(AuthPolicy.RequiredAuthenticationOrOnboarding, policy =>
+            {
+                policy
+                    .RequireAuthenticatedUser()
+                    .Requirements.Add(new RequiredAuthenticationOrOnboardingAuthentication());
+            });
 
-            options.DefaultPolicy = options.GetPolicy("RequiredAuthentication");
+            options.FallbackPolicy = options.GetPolicy(AuthPolicy.RequiredAuthentication);
         });
 
-        services.AddScoped<IAuthorizationHandler, RequiredAuthenticationHandler>();
-        
-        AddUserTokenService(services);
-
-        return services;
-    }
-    
-    public static IServiceCollection AddUserTokenService(this IServiceCollection services)
-    {
+        // Change to Singleton when working
         services.AddScoped<IUserTokenService, UserTokenService>();
+        services.AddScoped<IAuthorizationHandler, RequiredAuthenticationHandler>();
+        services.AddScoped<IAuthorizationHandler, OnboardingAuthenticationHandler>();
+        services.AddScoped<IAuthorizationHandler, RequiredAuthenticationOrOnboardingAuthenticationHandler>();
 
         return services;
-    }
-
-    public static IEndpointConventionBuilder RequirePolicies(this IEndpointConventionBuilder app)
-    {
-        app
-            .RequireAuthorization(p => p.AddRequirements(new RequiredAuthentication()));
-
-        return app;
     }
 }

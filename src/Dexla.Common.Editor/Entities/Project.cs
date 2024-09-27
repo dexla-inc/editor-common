@@ -36,4 +36,5 @@ public class Project : IEntity
     public Redirects Redirects { get; set; } = new();
     public Dictionary<string, object> Metadata { get; set; } = new();
     public List<App>? Apps { get; set; } 
+    public bool IsOnboarding { get; set; }
 }

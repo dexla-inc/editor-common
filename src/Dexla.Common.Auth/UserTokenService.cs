@@ -12,7 +12,8 @@ public class UserTokenService : IUserTokenService
     public UserRoles UserRole { get; private set; }
     public string GetUserId() => UserId;
     public string GetName() => Name;
-
+    public bool Onboarding { get; private set; }
+    
     public UserRoles GetUserRole(string companyId)
     {
         return Companies.FirstOrDefault(c => c.Id == companyId)?.UserRole ?? UserRoles.MEMBER;
@@ -27,12 +28,12 @@ public class UserTokenService : IUserTokenService
         return authCompany != null;
     }
 
-    public void SetValues(ClaimsPrincipal userClaims)
+    public void SetValues(ClaimsPrincipal userClaims, bool onboarding = false)
     {
         List<Claim> claims = userClaims.Claims.ToList();
 
-        string orgInfoString = claims.FirstOrDefault(c => c.Type == "org_id_to_org_member_info")?.Value ?? string.Empty;
-        if (!string.IsNullOrEmpty(orgInfoString))
+        string? orgInfoString = claims.FirstOrDefault(c => c.Type == "org_id_to_org_member_info")?.Value;
+        if (orgInfoString != null)
         {
             Dictionary<string, PropelAuthOrgInfo> orgDictionary = 
                 Json.Deserialize<Dictionary<string, PropelAuthOrgInfo>>(orgInfoString, Casing.SNAKE_CASE);
@@ -49,10 +50,28 @@ public class UserTokenService : IUserTokenService
                 orgInfo.InheritedUserRolesPlusCurrentRole)
             ).ToList();
         }
-
-        UserId = claims.First(c => c.Type == "user_id").Value;
-        string firstName = claims.First(c => c.Type == "first_name").Value;
-        string lastName = claims.First(c => c.Type == "last_name").Value;
+        
+        UserId = claims.FirstOrDefault(c => c.Type == "user_id")?.Value ?? string.Empty;
+        string? firstName = claims.FirstOrDefault(c => c.Type == "first_name")?.Value;
+        string? lastName = claims.FirstOrDefault(c => c.Type == "last_name")?.Value;
         Name = $"{firstName} {lastName}";
+        
+        Onboarding = onboarding;
+
+        if (onboarding)
+        {
+            Companies =
+            [
+                new AuthCompany(
+                    UserId,
+                    "onboarding-" + UserId,
+                    "Onboarding" + UserId,
+                    UserRoles.GUEST,
+                    [],
+                    [],
+                    []
+                )
+            ];
+        }
     }
 }
