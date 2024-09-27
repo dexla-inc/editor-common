@@ -4,7 +4,7 @@ using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class Branding : IEntity
+public class Branding : IEntity, IEntityWithOnboarding
 {
     protected internal Branding()
     {
@@ -34,4 +34,5 @@ public class Branding : IEntity
     public LoaderTypes Loader { get; set; }
     public FocusRingTypes FocusRing { get; set; }
     public CardStyleTypes CardStyle { get; set; }
+    public bool IsOnboarding { get; set; }
 }

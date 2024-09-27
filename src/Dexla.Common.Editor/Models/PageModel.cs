@@ -3,7 +3,7 @@ using Dexla.Common.Repository.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Models;
 
-public class PageModel : IModelWithProjectId
+public class PageModel : IModelWithProjectId, IModelWithOnboarding
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
@@ -28,6 +28,7 @@ public class PageModel : IModelWithProjectId
     public WebAppType? CopyFrom { get; set; } = new();
     public Dictionary<string,string>? QueryStrings { get; set; }
     public List<PageActionDto>? Actions { get; set; }
+    public List<string>? Features { get; set; }
 
     public void SetProjectId(string projectId)
     {
@@ -54,5 +55,12 @@ public class PageModel : IModelWithProjectId
             CopyFrom = null,
             QueryStrings = null
         };
+    }
+
+    public bool IsOnboarding { get; set; }
+    
+    public void SetOnboarding(bool value)
+    {
+        IsOnboarding = value;
     }
 }

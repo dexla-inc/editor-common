@@ -4,7 +4,7 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
-public class ProjectModel : IModelWithUserId
+public class ProjectModel : IModelWithUserId, IModelWithOnboarding
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }

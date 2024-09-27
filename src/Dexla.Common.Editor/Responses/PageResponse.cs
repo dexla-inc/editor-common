@@ -32,6 +32,7 @@ public class PageResponse : ISuccess
     public bool HasNavigation { get; }
     public Dictionary<string,string>? QueryStrings { get; }
     public List<PageActionDto>? Actions { get; set; }
+    public List<string>? Features { get; set; }
 
     public PageResponse(
         string? id,
@@ -45,7 +46,8 @@ public class PageResponse : ISuccess
         string? parentPageId,
         bool hasNavigation,
         Dictionary<string, string>? queryStrings,
-        List<PageActionDto>? actions)
+        List<PageActionDto>? actions,
+        List<string>? features)
     {
         Id = id;
         ProjectId = projectId;
@@ -59,6 +61,7 @@ public class PageResponse : ISuccess
         HasNavigation = hasNavigation;
         QueryStrings = queryStrings;
         Actions = actions;
+        Features = features;
     }
 
     public string TrackingId { get; set; }
@@ -83,7 +86,8 @@ public class PageResponse : ISuccess
                 Trigger = a.Trigger,
                 Action = Json.Deserialize<object>(a.Action),
                 SequentialTo = a.SequentialTo
-            }).ToList());
+            }).ToList(),
+            page.Features);
     }
 
     public static PageResponse ModelToResponse(PageModel model)
@@ -100,7 +104,8 @@ public class PageResponse : ISuccess
             model.ParentPageId,
             model.HasNavigation,
             model.QueryStrings,
-            model.Actions);
+            model.Actions,
+            model.Features);
     }
     
     public static IResponse ModelToResponse(RepositoryActionResultModel<PageModel>  actionResult)

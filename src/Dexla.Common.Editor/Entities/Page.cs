@@ -4,7 +4,7 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class Page : IPageEntity
+public class Page : IPageEntity, IEntityWithOnboarding
 {
     protected Page()
     {
@@ -26,6 +26,7 @@ public class Page : IPageEntity
     public Dictionary<string,string>? QueryStrings { get; set; }
     public virtual string Description { get; set; }
     public virtual List<PageAction>? Actions { get; set; }
+    public virtual List<string>? Features { get; set; }
     
     public IPageEntity SetNewValues(string userId, string projectId, string pageId)
     {
@@ -34,4 +35,6 @@ public class Page : IPageEntity
         Id = pageId;
         return this;
     }
+
+    public bool IsOnboarding { get; set; }
 }

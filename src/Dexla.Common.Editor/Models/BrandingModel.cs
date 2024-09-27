@@ -5,7 +5,7 @@ using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Models;
 
-public class BrandingModel : IModelWithProjectId
+public class BrandingModel : IModelWithProjectId, IModelWithOnboarding
 {
     public string? Id // Need to refactor to support multiple themes
     {
@@ -204,5 +204,12 @@ public class BrandingModel : IModelWithProjectId
             FaviconUrl = "https://mortenjonassen.dk/wp-content/uploads/2020/02/Per-larsen-favicon.jpg",
             LogoUrl = "https://wwwspennarecom.cdn.triggerfish.cloud/uploads/2015/08/Your-Logo-Here-Black-22.jpg",
         };
+    }
+
+    public bool IsOnboarding { get; set; }
+
+    public void SetOnboarding(bool value)
+    {
+        IsOnboarding = value;
     }
 }

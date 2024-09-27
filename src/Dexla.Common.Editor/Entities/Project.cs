@@ -5,7 +5,7 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class Project : IEntity
+public class Project : IEntity, IEntityWithOnboarding
 {
     protected internal Project()
     {
