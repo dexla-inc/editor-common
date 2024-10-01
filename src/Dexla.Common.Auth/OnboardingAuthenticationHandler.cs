@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Dexla.Common.Auth;
 using Microsoft.AspNetCore.Authorization;
 
@@ -7,12 +8,12 @@ public class OnboardingAuthenticationHandler(IUserTokenService userTokenServiceS
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context,
         OnboardingAuthentication requirement)
     {
-        bool? isAuthenticated = context.User.Identity?.IsAuthenticated;
+        Claim? iss = context.User.FindFirst("iss");
         
-        if (isAuthenticated == true)
+        if(iss?.Value == "dexla.ai")
         {
             context.Succeed(requirement);
-            userTokenServiceService.SetValues(context.User);
+            userTokenServiceService.SetValues(context.User, true);
         }
 
         return Task.CompletedTask;

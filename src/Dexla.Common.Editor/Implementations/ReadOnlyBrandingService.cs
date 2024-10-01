@@ -24,9 +24,10 @@ public class ReadOnlyBrandingService(IRepository<Branding, BrandingModel> reposi
 
     public static BrandingResponse GetResponse(BrandingModel model)
     {
+        bool isThemeValid = Enum.TryParse(model.Theme, out Contrasts theme);
         return new BrandingResponse(
             model.Id,
-            model.Theme,
+            isThemeValid ? theme : Contrasts.LIGHT,
             model.WebsiteUrl,
             model.Fonts,
             model.Colors,

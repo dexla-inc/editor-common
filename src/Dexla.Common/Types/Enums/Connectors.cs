@@ -13,5 +13,6 @@ public enum Connectors
     SEND_GRID,
     STRIPE,
     SUPABASE,
-    SALESFORCE
+    SALESFORCE,
+    GOOGLE_DRIVE
 }

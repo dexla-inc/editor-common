@@ -7,7 +7,7 @@ namespace Dexla.Common.Editor.Responses;
 
 public class BrandingResponse(
     string? id,
-    string theme,
+    Contrasts theme,
     string? websiteUrl,
     IEnumerable<FontDto> fonts,
     List<ColorDto> colors,
@@ -29,7 +29,7 @@ public class BrandingResponse(
     const string DefaultFontFamily = "Open Sans";
 
     public string? Id { get; } = id;
-    public string Theme { get; } = theme;
+    public Contrasts Theme { get; } = theme;
     public List<ColorDto> Colors { get; } = colors;
     public List<ColorShadeDto> ColorShades { get; } = colorShades;
     public IEnumerable<FontDto> Fonts { get; } = fonts;
@@ -125,9 +125,11 @@ public class BrandingResponse(
 
     public static BrandingResponse ModelToResponse(BrandingModel model)
     {
+        bool isThemeValid = Enum.TryParse(model.Theme, out Contrasts theme);
+        
         return new BrandingResponse(
             model.Id,
-            model.Theme,
+            isThemeValid ? theme : Contrasts.LIGHT,
             model.WebsiteUrl,
             model.Fonts,
             model.Colors,
