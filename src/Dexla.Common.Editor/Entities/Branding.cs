@@ -16,16 +16,15 @@ public class Branding : IEntity, IEntityWithOnboarding
     public string CompanyId { get; set; } = string.Empty;
     public string UserId { get; set; }
     public string ProjectId { get; set; } = string.Empty;
-    public Contrasts Theme { get; set; } = Contrasts.LIGHT;
+    public string Theme { get; set; } = string.Empty; //Contrasts.LIGHT;
     public List<Font> Fonts { get; set; }
     public List<Color> Colors { get; set; } = [];
     public List<ColorShade> ColorShades { get; set; } = [];
-    public List<Logo>? Logos { get; set;  } 
+    public List<Logo>? Logos { get; set; }
     public List<ResponsiveBreakpoint> ResponsiveBreakpoints { get; set; }
-    [Obsolete("Use Logos instead")]
-    public string LogoUrl { get; set; } = string.Empty;
+    [Obsolete("Use Logos instead")] public string LogoUrl { get; set; } = string.Empty;
     public string FaviconUrl { get; set; } = string.Empty;
-    public string DefaultSpacing { get; set; } 
+    public string DefaultSpacing { get; set; }
     public string? WebsiteUrl { get; set; }
     public string DefaultRadius { get; set; } = string.Empty;
     public string DefaultFont { get; set; } = string.Empty;

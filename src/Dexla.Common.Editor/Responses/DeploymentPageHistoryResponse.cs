@@ -10,6 +10,7 @@ public class DeploymentPageHistoryResponse : ISuccess
     public string Id { get; }
     public string Title { get; }
     public string Slug { get; }
+    public string Description { get; }
     public bool AuthenticatedOnly { get; }
     public string AuthenticatedUserRole { get; }
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -23,6 +24,7 @@ public class DeploymentPageHistoryResponse : ISuccess
         string pageId,
         string title,
         string slug,
+        string description,
         bool authenticatedOnly,
         string authenticatedUserRole,
         IEnumerable<string> pageState,
@@ -33,6 +35,7 @@ public class DeploymentPageHistoryResponse : ISuccess
         PageId = pageId;
         Title = title;
         Slug = slug;
+        Description = description;
         AuthenticatedOnly = authenticatedOnly;
         AuthenticatedUserRole = authenticatedUserRole;
         PageState = string.Join("", pageState);
@@ -71,6 +74,7 @@ public class DeploymentPageHistoryResponse : ISuccess
                 entity.PageId,
                 entity.Title,
                 entity.Slug,
+                entity.Description,
                 entity.AuthenticatedOnly,
                 entity.AuthenticatedUserRole,
                 entity.PageState,

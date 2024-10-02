@@ -151,9 +151,11 @@ public class BrandingResponse(
 
     public static BrandingResponse EntityToResponse(Branding entity)
     {
+        bool isThemeValid = Enum.TryParse(entity.Theme, out Contrasts theme);
+        
         return new BrandingResponse(
             entity.Id,
-            entity.Theme,
+            isThemeValid ? theme : Contrasts.LIGHT,
             entity.WebsiteUrl,
             entity.Fonts.Select(f => new FontDto
             {

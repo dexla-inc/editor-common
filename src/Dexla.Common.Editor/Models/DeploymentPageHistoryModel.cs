@@ -15,6 +15,7 @@ public class DeploymentPageHistoryModel : IModel
     public string PageId { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
+    public string? Description { get; set; }
     public bool AuthenticatedOnly { get; set; }
     public string AuthenticatedUserRole { get; set; } = string.Empty;
     public List<string> PageState { get; set; } = [];

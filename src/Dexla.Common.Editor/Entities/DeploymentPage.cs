@@ -16,6 +16,7 @@ public class DeploymentPage : IEntity
     public EnvironmentTypes Environment { get; set; }
     public string Title { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
+    public string? Description { get; set; }
     public bool AuthenticatedOnly { get; set; }
     public string AuthenticatedUserRole { get; set; } = string.Empty;
     public List<string> PageState { get; set; } = [];
@@ -36,6 +37,7 @@ public class DeploymentPage : IEntity
             Environment = Environment,
             Title = Title,
             Slug = Slug,
+            Description = Description,
             AuthenticatedOnly = AuthenticatedOnly,
             AuthenticatedUserRole = AuthenticatedUserRole,
             PageState = PageState,

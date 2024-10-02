@@ -15,12 +15,13 @@ public class DeploymentPageResponse : ISuccess
     public EnvironmentTypes Environment { get; }
     public string Title { get; }
     public string Slug { get; }
+    public string? Description { get; }
     public bool AuthenticatedOnly { get; }
     public string AuthenticatedUserRole { get; }
     public string? PageState { get; set; }
-    public List<PageActionDto>? Actions { get; set; }
-    public ProjectResponse? Project { get; set; }
-    public BrandingResponse? Branding { get; set; }
+    public List<PageActionDto>? Actions { get; }
+    public ProjectResponse? Project { get; }
+    public BrandingResponse? Branding { get; }
 
     public DeploymentPageResponse(
         string id,
@@ -30,6 +31,7 @@ public class DeploymentPageResponse : ISuccess
         EnvironmentTypes environment,
         string title,
         string slug,
+        string? description,
         bool authenticatedOnly,
         string authenticatedUserRole,
         IEnumerable<string> pageState,
@@ -44,6 +46,7 @@ public class DeploymentPageResponse : ISuccess
         Environment = environment;
         Title = title;
         Slug = slug;
+        Description = description;
         AuthenticatedOnly = authenticatedOnly;
         AuthenticatedUserRole = authenticatedUserRole;
         PageState = string.Join("", pageState);
@@ -65,6 +68,7 @@ public class DeploymentPageResponse : ISuccess
             entity.Environment,
             entity.Title,
             entity.Slug,
+            entity.Description,
             entity.AuthenticatedOnly,
             entity.AuthenticatedUserRole,
             entity.PageState,
@@ -92,6 +96,7 @@ public class DeploymentPageResponse : ISuccess
         EnvironmentTypes.Editor,
         string.Empty,
         string.Empty,
+        string.Empty,
         false,
         string.Empty,
         new List<string>(),
@@ -105,6 +110,7 @@ public class DeploymentPageResponse : ISuccess
         string.Empty,
         string.Empty,
         EnvironmentTypes.Editor,
+        string.Empty,
         string.Empty,
         string.Empty,
         false,

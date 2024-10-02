@@ -11,6 +11,11 @@ namespace Dexla.Common.Utilities
         {
             return Guid.NewGuid().ToString("N");
         }
+        
+        public static bool IsGuidWithoutHyphens(this string input)
+        {
+            return Guid.TryParseExact(input, "N", out _);
+        }
 
         private const char CompositeIdDelimiter = '|';
 
