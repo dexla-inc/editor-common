@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -14,7 +15,7 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
 {
     private readonly BlobContainerClient _containerClient;
     private const int ChunkSize = 4 * 1024 * 1024; // 4 MB chunk size
-    
+
     public BlobStorageService(string connectionString, string container)
     {
         _containerClient = new BlobContainerClient(connectionString, container);
@@ -31,28 +32,37 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
                 ContentType = blobStorage.ContentType
             };
 
-             Stream uploadStream;
-             if (_compressibleImageTypes.Contains(blobStorage.ContentType, StringComparer.OrdinalIgnoreCase))
-             {
-                 uploadStream = await CompressImage(blobStorage.Data, blobStorage.CompressionLevel);
-             }
-             else
-             {
-                 uploadStream = blobStorage.Data;
-             }
-
-            long streamLength = uploadStream.Length;
-            uploadStream.Position = 0;
-
-            if (streamLength >= ChunkSize)
+            Stream uploadStream;
+            if (_compressibleImageTypes.Contains(blobStorage.ContentType, StringComparer.OrdinalIgnoreCase))
             {
-                await UploadStreamInChunks(blobClient, uploadStream, blobHttpHeader);
+                uploadStream = await _compressImage(blobStorage.Data, blobStorage.CompressionLevel);
             }
             else
             {
-                await blobClient.UploadAsync(uploadStream, blobHttpHeader);
+                uploadStream = blobStorage.Data;
             }
-            
+
+            // Reset the position if the stream supports seeking
+            if (uploadStream.CanSeek)
+            {
+                uploadStream.Position = 0;
+            }
+
+            // Set up the upload options
+            BlobUploadOptions uploadOptions = new()
+            {
+                HttpHeaders = blobHttpHeader,
+                TransferOptions = new StorageTransferOptions
+                {
+                    // You can adjust these values based on your requirements
+                    // InitialTransferSize = 4 * 1024 * 1024, // 4MB initial transfer size
+                    // MaximumTransferSize = 4 * 1024 * 1024, // 4MB maximum transfer size
+                }
+            };
+
+            // Upload the stream without relying on Length or Position
+            await blobClient.UploadAsync(uploadStream, uploadOptions);
+
             string blobUrl = blobClient.Uri.ToString();
 
             return new BlobResponse(blobUrl);
@@ -62,7 +72,8 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
             return new ErrorResponse(e.Message, nameof(blobStorage));
         }
     }
-    
+
+
     private async Task UploadStreamInChunks(BlobClient blobClient, Stream stream, BlobHttpHeaders headers)
     {
         stream.Position = 0;
@@ -83,6 +94,7 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
             {
                 await blockBlobClient.StageBlockAsync(blockIdString, ms);
             }
+
             blockList.Add(blockIdString);
             blockId++;
         }
@@ -145,18 +157,44 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
         }
     }
 
-    private async Task<Stream> CompressImage(Stream inputStream, int quality = 60)
+    private static async Task<Stream> _compressImage(Stream inputStream, int quality = 60)
     {
-        inputStream.Position = 0;
-        using Image image = await Image.LoadAsync(inputStream);
+        Stream seekableStream;
+
+        if (!inputStream.CanSeek)
+        {
+            // Copy the non-seekable stream to a MemoryStream
+            seekableStream = new MemoryStream();
+            await inputStream.CopyToAsync(seekableStream);
+            seekableStream.Position = 0;
+        }
+        else
+        {
+            // Use the inputStream directly
+            seekableStream = inputStream;
+            if (seekableStream.Position != 0)
+            {
+                seekableStream.Position = 0;
+            }
+        }
+
+        using Image image = await Image.LoadAsync(seekableStream);
         JpegEncoder jpegEncoder = new()
         {
             Quality = quality
         };
 
+        // Create a new MemoryStream for the compressed image
         MemoryStream compressedStream = new();
         await image.SaveAsync(compressedStream, jpegEncoder);
         compressedStream.Position = 0;
+
+        // Dispose the seekableStream if we created it
+        if (!inputStream.CanSeek)
+        {
+            await seekableStream.DisposeAsync();
+        }
+
         return compressedStream;
     }
 
@@ -167,5 +205,4 @@ public class BlobStorageService : IStorageService<BlobStorageModel>
         "image/gif",
         "image/bmp"
     ];
-
 }
