@@ -6,7 +6,7 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
-public class ApiEndpointModel : IModelWithProjectId
+public class ApiEndpointModel : IModelWithProjectId, IModelWithOnboarding
 {
     public string? Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
@@ -83,6 +83,13 @@ public class ApiEndpointModel : IModelWithProjectId
     {
         RelativeUrl = RelativeUrl.TrimStart('/');
     }
+
+    public void SetOnboarding(bool value)
+    {
+        IsOnboarding = value;
+    }
+
+    public bool IsOnboarding { get; set; }
 }
 
 public class EndpointAuthenticationDto

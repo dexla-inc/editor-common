@@ -4,7 +4,7 @@ using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class ApiEndpoint : IEntity
+public class ApiEndpoint : IEntity, IEntityWithOnboarding
 {
     public string Id { get; set; } = string.Empty;
     public EntityStatus EntityStatus { get; set; }
@@ -38,4 +38,6 @@ public class ApiEndpoint : IEntity
     {
         return [EndpointTypes.ACCESS.ToString(), EndpointTypes.REFRESH.ToString(), EndpointTypes.USER.ToString()];
     }
+
+    public bool IsOnboarding { get; set; }
 }

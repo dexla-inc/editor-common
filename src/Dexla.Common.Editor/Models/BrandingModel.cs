@@ -1,4 +1,5 @@
-﻿using Dexla.Common.Editor.Responses;
+﻿using System.Text.RegularExpressions;
+using Dexla.Common.Editor.Responses;
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
@@ -66,134 +67,24 @@ public class BrandingModel : IModelWithProjectId, IModelWithOnboarding
         ProjectId = projectId;
         Id = projectId;
     }
-
-    const string DefaultFontFamily = "Open Sans";
-
+    
     public static BrandingModel GetDefault(string userId, string projectId)
     {
         return new BrandingModel
         {
+            Theme = Contrasts.LIGHT.ToString(),
             UserId = userId,
             ProjectId = projectId,
-            Fonts =
-            [
-                new FontDto
-                {
-                    Type = FontTypes.TITLE,
-                    FontFamily = DefaultFontFamily,
-                    Tag = "H1",
-                    FontWeight = "500", 
-                    FontSize = "32px",
-                    LineHeight = "48px",
-                    LetterSpacing = "0px",
-                    Note = "Main Title"
-                },
-                new FontDto
-                {
-                    Type = FontTypes.TITLE,
-                    FontFamily = DefaultFontFamily,
-                    Tag = "H2",
-                    FontWeight = "500",
-                    FontSize = "28px",
-                    LineHeight = "42px",
-                    LetterSpacing = "0px",
-                    Note = "Section Title"
-                },
-                new FontDto
-                {
-                    Type = FontTypes.TITLE,
-                    FontFamily = DefaultFontFamily,
-                    Tag = "H3",
-                    FontWeight = "500", 
-                    FontSize = "24px",
-                    LineHeight = "40px", 
-                    LetterSpacing = "0px",
-                    Note = "Subsection Title"
-                },
-                new FontDto
-                {
-                    Type = FontTypes.TITLE,
-                    FontFamily = DefaultFontFamily,
-                    Tag = "H4",
-                    FontWeight = "600", 
-                    FontSize = "22px",
-                    LineHeight = "32px", 
-                    LetterSpacing = "0px",
-                    Note = "Topic Title"
-                },
-                new FontDto
-                {
-                    Type = FontTypes.TITLE,
-                    FontFamily = DefaultFontFamily,
-                    Tag = "H5",
-                    FontWeight = "500", 
-                    FontSize = "20px",
-                    LineHeight = "24px", 
-                    LetterSpacing = "0px",
-                    Note = "Subtopic Title"
-                },
-                new FontDto
-                {
-                    Type = FontTypes.TITLE,
-                    FontFamily = DefaultFontFamily,
-                    Tag = "H6",
-                    FontWeight = "500", 
-                    FontSize = "18px",
-                    LineHeight = "24px",
-                    LetterSpacing = "0px",
-                    Note = "Minor Point"
-                },
-                new FontDto
-                {
-                    Type = FontTypes.TEXT,
-                    FontFamily = DefaultFontFamily,
-                    Tag = "P",
-                    FontWeight = "400",
-                    FontSize = "14px",
-                    LineHeight = "20px",
-                    LetterSpacing = "0px",
-                    Note = "Paragraph"
-                },
-                new FontDto
-                {
-                    Type = FontTypes.TEXT,
-                    FontFamily = DefaultFontFamily,
-                    Tag = "Button",
-                    FontWeight = "500",
-                    FontSize = "14px",
-                    LineHeight = "20px",
-                    LetterSpacing = "0px",
-                    Note = "Button"
-                }
-            ],
-            ColorShades = Models.ColorShades.Colors,
-            Colors =
-            [
-                new ColorDto { Hex = "#2F65CB", Name = "Primary", IsDefault = true, FriendlyName = "Primary", },
-                new ColorDto
-                    { Hex = "#FFFFFF", Name = "PrimaryText", IsDefault = true, FriendlyName = "Primary Text", },
-                new ColorDto { Hex = "#D9D9D9", Name = "Secondary", IsDefault = true, FriendlyName = "Secondary" },
-                new ColorDto
-                    { Hex = "#000000", Name = "SecondaryText", IsDefault = true, FriendlyName = "Secondary Text" },
-                new ColorDto { Hex = "#E57F4F", Name = "Tertiary", IsDefault = true, FriendlyName = "Tertiary" },
-                new ColorDto
-                    { Hex = "#FFFFFF", Name = "TertiaryText", IsDefault = true, FriendlyName = "Tertiary Text" },
-                new ColorDto { Hex = "#FFFFFF", Name = "Background", IsDefault = true, FriendlyName = "Background" },
-                new ColorDto { Hex = "#FE191C", Name = "Danger", IsDefault = true, FriendlyName = "Danger" },
-                new ColorDto { Hex = "#FFCC00", Name = "Warning", IsDefault = true, FriendlyName = "Warning" },
-                new ColorDto { Hex = "#10D48E", Name = "Success", IsDefault = true, FriendlyName = "Success" },
-                new ColorDto { Hex = "#F1F1F1", Name = "Neutral", IsDefault = true, FriendlyName = "Neutral" },
-                new ColorDto { Hex = "#000000", Name = "Black", IsDefault = true, FriendlyName = "Black" },
-                new ColorDto { Hex = "#FFFFFF", Name = "White", IsDefault = true, FriendlyName = "White" },
-                new ColorDto { Hex = "#EEEEEE", Name = "Border", IsDefault = true, FriendlyName = "Border" }
-            ],
+            Fonts = Models.Fonts.DefaultFonts,
+            ColorShades = Models.ColorShades.DefaultShades,
+            Colors = Models.ColorShades.DefaultColors,
             ResponsiveBreakpoints =
             [
                 new ResponsiveBreakpointDto { Breakpoint = "100%", Type = "Desktop" },
                 new ResponsiveBreakpointDto { Breakpoint = "768px", Type = "Tablet" },
                 new ResponsiveBreakpointDto { Breakpoint = "480px", Type = "Mobile" }
             ],
-            DefaultFont = DefaultFontFamily,
+            DefaultFont = Models.Fonts.DefaultFontFamily,
             HasCompactButtons = true,
             DefaultRadius = "sm",
             DefaultSpacing = "md",
@@ -211,5 +102,45 @@ public class BrandingModel : IModelWithProjectId, IModelWithOnboarding
     public void SetOnboarding(bool value)
     {
         IsOnboarding = value;
+    }
+    
+    /// <summary>
+    /// Sets a new color for the specified type by updating the Colors and ColorShades lists.
+    /// </summary>
+    /// <param name="type">The color type (e.g., "Primary", "Secondary").</param>
+    /// <param name="newHex">The new hex color code (e.g., "#FF5733").</param>
+    ///  /// <param name="isDefault">Is this a default color or new</param>
+    public void SetColor(string type, string newHex, bool isDefault = true)
+    {
+        if (string.IsNullOrWhiteSpace(type))
+            throw new ArgumentException("Color type cannot be null or empty.", nameof(type));
+
+        if (string.IsNullOrWhiteSpace(newHex))
+            throw new ArgumentException("Hex value cannot be null or empty.", nameof(newHex));
+
+        // Validate hex format
+        if (!Regex.IsMatch(newHex, "^#([A-Fa-f0-9]{6})$"))
+            throw new ArgumentException("Invalid hex color format.", nameof(newHex));
+
+        // Update the base color in Colors list
+        ColorDto? baseColor = Colors.FirstOrDefault(c => c.Name.Equals(type, StringComparison.OrdinalIgnoreCase));
+        if (baseColor != null)
+        {
+            baseColor.Hex = newHex;
+        }
+        else
+        {
+            // If the base color does not exist, optionally add it
+            Colors.Add(new ColorDto
+            {
+                Hex = newHex,
+                Name = type,
+                IsDefault = isDefault,
+                FriendlyName = type
+            });
+        }
+
+        // Update the ColorShades
+        ColorShades.SetColorShade(type, newHex, isDefault);
     }
 }

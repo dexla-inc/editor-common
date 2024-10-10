@@ -1,5 +1,6 @@
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
+using Dexla.Common.Types.Enums;
 using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Entities;
@@ -27,6 +28,7 @@ public class Page : IPageEntity, IEntityWithOnboarding
     public virtual string Description { get; set; }
     public virtual List<PageAction>? Actions { get; set; }
     public virtual List<string>? Features { get; set; }
+    public CssTypes CssType { get; set; }
     
     public IPageEntity SetNewValues(string userId, string projectId, string pageId)
     {

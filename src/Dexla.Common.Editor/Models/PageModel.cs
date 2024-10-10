@@ -1,5 +1,6 @@
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
+using Dexla.Common.Types.Enums;
 
 namespace Dexla.Common.Editor.Models;
 
@@ -29,6 +30,7 @@ public class PageModel : IModelWithProjectId, IModelWithOnboarding
     public Dictionary<string,string>? QueryStrings { get; set; }
     public List<PageActionDto>? Actions { get; set; }
     public List<string>? Features { get; set; }
+    public string CssType { get; set; }
 
     public void SetProjectId(string projectId)
     {
@@ -39,7 +41,7 @@ public class PageModel : IModelWithProjectId, IModelWithOnboarding
         UserId = value;
     }
     
-    public static PageModel Empty(string userId, string projectId)
+    public static PageModel Empty(string userId, string projectId, string cssType)
     {
         return new PageModel
         {
@@ -53,7 +55,8 @@ public class PageModel : IModelWithProjectId, IModelWithOnboarding
             AuthenticatedUserRole = string.Empty,
             HasNavigation = false,
             CopyFrom = null,
-            QueryStrings = null
+            QueryStrings = null,
+            CssType = cssType
         };
     }
 

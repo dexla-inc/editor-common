@@ -18,10 +18,8 @@ public class ProjectModel : IModelWithUserId, IModelWithOnboarding
     public string Industry { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string? SimilarCompany { get; set; }
-    [Obsolete("Use LiveUrls instead")]
-    public string Domain { get; set; } = string.Empty;
-    [Obsolete("Use LiveUrls instead")]
-    public string SubDomain { get; set; } = string.Empty;
+    [Obsolete("Use LiveUrls instead")] public string Domain { get; set; } = string.Empty;
+    [Obsolete("Use LiveUrls instead")] public string SubDomain { get; set; } = string.Empty;
     public Dictionary<string, LiveUrlDto> LiveUrls { get; set; } = [];
     public long Created { get; set; }
     public string[] Screenshots { get; set; } = [];
@@ -32,12 +30,13 @@ public class ProjectModel : IModelWithUserId, IModelWithOnboarding
     public Dictionary<string, object> Metadata { get; set; } = new();
     public List<AppDto>? Apps { get; set; }
     public bool IsOnboarding { get; set; }
-    
+    public string CssType { get; set; } = string.Empty;
+
     public void SetCompanyId(string value)
     {
         CompanyId = value;
     }
-    
+
     public void SetUserId(string value)
     {
         UserId = value;
@@ -52,7 +51,7 @@ public class ProjectModel : IModelWithUserId, IModelWithOnboarding
     {
         FriendlyName = value;
     }
-    
+
     public void AddMetadata(string key, object value)
     {
         Metadata.Add(key, value);
@@ -67,9 +66,14 @@ public class ProjectModel : IModelWithUserId, IModelWithOnboarding
     {
         IsOwner = value;
     }
-    
+
     public void SetOnboarding(bool value)
     {
         IsOnboarding = value;
+    }
+
+    public void SetCssType(string value)
+    {
+        CssType = value;
     }
 }

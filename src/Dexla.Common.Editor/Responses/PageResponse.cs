@@ -2,6 +2,7 @@
 using Dexla.Common.Editor.Models;
 using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types;
+using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Responses;
@@ -31,8 +32,9 @@ public class PageResponse : ISuccess
     public string? ParentPageId { get; }
     public bool HasNavigation { get; }
     public Dictionary<string,string>? QueryStrings { get; }
-    public List<PageActionDto>? Actions { get; set; }
-    public List<string>? Features { get; set; }
+    public List<PageActionDto>? Actions { get; }
+    public List<string>? Features { get; }
+    public CssTypes CssType { get; }
 
     public PageResponse(
         string? id,
@@ -47,7 +49,8 @@ public class PageResponse : ISuccess
         bool hasNavigation,
         Dictionary<string, string>? queryStrings,
         List<PageActionDto>? actions,
-        List<string>? features)
+        List<string>? features,
+        CssTypes cssType)
     {
         Id = id;
         ProjectId = projectId;
@@ -62,6 +65,7 @@ public class PageResponse : ISuccess
         QueryStrings = queryStrings;
         Actions = actions;
         Features = features;
+        CssType = cssType;
     }
 
     public string TrackingId { get; set; }
@@ -87,7 +91,8 @@ public class PageResponse : ISuccess
                 Action = Json.Deserialize<object>(a.Action),
                 SequentialTo = a.SequentialTo
             }).ToList(),
-            page.Features);
+            page.Features,
+            page.CssType);
     }
 
     public static PageResponse ModelToResponse(PageModel model)
@@ -105,7 +110,8 @@ public class PageResponse : ISuccess
             model.HasNavigation,
             model.QueryStrings,
             model.Actions,
-            model.Features);
+            model.Features,
+            Enum.Parse<CssTypes>(model.CssType));
     }
     
     public static IResponse ModelToResponse(RepositoryActionResultModel<PageModel>  actionResult)

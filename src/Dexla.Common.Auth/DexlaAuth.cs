@@ -7,13 +7,14 @@ namespace Dexla.Common.Auth;
 
 public class DexlaAuth
 {
-    public static Claim[] GetClaims(string email)
+    public static Claim[] GetClaims(string email, string projectId)
     {
         return
         [
             new Claim(JwtRegisteredClaimNames.Sub, email),
             new Claim(ClaimTypes.Name, email),
             new Claim("user_id", email),
+            new Claim("project_id", projectId),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         ];
     }

@@ -37,4 +37,5 @@ public class Project : IEntity, IEntityWithOnboarding
     public Dictionary<string, object> Metadata { get; set; } = new();
     public List<App>? Apps { get; set; } 
     public bool IsOnboarding { get; set; }
+    public CssTypes CssType { get; set; }
 }

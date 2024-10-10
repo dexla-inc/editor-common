@@ -21,6 +21,7 @@ public class Branding : IEntity, IEntityWithOnboarding
     public List<Color> Colors { get; set; } = [];
     public List<ColorShade> ColorShades { get; set; } = [];
     public List<Logo>? Logos { get; set; }
+    public Dictionary<string, string> Sizing { get; set; } = new();
     public List<ResponsiveBreakpoint> ResponsiveBreakpoints { get; set; }
     [Obsolete("Use Logos instead")] public string LogoUrl { get; set; } = string.Empty;
     public string FaviconUrl { get; set; } = string.Empty;

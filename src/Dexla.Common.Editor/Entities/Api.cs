@@ -5,7 +5,7 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class Api : IEntity
+public class Api : IEntity, IEntityWithOnboarding
 {
     public string Id { get; set; } = UtilityExtensions.GetId();
     public EntityStatus EntityStatus { get; set; }
@@ -21,4 +21,5 @@ public class Api : IEntity
     public long Updated { get; set; }
     public DataSourceTypes Type { get; set; }
     public string? ApiKey { get; set; }
+    public bool IsOnboarding { get; set; }
 }

@@ -23,14 +23,15 @@ public class ProjectResponse : ISuccess
     public string SubDomain { get; }
     public long Created { get; }
     public string[] Screenshots { get; }
-    public string? HomePageId { get; set; }
-    public string? CustomCode { get; set; }
+    public string? HomePageId { get; private set; }
+    public string? CustomCode { get; }
     public string? FaviconUrl { get; }
     public RedirectsDto? Redirects { get; }
     public Dictionary<string, object> Metadata { get; }
     public List<AppDto>? Apps { get; }
-    public Dictionary<string, LiveUrlDto> LiveUrls { get; set; } = [];
-    public bool IsOnboarding { get; set; }
+    public Dictionary<string, LiveUrlDto> LiveUrls { get; }
+    public bool IsOnboarding { get; }
+    public CssTypes CssType { get; }
 
     public ProjectResponse(
         string id,
@@ -53,7 +54,8 @@ public class ProjectResponse : ISuccess
         Dictionary<string, object> metadata,
         List<AppDto>? apps,
         Dictionary<string, LiveUrlDto> liveUrls,
-        bool isOnboarding = false)
+        bool isOnboarding = false,
+        CssTypes cssType = CssTypes.FLEX)
     {
         Id = id;
         CompanyId = companyId;
@@ -76,6 +78,7 @@ public class ProjectResponse : ISuccess
         Apps = apps;
         LiveUrls = liveUrls;
         IsOnboarding = isOnboarding;
+        CssType = cssType;
     }
 
     public ProjectResponse()
@@ -88,6 +91,7 @@ public class ProjectResponse : ISuccess
         RepositoryActionResultModel<ProjectModel> actionResult,
         string? homePageId = null)
     {
+        
         return actionResult.ActionResult<ProjectResponse>(
             actionResult,
             m => new ProjectResponse(
@@ -111,7 +115,8 @@ public class ProjectResponse : ISuccess
                 m.Metadata,
                 m.Apps,
                 m.LiveUrls,
-                m.IsOnboarding
+                m.IsOnboarding,
+                Enum.TryParse(m.CssType, out CssTypes cssType) ? cssType : CssTypes.FLEX
             )
             {
                 HomePageId = homePageId
@@ -167,7 +172,8 @@ public class ProjectResponse : ISuccess
                     SubDomain = kvp.Value.SubDomain
                 }
             ),
-            entity.IsOnboarding
+            entity.IsOnboarding,
+            entity.CssType
         );
     }
 
@@ -211,7 +217,8 @@ public class ProjectResponse : ISuccess
                     SubDomain = kvp.Value.SubDomain
                 }
             ), 
-            entity.IsOnboarding
+            entity.IsOnboarding,
+            entity.CssType
         );
     }
 
@@ -238,7 +245,8 @@ public class ProjectResponse : ISuccess
             entityProject.Metadata,
             entityProject.Apps,
             entityProject.LiveUrls,
-            entityProject.IsOnboarding
+            entityProject.IsOnboarding,
+            Enum.TryParse(entityProject.CssType, out CssTypes cssType) ? cssType : CssTypes.FLEX
         );
     }
 }

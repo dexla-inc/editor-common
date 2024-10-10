@@ -5,7 +5,7 @@ using Dexla.Common.Utilities;
 
 namespace Dexla.Common.Editor.Models;
 
-public class ApiModel : IModelWithProjectId
+public class ApiModel : IModelWithProjectId, IModelWithOnboarding
 {
     public string? Id { get; set; }
     public EntityStatus EntityStatus { get; set; }
@@ -61,5 +61,12 @@ public class ApiModel : IModelWithProjectId
     public void SetName(string name)
     {
         Name = name;
+    }
+
+    public bool IsOnboarding { get; set; }
+
+    public void SetOnboarding(bool value)
+    {
+        IsOnboarding = value;
     }
 }
