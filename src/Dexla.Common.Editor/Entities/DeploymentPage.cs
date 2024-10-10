@@ -23,7 +23,7 @@ public class DeploymentPage : IEntity
     public virtual List<PageAction>? Actions { get; set; }
     public Project? Project { get; set; }
     public Branding? Branding { get; set; }
-    public virtual List<ApiWithApiEndpoints>? Apis { get; set; }
+    public virtual List<ApiWithApiEndpoints>? Datasources { get; set; }
     public virtual List<Variable>? Variables { get; set; }
     public virtual List<LogicFlow>? LogicFlows { get; set; }
     
@@ -47,7 +47,7 @@ public class DeploymentPage : IEntity
             Actions = Actions,
             Project = Project,
             Branding = Branding,
-            Apis = Apis,
+            Datasources = Datasources,
             Variables = Variables,
             LogicFlows = LogicFlows
         };

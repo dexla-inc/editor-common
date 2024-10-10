@@ -20,7 +20,7 @@ public class DeploymentResponse : ISuccess, IAuditInformation
     public AuditUserDto UpdatedBy { get; }
     public ProjectResponse? Project { get; }
     public BrandingResponse? Branding { get; }
-    public List<ApiIncludeResponse>? Apis { get; }
+    public List<ApiIncludeResponse>? Datasources { get; }
     public List<VariableResponse>? Variables { get; }
     public List<LogicFlowResponse>? LogicFlows { get; }
 
@@ -35,7 +35,7 @@ public class DeploymentResponse : ISuccess, IAuditInformation
         AuditUserDto updatedBy,
         ProjectResponse? project,
         BrandingResponse? branding,
-        List<ApiIncludeResponse>? apis,
+        List<ApiIncludeResponse>? datasources,
         List<VariableResponse>? variables,
         List<LogicFlowResponse>? logicFlows)
     {
@@ -49,7 +49,7 @@ public class DeploymentResponse : ISuccess, IAuditInformation
         CanPromote = canPromote;
         Project = project;
         Branding = branding;
-        Apis = apis;
+        Datasources = datasources;
         Variables = variables;
         LogicFlows = logicFlows;
     }
@@ -83,7 +83,7 @@ public class DeploymentResponse : ISuccess, IAuditInformation
                 }).ToList(),
                 p.Project != null ? ProjectResponse.EntityToResponse(p.Project) : null,
                 p.Branding != null ? BrandingResponse.EntityToResponse(p.Branding) : null,
-                p.Apis?.Select(ApiIncludeResponse.EntityToResponse()).ToList(),
+                p.Datasources?.Select(ApiIncludeResponse.EntityToResponse()).ToList(),
                 p.Variables?.Select(VariableResponse.EntityToResponse()).ToList(),
                 p.LogicFlows?.Select(LogicFlowResponse.EntityToResponse()).ToList()
             )
@@ -103,7 +103,7 @@ public class DeploymentResponse : ISuccess, IAuditInformation
             new AuditUserDto(entity.AuditInformation),
             entity.Project != null ? ProjectResponse.EntityToResponse(entity.Project) : null,
             entity.Branding != null ? BrandingResponse.EntityToResponse(entity.Branding) : null,
-            entity.Apis?.Select(ApiIncludeResponse.EntityToResponse()).ToList(),
+            entity.Datasources?.Select(ApiIncludeResponse.EntityToResponse()).ToList(),
             entity.Variables?.Select(VariableResponse.EntityToResponse()).ToList(),
             entity.LogicFlows?.Select(LogicFlowResponse.EntityToResponse()).ToList()
         );
@@ -122,7 +122,7 @@ public class DeploymentResponse : ISuccess, IAuditInformation
             new AuditUserDto(entity.AuditInformation),
             ProjectResponse.EntityToResponse(entity.Project),
             BrandingResponse.EntityToResponse(entity.Branding),
-            entity.Apis?.Select(ApiIncludeResponse.EntityToResponse()).ToList(),
+            entity.Datasources?.Select(ApiIncludeResponse.EntityToResponse()).ToList(),
             entity.Variables?.Select(VariableResponse.EntityToResponse()).ToList(),
             entity.LogicFlows?.Select(LogicFlowResponse.EntityToResponse()).ToList()
         )
@@ -148,7 +148,7 @@ public class DeploymentResponse : ISuccess, IAuditInformation
                     }).ToList(),
                     ProjectResponse.EntityToResponse(p.Project),
                     BrandingResponse.EntityToResponse(p.Branding),
-                    p.Apis?.Select(a => ApiIncludeResponse.EntityToResponse()(a)).ToList(),
+                    p.Datasources?.Select(a => ApiIncludeResponse.EntityToResponse()(a)).ToList(),
                     p.Variables?.Select(v => VariableResponse.EntityToResponse()(v)).ToList(),
                     p.LogicFlows?.Select(l => LogicFlowResponse.EntityToResponse()(l)).ToList()
                 )
@@ -172,7 +172,7 @@ public class DeploymentResponse : ISuccess, IAuditInformation
             new AuditUserDto(model.AuditInformation),
             ProjectResponse.ModelToResponse(model.Project),
             BrandingResponse.ModelToResponse(model.Branding),
-            model.Apis?.Select(ApiIncludeResponse.ModelToResponse).ToList(),
+            model.Datasources?.Select(ApiIncludeResponse.ModelToResponse).ToList(),
             model.Variables?.Select(VariableResponse.ModelToResponse).ToList(),
             model.LogicFlows?.Select(LogicFlowResponse.ModelToResponse).ToList()
         );

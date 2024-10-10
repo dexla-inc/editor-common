@@ -22,7 +22,7 @@ public class DeploymentPageResponse : ISuccess
     public List<PageActionDto>? Actions { get; }
     public ProjectResponse? Project { get; }
     public BrandingResponse? Branding { get; }
-    public List<ApiIncludeResponse>? Apis { get; }
+    public List<ApiIncludeResponse>? Datasources { get; }
     public List<VariableResponse>? Variables { get; }
     public List<LogicFlowResponse>? LogicFlows { get; }
 
@@ -42,7 +42,7 @@ public class DeploymentPageResponse : ISuccess
         List<PageActionDto>? actions,
         ProjectResponse? project,
         BrandingResponse? branding,
-        List<ApiIncludeResponse>? apis,
+        List<ApiIncludeResponse>? datasources,
         List<VariableResponse>? variables,
         List<LogicFlowResponse>? logicFlows)
     {
@@ -60,7 +60,7 @@ public class DeploymentPageResponse : ISuccess
         Actions = actions;
         Project = project;
         Branding = branding;
-        Apis = apis;
+        Datasources = datasources;
         Variables = variables;
         LogicFlows = logicFlows;
     }
@@ -91,7 +91,7 @@ public class DeploymentPageResponse : ISuccess
             }).ToList(),
             entity.Project != null && exclude != true ? ProjectResponse.EntityToResponse(entity.Project) : null,
             entity.Branding != null && exclude != true ? BrandingResponse.EntityToResponse(entity.Branding) : null,
-            entity.Apis?.Select(api => ApiIncludeResponse.EntityToResponse()(api)).ToList(),
+            entity.Datasources?.Select(api => ApiIncludeResponse.EntityToResponse()(api)).ToList(),
             entity.Variables?.Select(v => VariableResponse.EntityToResponse()(v)).ToList(),
             entity.LogicFlows?.Select(l => LogicFlowResponse.EntityToResponse()(l)).ToList()
         );

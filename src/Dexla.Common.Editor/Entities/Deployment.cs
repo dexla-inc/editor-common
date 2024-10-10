@@ -26,7 +26,7 @@ public class Deployment : IEntity, IEntityWithTimeStamp
     public virtual int Version { get; set; }
     public virtual Project? Project { get; set; }
     public virtual Branding? Branding { get; set; }
-    public virtual List<ApiWithApiEndpoints>? Apis { get; set; }
+    public virtual List<ApiWithApiEndpoints>? Datasources { get; set; }
     public virtual List<Variable>? Variables { get; set; }
     public virtual List<LogicFlow>? LogicFlows { get; set; }
 }
