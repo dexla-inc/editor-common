@@ -61,4 +61,16 @@ public class VariableResponse : IMapperResponse<Variable, VariableModel, Variabl
             actionResult,
             ModelToResponse);
     }
+
+    public static VariableModel ResponseToModel(VariableResponse response)
+    {
+        return new VariableModel
+        {
+            Id = response.Id,
+            Name = response.Name,
+            Type = response.Type.ToString(),
+            DefaultValue = Json.Serialize(response.DefaultValue),
+            IsGlobal = response.IsGlobal
+        };
+    }
 }

@@ -1,3 +1,5 @@
+using Dexla.Common.Editor.Entities;
+using Dexla.Common.Editor.Responses;
 using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
@@ -24,6 +26,9 @@ public class DeploymentModel : IModelWithProjectId
     public int Version { get; set; }
     public ProjectModel? Project { get; set; }
     public BrandingModel? Branding { get; set; }
+    public List<ApiWithApiEndpoints>? Apis { get; set; }
+    public List<VariableModel>? Variables { get; set; }
+    public List<LogicFlowModel>? LogicFlows { get; set; }
     
     public DeploymentModel CloneWithEnvironment(EnvironmentTypes environment)
     {
@@ -39,7 +44,10 @@ public class DeploymentModel : IModelWithProjectId
             Environment = environment,
             Version = Version,
             Project = Project,
-            Branding = Branding
+            Branding = Branding,
+            Apis = Apis,
+            Variables = Variables,
+            LogicFlows = LogicFlows
         };
     }
 
@@ -66,5 +74,20 @@ public class DeploymentModel : IModelWithProjectId
     public void SetBranding(BrandingModel branding)
     {
         Branding = branding;
+    }
+    
+    public void SetApis(List<ApiIncludeResponse> apis)
+    {
+        Apis = apis.Select(ApiIncludeResponse.ResponseToEntity).ToList();
+    }
+    
+    public void SetVariables(List<VariableResponse> variables)
+    {
+        Variables = variables.Select(VariableResponse.ResponseToModel).ToList();
+    }
+    
+    public void SetLogicFlows(List<LogicFlowResponse> logicFlows)
+    {
+        LogicFlows = logicFlows.Select(LogicFlowResponse.ResponseToModel).ToList();
     }
 }

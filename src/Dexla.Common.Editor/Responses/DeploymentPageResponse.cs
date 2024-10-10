@@ -22,6 +22,10 @@ public class DeploymentPageResponse : ISuccess
     public List<PageActionDto>? Actions { get; }
     public ProjectResponse? Project { get; }
     public BrandingResponse? Branding { get; }
+    public List<ApiIncludeResponse>? Apis { get; }
+    public List<VariableResponse>? Variables { get; }
+    public List<LogicFlowResponse>? LogicFlows { get; }
+
 
     public DeploymentPageResponse(
         string id,
@@ -37,7 +41,10 @@ public class DeploymentPageResponse : ISuccess
         IEnumerable<string> pageState,
         List<PageActionDto>? actions,
         ProjectResponse? project,
-        BrandingResponse? branding)
+        BrandingResponse? branding,
+        List<ApiIncludeResponse>? apis,
+        List<VariableResponse>? variables,
+        List<LogicFlowResponse>? logicFlows)
     {
         Id = id;
         ProjectId = projectId;
@@ -53,6 +60,9 @@ public class DeploymentPageResponse : ISuccess
         Actions = actions;
         Project = project;
         Branding = branding;
+        Apis = apis;
+        Variables = variables;
+        LogicFlows = logicFlows;
     }
 
 
@@ -80,7 +90,11 @@ public class DeploymentPageResponse : ISuccess
                 SequentialTo = a.SequentialTo
             }).ToList(),
             entity.Project != null && exclude != true ? ProjectResponse.EntityToResponse(entity.Project) : null,
-            entity.Branding != null && exclude != true ? BrandingResponse.EntityToResponse(entity.Branding) : null);
+            entity.Branding != null && exclude != true ? BrandingResponse.EntityToResponse(entity.Branding) : null,
+            entity.Apis?.Select(api => ApiIncludeResponse.EntityToResponse()(api)).ToList(),
+            entity.Variables?.Select(v => VariableResponse.EntityToResponse()(v)).ToList(),
+            entity.LogicFlows?.Select(l => LogicFlowResponse.EntityToResponse()(l)).ToList()
+        );
     }
 
     public static DeploymentPageResponse EntityToResponse(DeploymentPage entity, bool exclude = false)
@@ -88,22 +102,26 @@ public class DeploymentPageResponse : ISuccess
         return EntityToResponse(exclude)(entity);
     }
 
-    public static DeploymentPageResponse Empty(ProjectResponse? project = null, BrandingResponse? branding = null) => new(
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        EnvironmentTypes.Editor,
-        string.Empty,
-        string.Empty,
-        string.Empty,
-        false,
-        string.Empty,
-        new List<string>(),
-        new List<PageActionDto>(),
-        project,
-        branding);
-    
+    public static DeploymentPageResponse Empty(ProjectResponse? project = null, BrandingResponse? branding = null) =>
+        new(
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            EnvironmentTypes.Editor,
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            false,
+            string.Empty,
+            new List<string>(),
+            [],
+            project,
+            branding,
+            null,
+            null,
+            null);
+
     public static DeploymentPageResponse InvalidResponse(ProjectWithBrandingResponse project) => new(
         string.Empty,
         project.Id,
@@ -118,5 +136,8 @@ public class DeploymentPageResponse : ISuccess
         new List<string>(),
         null,
         project,
-        project.Branding);
+        project.Branding,
+        null,
+        null,
+        null);
 }

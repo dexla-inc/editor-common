@@ -1,4 +1,6 @@
-﻿using Dexla.Common.Repository.Types.Enums;
+﻿using Dexla.Common.Editor.Entities;
+using Dexla.Common.Editor.Responses;
+using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Models;
@@ -21,6 +23,9 @@ public class DeploymentPageModel : IModel
     public List<string> PageState { get; set; } = [];
     public ProjectModel Project { get; set; } = new();
     public BrandingModel Branding { get; set; } = new();
+    public List<ApiWithApiEndpoints>? Apis { get; set; }
+    public List<VariableModel>? Variables { get; set; }
+    public List<LogicFlowModel>? LogicFlows { get; set; }
 
     public DeploymentPageModel Clone()
     {
@@ -40,7 +45,10 @@ public class DeploymentPageModel : IModel
             AuthenticatedUserRole = AuthenticatedUserRole,
             PageState = PageState,
             Project = Project,
-            Branding = Branding
+            Branding = Branding,
+            Apis = Apis,
+            Variables = Variables,
+            LogicFlows = LogicFlows
         };
     }
 }

@@ -23,6 +23,9 @@ public class DeploymentPage : IEntity
     public virtual List<PageAction>? Actions { get; set; }
     public Project? Project { get; set; }
     public Branding? Branding { get; set; }
+    public virtual List<ApiWithApiEndpoints>? Apis { get; set; }
+    public virtual List<Variable>? Variables { get; set; }
+    public virtual List<LogicFlow>? LogicFlows { get; set; }
     
     public DeploymentPage Clone()
     {
@@ -43,7 +46,10 @@ public class DeploymentPage : IEntity
             PageState = PageState,
             Actions = Actions,
             Project = Project,
-            Branding = Branding
+            Branding = Branding,
+            Apis = Apis,
+            Variables = Variables,
+            LogicFlows = LogicFlows
         };
     }
 }

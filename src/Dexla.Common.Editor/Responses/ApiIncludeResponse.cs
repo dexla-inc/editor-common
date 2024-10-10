@@ -73,6 +73,7 @@ public class ApiIncludeResponse : ISuccess
         };
     }
     
+    
     private static DatasourceAuthConfigurationResponse GetAuthConfig(ApiWithApiEndpoints api)
         {
             string accessTokenUrl = string.Empty, refreshTokenUrl = string.Empty, userUrl = string.Empty;
@@ -121,4 +122,27 @@ public class ApiIncludeResponse : ISuccess
         }
 
     public string TrackingId { get; set; }
+
+    public static ApiIncludeResponse ModelToResponse(ApiWithApiEndpoints apiWithApiEndpoints)
+    {
+        return EntityToResponse()(apiWithApiEndpoints);
+    }
+
+    public static ApiWithApiEndpoints ResponseToEntity(ApiIncludeResponse response)
+    {
+        return new ApiWithApiEndpoints
+        {
+            Id = response.Id,
+            Name = response.Name,
+            AuthenticationScheme = response.AuthenticationScheme,
+            Environment = response.Environment,
+            BaseUrl = response.BaseUrl,
+            SwaggerUrl = response.SwaggerUrl,
+            Updated = response.Updated,
+            Type = response.Type,
+            ApiKey = response.ApiKey,
+            IsTested = response.IsTested,
+            ApiEndpoints = response.Endpoints?.Select(ApiEndpointResponse.ResponseToEntity).ToList() ?? []
+        };
+    }
 }
