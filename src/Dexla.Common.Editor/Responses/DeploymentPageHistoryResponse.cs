@@ -18,6 +18,11 @@ public class DeploymentPageHistoryResponse : ISuccess
     public string PageId { get; }
     public EnvironmentTypes Environment { get; }
     public long Created { get; }
+    public ProjectResponse? Project { get; }
+    public BrandingResponse? Branding { get; }
+    public List<ApiIncludeResponse>? Datasources { get; }
+    public List<VariableResponse>? Variables { get; }
+    public List<LogicFlowResponse>? LogicFlows { get; }
 
     public DeploymentPageHistoryResponse(
         string id,
@@ -29,7 +34,12 @@ public class DeploymentPageHistoryResponse : ISuccess
         string authenticatedUserRole,
         IEnumerable<string> pageState,
         EnvironmentTypes environment,
-        long created)
+        long created,
+        ProjectResponse? project,
+        BrandingResponse? branding,
+        List<ApiIncludeResponse>? datasources,
+        List<VariableResponse>? variables,
+        List<LogicFlowResponse>? logicFlows)
     {
         Id = id;
         PageId = pageId;
@@ -41,6 +51,11 @@ public class DeploymentPageHistoryResponse : ISuccess
         PageState = string.Join("", pageState);
         Environment = environment;
         Created = created;
+        Project = project;
+        Branding = branding;
+        Datasources = datasources;
+        Variables = variables;
+        LogicFlows = logicFlows;
     }
 
     protected DeploymentPageHistoryResponse(
@@ -51,7 +66,12 @@ public class DeploymentPageHistoryResponse : ISuccess
         bool authenticatedOnly,
         string authenticatedUserRole,
         EnvironmentTypes environment,
-        long created)
+        long created,
+        ProjectResponse? project,
+        BrandingResponse? branding,
+        List<ApiIncludeResponse>? datasources,
+        List<VariableResponse>? variables,
+        List<LogicFlowResponse>? logicFlows)
     {
         Id = id;
         PageId = pageId;
@@ -61,6 +81,11 @@ public class DeploymentPageHistoryResponse : ISuccess
         AuthenticatedUserRole = authenticatedUserRole;
         Environment = environment;
         Created = created;
+        Project = project;
+        Branding = branding;
+        Datasources = datasources;
+        Variables = variables;
+        LogicFlows = logicFlows;
     }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -79,7 +104,12 @@ public class DeploymentPageHistoryResponse : ISuccess
                 entity.AuthenticatedUserRole,
                 entity.PageState,
                 entity.Environment,
-                entity.Created);
+                entity.Created,
+                ProjectResponse.EntityToResponse(entity.Project), 
+                BrandingResponse.EntityToResponse(entity.Branding), 
+                entity.Datasources?.Select(ApiIncludeResponse.EntityToResponse()).ToList(),
+                entity.Variables?.Select(VariableResponse.EntityToResponse()).ToList(),
+                entity.LogicFlows?.Select(LogicFlowResponse.EntityToResponse()).ToList());
         
         return entity => new DeploymentPageHistoryResponse(
             entity.Id,
@@ -89,6 +119,11 @@ public class DeploymentPageHistoryResponse : ISuccess
             entity.AuthenticatedOnly,
             entity.AuthenticatedUserRole,
             entity.Environment,
-            entity.Created);
+            entity.Created,
+            ProjectResponse.EntityToResponse(entity.Project),
+            BrandingResponse.EntityToResponse(entity.Branding),
+            entity.Datasources?.Select(ApiIncludeResponse.EntityToResponse()).ToList(),
+            entity.Variables?.Select(VariableResponse.EntityToResponse()).ToList(),
+            entity.LogicFlows?.Select(LogicFlowResponse.EntityToResponse()).ToList());
     }
 }

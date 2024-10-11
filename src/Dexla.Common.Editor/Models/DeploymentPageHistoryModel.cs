@@ -1,4 +1,5 @@
-﻿using Dexla.Common.Repository.Types.Enums;
+﻿using Dexla.Common.Editor.Entities;
+using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 
 namespace Dexla.Common.Editor.Models;
@@ -20,4 +21,9 @@ public class DeploymentPageHistoryModel : IModel
     public string AuthenticatedUserRole { get; set; } = string.Empty;
     public List<string> PageState { get; set; } = [];
     public long Created { get; set; }
+    public ProjectModel Project { get; set; } = new();
+    public BrandingModel Branding { get; set; } = new();
+    public List<ApiWithApiEndpoints>? Datasources { get; set; }
+    public List<VariableModel>? Variables { get; set; }
+    public List<LogicFlowModel>? LogicFlows { get; set; }
 }

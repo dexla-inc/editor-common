@@ -23,4 +23,9 @@ public class DeploymentPageHistory : IEntity
     public virtual List<PageAction>? Actions { get; set; }
     public virtual string PageId { get; set; } = string.Empty;
     public virtual long Created { get; set; }
+    public Project? Project { get; set; }
+    public Branding? Branding { get; set; }
+    public virtual List<ApiWithApiEndpoints>? Datasources { get; set; }
+    public virtual List<Variable>? Variables { get; set; }
+    public virtual List<LogicFlow>? LogicFlows { get; set; }
 }
