@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Text.RegularExpressions;
 using Dexla.Common.Editor.Responses;
 
@@ -6,13 +7,13 @@ namespace Dexla.Common.Editor.Models;
 public static class ColorShades
 {
     /// <summary>
-    /// Sets a new color for the specified type by removing all existing shades
-    /// and adding the new color to the .6 shade.
+    /// Sets a new color for the specified type by updating the .6 shade
+    /// and generating shades 0-5 (lighter) and 7-9 (darker) based on the .6 shade.
     /// </summary>
     /// <param name="shades">The list of ColorShadeDto to operate on.</param>
     /// <param name="type">The color type (e.g., "Primary", "Secondary").</param>
-    /// <param name="newHex">The new hex color code (e.g., "#FF5733").</param>
-    /// <param name="isDefault">Is this a default color or new</param>
+    /// <param name="newHex">The new hex color code for the .6 shade (e.g., "#FF5733").</param>
+    /// <param name="isDefault">Indicates if the color is a default color.</param>
     /// <exception cref="ArgumentException">Thrown when the type is invalid or hex format is incorrect.</exception>
     public static void SetColorShade(this List<ColorShadeDto> shades, string type, string newHex, bool isDefault = true)
     {
@@ -26,26 +27,102 @@ public static class ColorShades
         if (!IsValidHex(newHex))
             throw new ArgumentException("Invalid hex color format.", nameof(newHex));
 
-        // Define the prefix to identify the color type
-        string prefix = $"{type}.";
+        // Update or add the .6 shade
+        string baseShadeName = $"{type}.6";
+        UpdateOrAddShade(shades, baseShadeName, newHex, type, isDefault);
 
-        // Remove all existing shades for the specified type
-        shades.RemoveAll(c => c.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase));
+        // Convert baseHex to Color once
+        Color baseColor = ColorTranslator.FromHtml(newHex);
 
-        // Create the new ColorShadeDto for the .6 shade
-        ColorShadeDto newColorShade = new()
+        // Define shade ranges
+        var shadeDefinitions = new[]
         {
-            Hex = newHex,
-            Name = $"{type}.6",
-            IsDefault = isDefault, 
-            FriendlyName = $"{type}" 
+            new { Start = 0, End = 5, BrightnessFactor = 0.1f, IsIncrease = true },
+            new { Start = 7, End = 9, BrightnessFactor = 0.1f, IsIncrease = false }
         };
 
-        // Add the new shade
-        shades.Add(newColorShade);
+        foreach (var shadeDef in shadeDefinitions)
+        {
+            for (int i = shadeDef.Start; i <= shadeDef.End; i++)
+            {
+                string shadeName = $"{type}.{i}";
+                string friendlyName = $"{type} {i}";
+                float factor = shadeDef.BrightnessFactor * (shadeDef.IsIncrease ? 6 - i : i - 6);
+                Color modifiedColor = shadeDef.IsIncrease
+                    ? ChangeColorBrightness(baseColor, factor)
+                    : ChangeColorBrightness(baseColor, -factor);
+
+                string modifiedHex = ColorTranslator.ToHtml(modifiedColor);
+                UpdateOrAddShade(shades, shadeName, modifiedHex, friendlyName, isDefault);
+            }
+        }
 
         // Sort the list to maintain order
         SortColors(shades);
+    }
+
+    /// <summary>
+    /// Updates an existing shade or adds a new one to the list.
+    /// </summary>
+    /// <param name="shades">The list of color shades.</param>
+    /// <param name="shadeName">The name of the shade.</param>
+    /// <param name="hex">The hexadecimal color value.</param>
+    /// <param name="friendlyName">The friendly name for the shade.</param>
+    /// <param name="isDefault">Indicates if this is the default shade.</param>
+    private static void UpdateOrAddShade(List<ColorShadeDto> shades, string shadeName, string hex, string friendlyName,
+        bool isDefault)
+    {
+        ColorShadeDto? existingShade =
+            shades.FirstOrDefault(c => c.Name.Equals(shadeName, StringComparison.OrdinalIgnoreCase));
+        if (existingShade != null)
+        {
+            existingShade.Hex = hex;
+            existingShade.IsDefault = isDefault;
+            existingShade.FriendlyName = friendlyName;
+        }
+        else
+        {
+            shades.Add(new ColorShadeDto
+            {
+                Hex = hex,
+                Name = shadeName,
+                IsDefault = isDefault,
+                FriendlyName = friendlyName
+            });
+        }
+    }
+
+    /// <summary>
+    /// Adjusts the brightness of a color.
+    /// Positive value to increase brightness, negative to decrease.
+    /// </summary>
+    /// <param name="color">The base color.</param>
+    /// <param name="factor">The factor to adjust brightness (-1 to 1).</param>
+    /// <returns>The adjusted color.</returns>
+    private static Color ChangeColorBrightness(Color color, float factor)
+    {
+        float red = color.R;
+        float green = color.G;
+        float blue = color.B;
+
+        if (factor < 0)
+        {
+            factor = 1 + factor;
+            red *= factor;
+            green *= factor;
+            blue *= factor;
+        }
+        else
+        {
+            red += (255 - red) * factor;
+            green += (255 - green) * factor;
+            blue += (255 - blue) * factor;
+        }
+
+        return Color.FromArgb(color.A,
+            Math.Clamp((int)red, 0, 255),
+            Math.Clamp((int)green, 0, 255),
+            Math.Clamp((int)blue, 0, 255));
     }
 
     /// <summary>
@@ -68,10 +145,9 @@ public static class ColorShades
     private static void SortColors(List<ColorShadeDto> colors)
     {
         // Create a dictionary for quick lookup of desired order indices
-        // No changes needed here
         Dictionary<string, int> colorOrderDict = DesiredColorOrder
             .Select((name, index) => new { name, index })
-            .ToDictionary(x => x.name, x => x.index, StringComparer.OrdinalIgnoreCase); // Added case-insensitive comparer
+            .ToDictionary(x => x.name, x => x.index, StringComparer.OrdinalIgnoreCase);
 
         colors.Sort((x, y) =>
         {
@@ -82,16 +158,64 @@ public static class ColorShades
             bool xInOrder = colorOrderDict.TryGetValue(xBaseName, out int xIndex);
             bool yInOrder = colorOrderDict.TryGetValue(yBaseName, out int yIndex);
 
-            return xInOrder switch
+            switch (xInOrder)
             {
-                true when yInOrder => xIndex.CompareTo(yIndex),
-                true => -1, // x comes before y
-                _ => yInOrder
-                    ? 1
-                    : // If neither is in the desired order, sort alphabetically
-                    string.Compare(xBaseName, yBaseName, StringComparison.OrdinalIgnoreCase)
-            };
+                case true when yInOrder:
+                {
+                    // Compare based on DesiredColorOrder
+                    int baseComparison = xIndex.CompareTo(yIndex);
+                    if (baseComparison != 0)
+                    {
+                        return baseComparison;
+                    }
+                    else
+                    {
+                        // If base names are the same, compare by shade number
+                        int xShade = GetShadeNumber(x.Name);
+                        int yShade = GetShadeNumber(y.Name);
+                        return xShade.CompareTo(yShade);
+                    }
+                }
+                case true:
+                    // x comes before y
+                    return -1;
+                default:
+                {
+                    if (yInOrder)
+                    {
+                        // y comes before x
+                        return 1;
+                    }
+
+                    // If neither is in the desired order, sort alphabetically
+                    int baseComparison = string.Compare(xBaseName, yBaseName, StringComparison.OrdinalIgnoreCase);
+                    if (baseComparison != 0)
+                    {
+                        return baseComparison;
+                    }
+
+                    // If base names are the same, compare by shade number
+                    int xShade = GetShadeNumber(x.Name);
+                    int yShade = GetShadeNumber(y.Name);
+                    return xShade.CompareTo(yShade);
+                }
+            }
         });
+    }
+
+    /// <summary>
+    /// Extracts the shade number from a color name.
+    /// For example, "Primary.1" returns 1. If no shade is present, returns 0.
+    /// </summary>
+    private static int GetShadeNumber(string colorName)
+    {
+        int dotIndex = colorName.IndexOf('.');
+        if (dotIndex >= 0 && int.TryParse(colorName.Substring(dotIndex + 1), out int shade))
+        {
+            return shade;
+        }
+
+        return 0; // Default shade if none is present
     }
 
     /// <summary>
@@ -108,7 +232,7 @@ public static class ColorShades
         int dotIndex = name.IndexOf('.');
         return dotIndex > 0 ? name.Substring(0, dotIndex) : name;
     }
-    
+
     private static readonly List<string> DesiredColorOrder =
     [
         "Primary",
@@ -126,7 +250,7 @@ public static class ColorShades
         "White",
         "Border"
     ];
-    
+
     public static readonly List<ColorShadeDto> DefaultShades =
     [
         new() { Hex = "#EAF0FA", Name = "Primary.0", IsDefault = true, FriendlyName = "Primary 0" },
