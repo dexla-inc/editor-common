@@ -30,6 +30,7 @@ public class BrandingModel : IModelWithProjectId, IModelWithOnboarding
     public string ProjectId { get; set; } = string.Empty;
     public string Theme { get; set; } = string.Empty;
     public List<FontDto> Fonts { get; set; } = [];
+    [Obsolete("Use ColorShades instead.")]
     public List<ColorDto> Colors { get; set; } = [];
     public List<ColorShadeDto> ColorShades { get; set; } = [];
     public List<ResponsiveBreakpointDto> ResponsiveBreakpoints { get; set; } = [];

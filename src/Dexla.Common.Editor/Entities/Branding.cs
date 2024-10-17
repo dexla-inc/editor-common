@@ -18,6 +18,7 @@ public class Branding : IEntity, IEntityWithOnboarding
     public string ProjectId { get; set; } = string.Empty;
     public string Theme { get; set; } = string.Empty; //Contrasts.LIGHT;
     public List<Font> Fonts { get; set; }
+    [Obsolete("Use ColorShades instead.")]
     public List<Color> Colors { get; set; } = [];
     public List<ColorShade> ColorShades { get; set; } = [];
     public List<Logo>? Logos { get; set; }

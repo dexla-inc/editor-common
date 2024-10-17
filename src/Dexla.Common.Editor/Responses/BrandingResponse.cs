@@ -1,5 +1,6 @@
 ﻿using Dexla.Common.Editor.Entities;
 using Dexla.Common.Editor.Models;
+using Dexla.Common.Repository.Types.Models;
 using Dexla.Common.Types.Enums;
 using Dexla.Common.Types.Interfaces;
 
@@ -10,7 +11,6 @@ public class BrandingResponse(
     Contrasts theme,
     string? websiteUrl,
     IEnumerable<FontDto> fonts,
-    List<ColorDto> colors,
     List<ColorShadeDto> colorShades,
     IEnumerable<ResponsiveBreakpointDto> responsiveBreakpoints,
     string faviconUrl,
@@ -30,7 +30,6 @@ public class BrandingResponse(
 
     public string? Id { get; } = id;
     public Contrasts Theme { get; } = theme;
-    public List<ColorDto> Colors { get; } = colors;
     public List<ColorShadeDto> ColorShades { get; } = colorShades;
     public IEnumerable<FontDto> Fonts { get; } = fonts;
     public IEnumerable<ResponsiveBreakpointDto> ResponsiveBreakpoints { get; } = responsiveBreakpoints;
@@ -132,7 +131,6 @@ public class BrandingResponse(
             isThemeValid ? theme : Contrasts.LIGHT,
             model.WebsiteUrl,
             model.Fonts,
-            model.Colors,
             model.ColorShades,
             model.ResponsiveBreakpoints,
             model.FaviconUrl,
@@ -147,6 +145,13 @@ public class BrandingResponse(
             Enum.Parse<FocusRingTypes>(model.FocusRing),
             Enum.Parse<CardStyleTypes>(model.CardStyle)
         );
+    }
+    
+    public static IResponse ModelToResponse(RepositoryActionResultModel<BrandingModel> actionResult)
+    {
+        return actionResult.ActionResult(
+            actionResult,
+            ModelToResponse);
     }
 
     public static BrandingResponse EntityToResponse(Branding entity)
@@ -168,14 +173,6 @@ public class BrandingResponse(
                 LetterSpacing = f.LetterSpacing,
                 Note = f.Note
             }),
-            entity.Colors.Select(c => new ColorDto
-            {
-                Name = c.Name,
-                FriendlyName = c.FriendlyName,
-                Hex = c.Hex,
-                Brightness = c.Brightness,
-                IsDefault = c.IsDefault
-            }).ToList(),
             entity.ColorShades.Select(c => new ColorShadeDto
             {
                 Name = c.Name,

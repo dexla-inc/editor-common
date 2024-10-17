@@ -30,7 +30,6 @@ public class ReadOnlyBrandingService(IRepository<Branding, BrandingModel> reposi
             isThemeValid ? theme : Contrasts.LIGHT,
             model.WebsiteUrl,
             model.Fonts,
-            model.Colors,
             model.ColorShades,
             model.ResponsiveBreakpoints,
             model.FaviconUrl,
