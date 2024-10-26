@@ -1,8 +1,8 @@
-﻿using Dexla.Common.Types.Enums;
+using Dexla.Common.Types.Enums;
 
-namespace Dexla.Common.Editor.Entities;
+namespace Dexla.Common.Types;
 
-public class EndpointAuthentication
+public class EndpointAuthenticationDto
 {
     public EndpointTypes EndpointType { get; set; }
     public string TokenKey { get; set; } = string.Empty;

@@ -1,10 +1,11 @@
 ﻿using Dexla.Common.Repository.Types.Enums;
 using Dexla.Common.Repository.Types.Interfaces;
 using Dexla.Common.Types.Enums;
+using Dexla.Common.Types.Models;
 
 namespace Dexla.Common.Editor.Entities;
 
-public class ApiEndpoint : IEntity, IEntityWithOnboarding
+public class ApiEndpoint : IEntityWithOnboarding
 {
     public string Id { get; set; } = string.Empty;
     public EntityStatus EntityStatus { get; set; }
